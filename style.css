@@ -1,15 +1,15 @@
 /* ==========================================================================
-   1. BASE SYSTEM & DEVICE VIEWPORT MANAGEMENT
+   1. BASE SYSTEM & VIEWPORT SCREEN BOUNDS
    ========================================================================== */
 body {
   margin: 0;
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   color: #f8fafc;
-  height: 100vh;           /* Lock exactly to the device screen height */
+  height: 100vh;           /* Enforces exact device screen height limit */
   display: flex;
-  flex-direction: column;  /* Stack elements vertically */
-  overflow: hidden;        /* Prevent the whole page from scrolling on desktop */
+  flex-direction: column;  
+  overflow: hidden;        /* Prevents the body itself from spilling/scrolling */
 }
 
 .glass {
@@ -20,14 +20,14 @@ body {
 }
 
 /* ==========================================================================
-   2. HEADER & SEARCH AREA (Comfortable Content Hugging)
+   2. HEADER AREA
    ========================================================================== */
 .header {
-  padding: 14px 20px;
+  padding: 12px 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  flex-shrink: 0;          /* Take only what it needs, never shrink or grow */
+  gap: 8px;
+  flex-shrink: 0;
   z-index: 10;
 }
 
@@ -41,18 +41,18 @@ body {
 .logo-area {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .care-logo {
-  width: 38px;
-  height: 38px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
 }
 
 .logo-area h1 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.5px;
 }
@@ -63,25 +63,25 @@ body {
 }
 
 .credits-text {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.6);
 }
 
 .search-box {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
 }
 
 input {
-  padding: 10px 16px;
+  padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.25);
   color: white;
   flex-grow: 1;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: all 0.3s;
 }
 
@@ -94,12 +94,12 @@ input:focus {
 button {
   background: #3b82f6;
   color: white;
-  padding: 10px 24px;
+  padding: 10px 20px;
   border: none;
   border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   transition: background 0.2s;
 }
 
@@ -108,21 +108,21 @@ button:hover {
 }
 
 /* ==========================================================================
-   3. DESKTOP WORKSPACE (Natively Fills Remaining Screen Space)
+   3. WORKSPACE CONTAINER (Desktop Mode Side-By-Side)
    ========================================================================== */
 .app-layout {
   display: flex;
-  flex: 1;                 /* Natively consumes 100% of the remaining screen height */
+  flex: 1;                 /* Dynamically stretches to use remaining space */
   gap: 16px;
-  padding: 8px 16px;
+  padding: 4px 16px;
   box-sizing: border-box;
-  min-height: 0;           /* CRITICAL: Tells Leaflet Map exactly how to calculate size */
+  min-height: 0;           /* Prevents child elements from bursting screen limits */
 }
 
 #results-wrapper {
-  flex: 1.3;
+  flex: 1.2;
   height: 100%;
-  overflow-y: auto;        /* Only the results column scrolls internally if long */
+  overflow-y: auto;        /* Restricts result text scroll strictly here */
   box-sizing: border-box;
   padding-right: 4px;
 }
@@ -132,8 +132,8 @@ button:hover {
 }
 
 #map {
-  flex: 1;
-  height: 100% !important; /* Spreads beautifully into its native flex container */
+  flex: 1.5;
+  height: 100% !important;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
@@ -149,10 +149,10 @@ button:hover {
 }
 
 /* ==========================================================================
-   4. WELCOME PLACEHOLDER ANIMATIONS
+   4. PLATFORM COMPONENT STYLES & ANIMATIONS
    ========================================================================== */
 .welcome-placeholder {
-  padding: 24px;
+  padding: 20px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: 16px;
@@ -161,9 +161,9 @@ button:hover {
 
 .magic-logo-container {
   position: relative;
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 16px auto;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -178,15 +178,15 @@ button:hover {
 }
 
 .magic-care-logo {
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
 }
 
 .magic-glow {
   position: absolute;
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(147, 100, 181, 0.2) 70%, transparent 100%);
   border-radius: 50%;
   filter: blur(8px);
@@ -196,8 +196,8 @@ button:hover {
 
 .magic-ring {
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 74px;
+  height: 74px;
   border-radius: 50%;
   border: 2px dashed rgba(59, 130, 246, 0.4);
   border-top-color: #9364b5;
@@ -207,26 +207,26 @@ button:hover {
 }
 
 .welcome-placeholder h3 {
-  margin: 0 0 8px 0;
-  font-size: 1.25rem;
+  margin: 0 0 6px 0;
+  font-size: 1.15rem;
   color: #3b82f6;
 }
 
 .welcome-placeholder p {
   color: #94a3b8;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   line-height: 1.5;
   text-align: left;
   margin: 0;
 }
 
 .tip-box {
-  margin-top: 12px;
+  margin-top: 10px;
   background: rgba(59, 130, 246, 0.1);
   border-left: 4px solid #3b82f6;
-  padding: 10px;
+  padding: 8px 10px;
   border-radius: 4px 12px 12px 4px;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #cbd5e1;
   text-align: left;
 }
@@ -248,7 +248,7 @@ button:hover {
 }
 
 .card-header {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   margin-bottom: 6px;
   display: flex;
@@ -265,7 +265,7 @@ button:hover {
 
 .card-body {
   color: #94a3b8;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   margin-bottom: 10px;
 }
 
@@ -276,7 +276,7 @@ button:hover {
 
 .action-btn {
   text-decoration: none;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   padding: 8px 12px;
   background: #3b82f6;
   color: white;
@@ -296,29 +296,29 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. INTERACTIVE FOOTER (Tight Content Hugging - No Dead Blue Voids)
+   6. ADAPTIVE FOOTER
    ========================================================================== */
 .care-footer {
-  height: auto;             /* Lets container dynamically size to the content */
-  margin: 6px 16px 16px 16px;
+  height: auto;
+  margin: 4px 16px 12px 16px;
   border-radius: 16px;
-  padding: 12px 14px;
+  padding: 10px 14px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 10px;                /* Keeps address cards and about line perfectly near each other */
-  flex-shrink: 0;           /* Protects footer from compressing */
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .footer-row-top {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .footer-title {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: #3b82f6;
   text-transform: uppercase;
@@ -327,10 +327,10 @@ button:hover {
 
 .address-grid {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   overflow-x: auto;
   align-items: center;
-  padding-bottom: 4px;
+  padding-bottom: 2px;
 }
 
 .address-grid::-webkit-scrollbar {
@@ -345,24 +345,16 @@ button:hover {
   background: rgba(30, 41, 59, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
-  padding: 10px 12px;
-  min-width: 240px;
-  max-width: 240px;
-  height: 52px;
+  padding: 8px 12px;
+  min-width: 230px;
+  max-width: 230px;
+  height: 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.mac-address-card:hover {
-  transform: translateY(-2px);
-  background: rgba(15, 23, 42, 0.75);
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
 }
 
 .mac-dot-header {
@@ -373,25 +365,21 @@ button:hover {
   gap: 3px;
 }
 
-.mac-dot-header .dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-}
+.mac-dot-header .dot { width: 5px; height: 5px; border-radius: 50%; }
 .dot.r { background: #ef4444; }
 .dot.y { background: #eab308; }
 .dot.g { background: #22c55e; }
 
 .mac-address-card h4 {
-  margin: 0 0 2px 0;
-  font-size: 0.85rem;
+  margin: 0 0 1px 0;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #ffffff;
 }
 
 .mac-address-card p {
-  margin: 1px 0;
-  font-size: 0.72rem;
+  margin: 0;
+  font-size: 0.7rem;
   color: #94a3b8;
   white-space: nowrap;
   overflow: hidden;
@@ -402,21 +390,18 @@ button:hover {
   background: rgba(15, 23, 42, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 8px;
-  padding: 6px 14px;
+  padding: 6px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
 }
 
 .status-col {
   display: flex;
   gap: 6px;
   color: #cbd5e1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .status-col strong { color: #3b82f6; }
@@ -424,16 +409,16 @@ button:hover {
 .status-right { border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 12px; }
 
 /* ==========================================================================
-   7. KEYFRAME ENGINE ANIMATIONS
+   7. CORE ENGINE ANIMATIONS
    ========================================================================== */
 @keyframes floatLogo {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
+  50% { transform: translateY(-5px); }
   100% { transform: translateY(0px); }
 }
 @keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.5; }
-  100% { transform: scale(1.1); opacity: 0.9; }
+  0% { transform: scale(0.95); opacity: 0.5; }
+  100% { transform: scale(1.05); opacity: 0.8; }
 }
 @keyframes spinRing {
   0% { transform: rotate(0deg); }
@@ -441,83 +426,69 @@ button:hover {
 }
 
 /* ==========================================================================
-   8. MOBILE RESPONSIVENESS (Seamless Smartphone Finger-Scrolling Layout)
+   8. SMART DEVICE MOBILE CONFIGURATION (Prevents Footer Spill Out Completely)
    ========================================================================== */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   body {
-    overflow-y: auto !important;  /* Release the screen boundary lock so mobile can scroll naturally */
-    height: auto !important;
-  }
-  
-  .header-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  
-  .mac-credits {
-    align-self: flex-start;
+    overflow: hidden !important; /* Locks screen view cleanly inside mobile browser window */
+    height: 100vh !important;
   }
 
   .app-layout {
-    display: flex !important;
-    flex-direction: column !important; /* Stack columns on top of each other */
-    height: auto !important;
-    padding: 12px;
-    gap: 16px;
+    flex-direction: column !important; /* Stack map and info card row over each other */
+    height: auto;
+    flex: 1;
+    min-height: 0;
+    gap: 10px;
+    padding: 6px 12px;
   }
 
+  /* Compact, balanced height layout style for map on smartphones */
   #map {
-    height: 380px !important;       /* Gives map a comfortable static box on mobile viewports */
+    order: 1;                     /* Places the map cleanly at the top of the workspace */
+    height: 220px !important;     /* Keeps the map short, sharp, and out of the footer's way */
+    min-height: 220px !important;
     width: 100% !important;
-    min-height: 380px !important;
-    flex-shrink: 0;
+    flex: none !important;
   }
 
   #results-wrapper {
-    height: auto !important;
-    overflow: visible !important;
+    order: 2;                     /* Information section follows smoothly underneath */
+    flex: 1 !important;
+    height: 100% !important;
+    overflow-y: auto !important;  /* Only this section scrolls if multiple content cards appear */
   }
 
   .care-footer {
-    height: auto !important;
-    margin: 12px !important;
-    padding: 14px !important;
-    gap: 14px !important;
+    margin: 4px 12px 12px 12px !important;
+    padding: 10px !important;
   }
 
+  /* Converts horizontal bar cards to a compact scroll list on phones */
   .address-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 10px !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    align-items: center !important;
+    gap: 8px !important;
   }
 
   .mac-address-card {
-    min-width: 0 !important;
-    max-width: none !important;
-    width: 100% !important;
-    height: auto !important;
-    padding: 12px !important;
+    min-width: 200px !important;
+    max-width: 200px !important;
+    height: 44px !important;
   }
 
   .mac-status-card {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-    padding: 12px !important;
-  }
-
-  .status-col {
-    max-width: 100% !important;
-    white-space: normal !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
   }
 
   .status-right {
-    border-left: none !important;
-    padding-left: 0 !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding-top: 8px !important;
-    width: 100% !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-left: 8px !important;
+    border-top: none !important;
+    padding-top: 0 !important;
+    width: auto !important;
   }
 }
