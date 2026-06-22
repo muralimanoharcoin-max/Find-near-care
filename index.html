@@ -1,57 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Find Near CARE</title>
-<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Find Near CARE - Mac Minimal Layout</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="glass header">
-  <div class="header-top">
-    <div class="logo-area">
-  <img src="https://logosandtypes.com/wp-content/uploads/2024/01/care-hospitals.svg" alt="CARE Logo" class="care-logo">
-  <h1>Find Near CARE</h1>
-</div>
+    <div class="mac-viewport-container">
+        
+        <header class="mac-header glass">
+            <div class="header-top">
+                <div class="logo-area">
+                    <div class="mac-window-dots">
+                        <span class="dot close"></span>
+                        <span class="dot minimize"></span>
+                        <span class="dot expand"></span>
+                    </div>
+                    <h1>Find Near CARE</h1>
+                </div>
+                <div class="mac-credits">
+                    <span class="credits-text">Designed & Developed by our agent Murali Manohar • 2026</span>
+                </div>
+            </div>
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Enter city or area (e.g., Banjara, Hitech, Nagpur)..." value="Mumbai">
+                <button id="search-button">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    Search
+                </button>
+            </div>
+        </header>
 
-    
-    <div class="mac-credits">
-      <span class="credits-text">Designed & Developed by our agent Murali Manohar •2026•</span>
+        <main class="app-layout">
+            
+            <div id="results-wrapper">
+                <div id="results">
+                    <div class="welcome-placeholder">
+                        <div class="magic-logo-container">
+                            <div class="magic-ring"></div>
+                            <div class="magic-glow"></div>
+                            <div class="magic-animator">
+                                <span style="font-size: 2rem;">🏥</span>
+                            </div>
+                        </div>
+                        <h3>Welcome to Find Near CARE</h3>
+                        <p>Search with city, area, or neighborhood in the search bar above. Results filter directly into this side panel frame, mapping custom metrics onto the canvas layout map seamlessly.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="map"></div>
+
+        </main>
+
     </div>
-  </div>
 
-  <div class="search-box">
-    <input id="search" placeholder="Enter city or area (e.g., Banjara, Hitech, Nagpur)..." onkeypress="handleKeyPress(event)"/>
-    <button onclick="triggerSearch()">🔍 Search</button>
-  </div>
-</div>
-<div class="welcome-placeholder">
-    <div class="magic-logo-container">
-        <div class="magic-ring"></div>
-        <div class="magic-glow"></div>
-        <div class="magic-animator">
-            <img src="care-logo.png" class="magic-care-logo" alt="CARE">
-        </div>
-    </div>
-    <h3>Welcome to Find Near CARE</h3>
-    <p>Search with city, area, or neighborhood in the search bar. Results update inside this panel, mapping spatial locations on the right panel instantly.</p>
-    <div class="tip-box">
-        <strong>💡 Dashboard Tip:</strong> Address tracking ribbons anchor at the bottom floor of your display context automatically.
-    </div>
-</div>
-
-<div class="app-layout">
-  <div id="results-wrapper">
-    <div id="results"></div>
-  </div>
-  
-  <div id="map"></div>
-</div>
-
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="script.js"></script>
 </body>
 </html>
