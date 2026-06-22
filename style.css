@@ -108,15 +108,15 @@ button:hover {
 }
 
 /* ==========================================================================
-   3. DESKTOP WORKSPACE (Flex Fill - Brings Map Back & Deletes Blank Gap)
+   3. DESKTOP WORKSPACE (Exactly 75% of the remaining screen height)
    ========================================================================== */
 .app-layout {
   display: flex;
-  flex: 1;              /* Automatically fills ALL space between header & footer */
+  flex: 75;             /* Takes up exactly 75% of the vertical space below header */
   gap: 16px;
   padding: 12px 16px 4px 16px;
   box-sizing: border-box;
-  min-height: 0;        /* Vital fix: Allows map container to calculate layout heights cleanly */
+  min-height: 0;        /* Allows the map to calculate its internal size correctly */
 }
 
 #results-wrapper {
@@ -133,7 +133,7 @@ button:hover {
 
 #map {
   flex: 1;
-  height: 100%;        /* Takes up 100% of the newly allocated space */
+  height: 100% !important; 
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
