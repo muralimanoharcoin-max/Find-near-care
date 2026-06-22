@@ -127,16 +127,19 @@ button:hover {
 .app-layout {
   display: flex;
   flex-direction: row;     /* Default side-by-side split row layout for desktop screens */
-  flex: 1;                 /* Dynamically stretches to consume available screen depth */
+  
+  /* ADJUSTMENT 1: Instead of letting it grow indefinitely, we limit its weight */
+  flex: 0 1 55vh;          /* Takes up a clean, balanced portion of the viewport height */
+  
   gap: 16px;
-  
-  /* ADJUSTED: Increased top/bottom padding to 20px compresses the map and results 
-     vessels into a shorter, sleeker format, giving the page more breathing room */
-  padding: 20px 16px;      
-  
+  padding: 8px 16px;      
   box-sizing: border-box;
   min-height: 0;           /* CRITICAL: Instructs Leaflet Map how to safely size container bounds */
+  
+  /* ADJUSTMENT 2: Adds uniform top and bottom spacing to separate it from the header/footer */
+  margin: 12px 0;          
 }
+
 
 
 /* ==========================================================================
