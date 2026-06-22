@@ -1,0 +1,514 @@
+/* ==========================================================================
+   1. BASE SYSTEM & CORE VIEWPORT LOCK
+   ========================================================================== */
+body {
+  margin: 0;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #f8fafc;
+  height: 100vh;           /* Lock strictly to screen height */
+  display: flex;
+  flex-direction: column;  /* Stack: Header -> Layout -> Footer */
+  overflow: hidden;        /* Prevent global page bounce or scrolling */
+  position: relative;
+}
+
+/* THE TWO-LINED ACCENT BOTTOM BORDER */
+body::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 9999;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    #3b82f6 0%,   #3b82f6 50%, 
+    #22c55e 50%,  #22c55e 100%
+  );
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   2. HEADER & SEARCH AREA
+   ========================================================================== */
+.header {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.care-logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.logo-area h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.mac-credits {
+  display: flex;
+  align-items: center;
+}
+
+.credits-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-box {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+input {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  flex-grow: 1;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+button {
+  background: #3b82f6;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #2563eb;
+}
+
+/* ==========================================================================
+   3. DESKTOP & LAPTOP WORKSPACE LAYOUT
+   ========================================================================== */
+.app-layout {
+  display: flex;
+  flex-direction: row;     /* Side-by-side on large screens */
+  flex: 1;                 /* Stretch to take remaining vertical space */
+  gap: 16px;
+  padding: 12px 16px;      
+  box-sizing: border-box;
+  min-height: 0;           /* Allows children to size correctly without overflowing */
+}
+
+#results-wrapper {
+  flex: 1.2;
+  height: 100%;
+  overflow-y: auto;        /* Scroll only inside the results box */
+  box-sizing: border-box;
+  padding-right: 4px;
+}
+
+#results {
+  width: 100%;
+}
+
+#map {
+  flex: 1.5;
+  height: 100% !important; /* Scale clean with the layout parent container */
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+#results-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+#results-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   4. WELCOME PLACEHOLDER & ANIMATIONS
+   ========================================================================== */
+.welcome-placeholder {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 166px;
+  text-align: center;
+  border-radius: 16px;
+}
+
+.magic-logo-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 12px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.magic-animator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  animation: floatLogo 3.5s ease-in-out infinite;
+}
+
+.magic-care-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.magic-glow {
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(147, 100, 181, 0.2) 70%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(8px);
+  z-index: 1;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+.magic-ring {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  border: 2px dashed rgba(59, 130, 246, 0.4);
+  border-top-color: #9364b5;
+  border-bottom-color: #22c55e;
+  z-index: 3;
+  animation: spinRing 6s linear infinite;
+}
+
+.welcome-placeholder h3 {
+  margin: 0 0 6px 0;
+  font-size: 1.15rem;
+  color: #3b82f6;
+}
+
+.welcome-placeholder p {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: left;
+  margin: 0;
+}
+
+.tip-box {
+  margin-top: 10px;
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 4px solid #3b82f6;
+  padding: 8px 10px;
+  border-radius: 4px 12px 12px 4px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  text-align: left;
+}
+
+/* ==========================================================================
+   5. HOSPITAL RESULT CARDS
+   ========================================================================== */
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.nearest-card {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.card-header {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  background: #22c55e;
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.card-body {
+  color: #94a3b8;
+  font-size: 0.88rem;
+  margin-bottom: 10px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  text-decoration: none;
+  font-size: 0.78rem;
+  padding: 8px 12px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.action-btn.wa-btn {
+  background: #25d366;
+}
+
+/* ==========================================================================
+   6. INTERACTIVE FOOTER CONTAINER
+   ========================================================================== */
+.care-footer {
+  height: auto;
+  margin: 4px 16px 16px 16px;
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 6px;
+  flex-shrink: 0;          /* Never let components crush the footer size */
+}
+
+.footer-row-top {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.footer-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.address-grid {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;        /* Swipe row ribbon */
+  align-items: center;
+  padding-bottom: 2px;
+}
+
+.address-grid::-webkit-scrollbar {
+  height: 4px;
+}
+.address-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.mac-address-card {
+  background: rgba(30, 41, 59, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 8px 12px;
+  min-width: 230px;
+  max-width: 230px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.mac-dot-header {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  display: flex;
+  gap: 3px;
+}
+
+.mac-dot-header .dot { width: 5px; height: 5px; border-radius: 50%; }
+.dot.r { background: #ef4444; }
+.dot.y { background: #eab308; }
+.dot.g { background: #22c55e; }
+
+.mac-address-card h4 {
+  margin: 0 0 1px 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.mac-address-card p {
+  margin: 0;
+  font-size: 0.7rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mac-status-card {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 0.72rem;
+}
+
+.status-col {
+  display: flex;
+  gap: 6px;
+  color: #cbd5e1;
+}
+
+.status-col strong { color: #3b82f6; }
+.status-col span { color: #94a3b8; }
+.status-right { border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 12px; }
+
+/* ==========================================================================
+   7. CORE DESIGN ANIMATIONS
+   ========================================================================== */
+@keyframes floatLogo {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes pulseGlow {
+  0% { transform: scale(0.95); opacity: 0.5; }
+  100% { transform: scale(1.05); opacity: 0.8; }
+}
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   8. SMART DEVICE MOBILE CONFIGURATION (Side-By-Side Fixed Blueprint)
+   ========================================================================== */
+@media (max-width: 900px) {
+  body {
+    height: 100vh !important;
+    overflow: hidden !important;   /* Keep window viewport completely locked */
+  }
+
+  /* Force side-by-side matching your blueprint drawing */
+  .app-layout {
+    display: flex !important;
+    flex-direction: row !important; 
+    flex: 1 !important;
+    min-height: 0 !important;
+    gap: 8px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* Balanced left column */
+  #results-wrapper {
+    flex: 1 !important;
+    height: 100% !important;
+    overflow-y: auto !important;  /* Dynamic results list scroll stays safe here */
+  }
+
+  /* Fixed right column - Map will never vanish or stretch out layout boundaries */
+  #map {
+    flex: 1 !important;
+    height: 100% !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .care-footer {
+    margin: 4px 12px 12px 12px !important;
+    padding: 8px !important;
+  }
+
+  .address-grid {
+    display: flex !important;
+    flex-direction: row !important; 
+    overflow-x: auto !important;   
+    gap: 8px !important;
+  }
+
+  .mac-address-card {
+    min-width: 160px !important;  
+    max-width: 160px !important;
+    height: 42px !important;
+  }
+
+  .mac-status-card {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+  }
+
+  .status-right {
+    border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-left: 8px !important;
+    border-top: none !important;
+    padding-top: 0 !important;
+    width: auto !important;
+  }
+}
