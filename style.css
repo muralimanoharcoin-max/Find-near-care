@@ -296,18 +296,19 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. INTERACTIVE MAC DIRECTORY FOOTER (Tight Content Hugging)
+   6. INTERACTIVE MAC DIRECTORY FOOTER (Exactly 25% of the screen height)
    ========================================================================== */
 .care-footer {
-  height: auto;        /* Let footer shrink perfectly to match card height */
+  flex: 25;            /* Takes up exactly 25% of the vertical space below header */
   margin: 6px 16px 16px 16px;
   border-radius: 16px;
   padding: 12px 14px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  flex-shrink: 0;       /* Keeps footer locked into its slim shape */
+  justify-content: space-between;
+  flex-shrink: 0;       /* Prevents the footer from getting compressed */
+  min-height: 0;        /* Prevents content layout leaks */
 }
 
 .footer-row-top {
