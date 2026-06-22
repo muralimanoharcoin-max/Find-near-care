@@ -68,7 +68,7 @@ async function searchLocation(query) {
     const targetCoords = [targetLat, targetLon];
 
     map.setView(targetCoords, 12);
-    setTimeout(() => { map.invalidateSize(); }, 200); // Forces Leaflet engine to compute layout recalculation metrics
+    setTimeout(() => { map.invalidateSize(); }, 200); 
     
     if (searchMarker) map.removeLayer(searchMarker);
     searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Search Location:</b> ${cleanQuery}`).openPopup();
@@ -93,7 +93,6 @@ async function searchLocation(query) {
 
     let html = "";
     results.forEach((x, index) => {
-      // Formatted cleanly with cross-platform URL parameters
       const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${x.lat},${x.lon}&travelmode=driving`;
       const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${x.min.toFixed(0)} mins). Route: ${mapsUrl}`);
       
@@ -116,7 +115,8 @@ async function searchLocation(query) {
       </div>`;
     });
 
-    document.getElementById("results-wrapper").innerHTML = html;
+    // Target results inner div block directly so flex height rules stay preserved
+    document.getElementById("results").innerHTML = html;
 
   } catch (error) {
     console.error("Search operations error:", error);
