@@ -67,7 +67,7 @@ body {
 .search-box {
   display: flex;
   gap: 10px;
-  width: 100%;
+  width: 50%;
 }
 
 input {
@@ -111,27 +111,27 @@ button:hover {
   gap: 16px;
   padding: 16px;
   box-sizing: border-box;
-  height: calc(100vh - 160px); /* Fits perfectly on 100% browser zoom windows */
+  height: calc(90vh - 150px); /* Fits perfectly on 100% browser zoom windows */
   min-height: 0; 
 }
 
 /* RESULTS WRAPPER: Matches Map height perfectly without growing like a train */
 #results-wrapper {
   flex: 1.3;
-  height: 100%;
+  height: 60%;
   overflow-y: auto;
   box-sizing: border-box;
   padding-right: 6px;
 }
 
 #results {
-  width: 100%;
+  width: 105%;
 }
 
 /* MAP WRAPPER: Sits cleanly parallel on right side at 100% height matches */
 #map {
   flex: 1;
-  height: 100%; 
+  height: 60%; 
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
