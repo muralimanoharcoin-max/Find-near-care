@@ -246,3 +246,98 @@ button:hover {
     order: 2; /* List cascades vertically beneath map smoothly */
   }
 }
+/* ==========================================================================
+   4. WELCOME PLACEHOLDER & MAC MAGIC ANIMATIONS
+   ========================================================================== */
+.welcome-placeholder {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  text-align: center;
+}
+
+/* Container locking elements to the exact same relative center point */
+.magic-logo-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Layer 1: Core Center Logo Icon with premium floating effect */
+.magic-animator {
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: macFloat 3.5s ease-in-out infinite;
+}
+
+.magic-care-logo {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+/* Layer 2: Cyber-Blue Ambient Backlight Flash Glow */
+.magic-glow {
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.45) 0%, rgba(34, 197, 94, 0.1) 70%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: 1;
+  animation: macGlowPulse 2s ease-in-out infinite alternate;
+}
+
+/* Layer 3: Dashed Orbital Ring spinning smoothly around the brand logo */
+.magic-ring {
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 2px dashed rgba(59, 130, 246, 0.35);
+  border-top-color: #9364b5;   /* Premium Mac Purple Accent Segment */
+  border-bottom-color: #22c55e;/* Brand Green Accent Segment */
+  z-index: 3;
+  animation: macRingSpin 8s linear infinite;
+}
+
+/* Welcome Typography and tips context */
+.welcome-placeholder h3 { margin: 0 0 8px 0; font-size: 1.05rem; color: #3b82f6; }
+.welcome-placeholder p { color: #94a3b8; font-size: 0.82rem; line-height: 1.5; margin: 0; }
+
+.tip-box {
+  margin-top: 14px; 
+  background: rgba(59, 130, 246, 0.08);
+  border-left: 3px solid #3b82f6; 
+  padding: 10px; 
+  border-radius: 4px 10px 10px 4px;
+  font-size: 0.78rem; 
+  color: #cbd5e1; 
+  text-align: left;
+}
+
+/* ==========================================================================
+   INTERPOLATED ANIMATION KEYFRAMES
+   ========================================================================== */
+@keyframes macFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes macGlowPulse {
+  0% { transform: scale(0.9); opacity: 0.4; }
+  100% { transform: scale(1.1); opacity: 0.8; }
+}
+
+@keyframes macRingSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
