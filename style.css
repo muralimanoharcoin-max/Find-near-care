@@ -6,9 +6,10 @@ body {
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   color: #f8fafc;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Desktop view is locked perfectly to the screen */
 }
 
 .glass {
@@ -28,6 +29,8 @@ body {
   gap: 12px;
   flex-shrink: 0;
   z-index: 10;
+  height: 110px; /* Explicit height to make math perfect */
+  box-sizing: border-box;
 }
 
 .header-top {
@@ -74,7 +77,7 @@ body {
 }
 
 input {
-  padding: 12px 16px;
+  padding: 10px 16px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.25);
@@ -93,7 +96,7 @@ input:focus {
 button {
   background: #3b82f6;
   color: white;
-  padding: 12px 24px;
+  padding: 10px 24px;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -107,15 +110,15 @@ button:hover {
 }
 
 /* ==========================================================================
-   3. DESKTOP WORKSPACE (Expanded Map & Results Height)
+   3. DESKTOP WORKSPACE (Calculated Dynamic Sizing - The Magic Fix)
    ========================================================================== */
 .app-layout {
   display: flex;
-  flex: 1; /* Automatically takes up all available remaining vertical space */
+  /* 100vh minus header (110px) minus footer (150px) minus margins (30px) */
+  height: calc(100vh - 290px) !important; 
   gap: 16px;
-  padding: 16px 16px 4px 16px;
+  padding: 12px 16px 4px 16px;
   box-sizing: border-box;
-  min-height: 450px; /* Ensures a great desktop map size */
 }
 
 #results-wrapper {
@@ -132,7 +135,7 @@ button:hover {
 
 #map {
   flex: 1;
-  height: 100%; 
+  height: 100% !important; /* Force map to take up full layout height */
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
@@ -295,25 +298,24 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. INTERACTIVE MAC DIRECTORY FOOTER (Absolute Bottom Compression Fix)
+   6. INTERACTIVE MAC DIRECTORY FOOTER (Tight Content Hugging)
    ========================================================================== */
 .care-footer {
-  height: auto !important;
+  height: 150px; /* Locked explicit height for math calculations */
   margin: 6px 16px 16px 16px;
   border-radius: 16px;
   padding: 12px 14px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  position: relative; /* Base anchor context */
+  justify-content: space-between;
+  flex-shrink: 0;
 }
 
 .footer-row-top {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 0 !important; /* Forces the gap to respect the 12px layout definition */
+  gap: 4px;
 }
 
 .footer-title {
@@ -397,7 +399,7 @@ button:hover {
   text-overflow: ellipsis;
 }
 
-/* Lower Split: Forces structural layout items to hug each other vertically */
+/* Lower Split: Horizontal Branding Status Line */
 .mac-status-card {
   background: rgba(15, 23, 42, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -408,7 +410,6 @@ button:hover {
   align-items: center;
   box-sizing: border-box;
   font-size: 0.75rem;
-  margin-top: 0 !important; 
 }
 
 .status-col {
@@ -425,100 +426,4 @@ button:hover {
 .status-right { border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 12px; }
 
 /* ==========================================================================
-   7. ENGINE ANIMATIONS KEYFRAMES
-   ========================================================================== */
-@keyframes floatLogo {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
-}
-@keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.5; }
-  100% { transform: scale(1.1); opacity: 0.9; }
-}
-@keyframes spinRing {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* ==========================================================================
-   8. MOBILE VIEWPORT MEDIA RESPONSIVENESS
-   ========================================================================== */
-@media (max-width: 768px) {
-  body {
-    overflow-y: auto !important;
-    height: auto !important;
-    display: flex !important;
-  }
-  
-  .header-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  
-  .mac-credits {
-    align-self: flex-start;
-  }
-
-  .app-layout {
-    display: flex !important;
-    flex-direction: column !important;
-    height: auto !important;
-    padding: 12px;
-    gap: 16px;
-  }
-
-  #map {
-    height: 45vh !important;
-    width: 100% !important;
-    min-height: 320px;
-  }
-
-  #results-wrapper {
-    height: auto !important;
-    overflow: visible !important;
-  }
-
-  .care-footer {
-    height: auto !important;
-    margin: 12px !important;
-    padding: 14px !important;
-    gap: 14px !important;
-  }
-
-  .address-grid {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    gap: 10px !important;
-  }
-
-  .mac-address-card {
-    min-width: 0 !important;
-    max-width: none !important;
-    width: 100% !important;
-    height: auto !important;
-    padding: 12px !important;
-  }
-
-  .mac-status-card {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 8px !important;
-    padding: 12px !important;
-  }
-
-  .status-col {
-    max-width: 100% !important;
-    white-space: normal !important;
-  }
-
-  .status-right {
-    border-left: none !important;
-    padding-left: 0 !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
-    padding-top: 8px !important;
-    width: 100% !important;
-  }
-}
+   7. ENGINE ANIM
