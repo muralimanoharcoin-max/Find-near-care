@@ -8,8 +8,8 @@ body {
   color: #f8fafc;
   height: 100vh;           /* Enforces exact device screen height limit */
   display: flex;
-  flex-direction: column;  
-  overflow: hidden;        /* Prevents the body itself from spilling/scrolling */
+  flex-direction: column;  /* Stacks header, workspace layout, and footer vertically */
+  overflow: hidden;        /* Prevents the body itself from spilling or scrolling */
 }
 
 .glass {
@@ -20,14 +20,14 @@ body {
 }
 
 /* ==========================================================================
-   2. HEADER AREA
+   2. HEADER & SEARCH AREA (Blue Block Elements)
    ========================================================================== */
 .header {
   padding: 12px 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  flex-shrink: 0;
+  flex-shrink: 0;          /* Prevents the header from shrinking or breaking layout */
   z-index: 10;
 }
 
@@ -108,21 +108,22 @@ button:hover {
 }
 
 /* ==========================================================================
-   3. WORKSPACE CONTAINER (Desktop Mode Side-By-Side)
+   3. DESKTOP SIDE-BY-SIDE SIDEBAR WORKSPACE (Yellow/Red Layout Blocks)
    ========================================================================== */
 .app-layout {
   display: flex;
-  flex: 1;                 /* Dynamically stretches to use remaining space */
+  flex-direction: row;     /* Default side-by-side split row layout for desktop screens */
+  flex: 1;                 /* Dynamically stretches to consume 100% of available screen depth */
   gap: 16px;
   padding: 4px 16px;
   box-sizing: border-box;
-  min-height: 0;           /* Prevents child elements from bursting screen limits */
+  min-height: 0;           /* CRITICAL: Instructs Leaflet Map how to safely size container bounds */
 }
 
 #results-wrapper {
-  flex: 1.2;
+  flex: 1.2;               /* Yellow Box Layout block */
   height: 100%;
-  overflow-y: auto;        /* Restricts result text scroll strictly here */
+  overflow-y: auto;        /* Allows the results column to scroll cleanly if too long */
   box-sizing: border-box;
   padding-right: 4px;
 }
@@ -132,8 +133,8 @@ button:hover {
 }
 
 #map {
-  flex: 1.5;
-  height: 100% !important;
+  flex: 1.5;               /* Red Box Layout block */
+  height: 100% !important; /* Forces layout tracking inside flexible parent limits */
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
@@ -149,7 +150,7 @@ button:hover {
 }
 
 /* ==========================================================================
-   4. PLATFORM COMPONENT STYLES & ANIMATIONS
+   4. COMPONENT INTERFACES & PLATFORM ANIMATIONS
    ========================================================================== */
 .welcome-placeholder {
   padding: 20px;
@@ -232,7 +233,7 @@ button:hover {
 }
 
 /* ==========================================================================
-   5. RESULTS CARDS
+   5. HOSPITAL RESULT CARDS
    ========================================================================== */
 .card {
   background: rgba(255, 255, 255, 0.04);
@@ -296,10 +297,10 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. ADAPTIVE FOOTER
+   6. SOLIDIFIED COMPRESSION FOOTER ENGINE (Green & Purple Blueprint Blocks)
    ========================================================================== */
 .care-footer {
-  height: auto;
+  height: auto;             /* Lets the footer automatically wrap the container items safely */
   margin: 4px 16px 12px 16px;
   border-radius: 16px;
   padding: 10px 14px;
@@ -307,8 +308,8 @@ button:hover {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 8px;
-  flex-shrink: 0;
+  gap: 8px;                 /* Eradicates the excessive blue empty space voids completely */
+  flex-shrink: 0;           /* Guards footer from getting squeezed off-screen */
 }
 
 .footer-row-top {
@@ -325,10 +326,11 @@ button:hover {
   letter-spacing: 0.5px;
 }
 
+/* Horizontal Scrolling Ribbon Engine for addresses (Green Box wrapper) */
 .address-grid {
   display: flex;
   gap: 10px;
-  overflow-x: auto;
+  overflow-x: auto;        /* Swipes smoothly sideways across screens */
   align-items: center;
   padding-bottom: 2px;
 }
@@ -341,6 +343,7 @@ button:hover {
   border-radius: 4px;
 }
 
+/* Purple Mini Card Component Blocks */
 .mac-address-card {
   background: rgba(30, 41, 59, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -409,7 +412,7 @@ button:hover {
 .status-right { border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 12px; }
 
 /* ==========================================================================
-   7. CORE ENGINE ANIMATIONS
+   7. CORE DESIGN ANIMATION INTERPOLATION
    ========================================================================== */
 @keyframes floatLogo {
   0% { transform: translateY(0px); }
@@ -426,55 +429,51 @@ button:hover {
 }
 
 /* ==========================================================================
-   8. SMART DEVICE MOBILE CONFIGURATION (Prevents Footer Spill Out Completely)
+   8. SMART DEVICE MOBILE ENGINE (Enforces Side-by-Side Blueprint Responsively)
    ========================================================================== */
 @media (max-width: 900px) {
   body {
-    overflow: hidden !important; /* Locks screen view cleanly inside mobile browser window */
     height: 100vh !important;
+    overflow: hidden !important;   /* Completely locks window bounding parameters */
   }
 
   .app-layout {
-    flex-direction: column !important; /* Stack map and info card row over each other */
+    display: flex !important;
+    flex-direction: row !important; /* Preserves side-by-side design directly on smartphone screens */
     height: auto;
-    flex: 1;
-    min-height: 0;
-    gap: 10px;
-    padding: 6px 12px;
-  }
-
-  /* Compact, balanced height layout style for map on smartphones */
-  #map {
-    order: 1;                     /* Places the map cleanly at the top of the workspace */
-    height: 220px !important;     /* Keeps the map short, sharp, and out of the footer's way */
-    min-height: 220px !important;
-    width: 100% !important;
-    flex: none !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+    gap: 8px !important;
+    padding: 4px 8px !important;
   }
 
   #results-wrapper {
-    order: 2;                     /* Information section follows smoothly underneath */
     flex: 1 !important;
     height: 100% !important;
-    overflow-y: auto !important;  /* Only this section scrolls if multiple content cards appear */
+  }
+
+  #map {
+    flex: 1 !important;
+    height: 100% !important;
+    display: block !important;
   }
 
   .care-footer {
-    margin: 4px 12px 12px 12px !important;
-    padding: 10px !important;
+    margin: 4px 8px 8px 8px !important;
+    padding: 8px !important;
   }
 
-  /* Converts horizontal bar cards to a compact scroll list on phones */
+  /* Ensures purple blocks scroll sideways in a neat row strip under the columns */
   .address-grid {
-    flex-direction: row !important;
-    overflow-x: auto !important;
-    align-items: center !important;
+    display: flex !important;
+    flex-direction: row !important; 
+    overflow-x: auto !important;   
     gap: 8px !important;
   }
 
   .mac-address-card {
-    min-width: 200px !important;
-    max-width: 200px !important;
+    min-width: 170px !important;  /* Fits perfectly on slim mobile screen real-estate */
+    max-width: 170px !important;
     height: 44px !important;
   }
 
