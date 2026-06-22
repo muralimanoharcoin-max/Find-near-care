@@ -1,5 +1,11 @@
 [
   {
+    "name": "Care Banjara IP",
+    "lat": 17.4125702,
+    "lon": 78.4502685,
+    "googleMaps": "https://www.google.com/maps/place/CARE+Hospitals,+Banjara+Hills+Hyderabad+%7C+Best+Hospital/@17.4125702,78.4502685,15z/data=!4m2!3m1!1s0x0:0x55376a3d51b6637?sa=X&hl=en&ved=2ahUKEwiBj_KXgY37AhU7TGwGHYuxB3AQ_BJ6BAh8EB8"
+  },
+  {
     "name": "Care Banjara COPC",
     "lat": 17.4142629,
     "lon": 78.4464917,
@@ -58,6 +64,12 @@
     "lat": 21.2130464,
     "lon": 81.6536938,
     "gmap": "https://www.google.com/maps/place/Ramkrishna+CARE+Hospitals,+Raipur+%7C+Best+Hospital/@21.2130464,81.6536938,15z/data=!4m2!3m1!1s0x0:0x5979620a26ee43b0?sa=X&hl=en&ved=2ahUKEwi33JuCgo37AhVaSGwGHW1PCE8Q_BJ6BAhbEB8"
+  },
+  {
+    "name": "Care Avurangabad",
+    "lat": 19.8593755,
+    "lon": 75.3362985,
+    "googleMaps": "https://www.google.com/maps/place/United+CIIGMA+Hospital/@19.8593755,75.3362985,15z/data=!4m5!3m4!1s0x0:0xb220728829833101!8m2!3d19.8593755!4d75.3362985"
   },
   {
     "name": "Care Nagpur",
