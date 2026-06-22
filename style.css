@@ -71,7 +71,7 @@ body {
 .search-box {
   display: flex;
   gap: 10px;
-  width: 100%;
+  width: 40%;
 }
 
 input {
@@ -112,7 +112,7 @@ button:hover {
    ========================================================================== */
 .app-layout {
   display: flex;
-  flex: 75;             /* Takes up exactly 75% of the vertical space below header */
+  flex: 65;             /* Takes up exactly 65% of the vertical space below header */
   gap: 16px;
   padding: 12px 16px 4px 16px;
   box-sizing: border-box;
@@ -133,7 +133,7 @@ button:hover {
 
 #map {
   flex: 1;
-  height: 100% !important; 
+  height: 65% !important; 
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
@@ -296,10 +296,10 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. INTERACTIVE MAC DIRECTORY FOOTER (Exactly 25% of the screen height)
+   6. INTERACTIVE MAC DIRECTORY FOOTER (Exactly 35% of the screen height)
    ========================================================================== */
 .care-footer {
-  flex: 25;            /* Takes up exactly 25% of the vertical space below header */
+  flex: 35;            /* Takes up exactly 35% of the vertical space below header */
   margin: 6px 16px 16px 16px;
   border-radius: 16px;
   padding: 12px 14px;
