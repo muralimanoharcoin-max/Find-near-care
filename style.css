@@ -6,7 +6,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Prevents whole-page scrolling on desktop */
+  overflow: hidden; /* Fixes desktop background scroll bleed */
 }
 
 .glass {
@@ -21,7 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  flex-shrink: 0; /* Prevents the header from getting crushed */
+  flex-shrink: 0;
 }
 
 .header-top {
@@ -102,35 +102,35 @@ button:hover {
   background: #2563eb;
 }
 
-/* Side-by-Side Flexbox Layout */
+/* Master Grid Wrapper */
 .app-layout {
   display: flex;
   flex: 1;
   gap: 16px;
   padding: 16px;
   box-sizing: border-box;
-  min-height: 0; /* Critical logic to allow child scrolling panels to function */
+  min-height: 0; /* Ensures inner column content scrolls without busting out of the screen layout */
 }
 
-/* RESULTS PANEL ON LEFT: Exactly equal height to the map with independent scrollbar */
+/* LEFT COLUMN: Results Panel is slightly wider (flex: 1.3) and maps perfectly to container height */
 #results {
-  flex: 1;
+  flex: 1.3;
   height: 100%;
   overflow-y: auto;
-  padding-right: 4px;
+  padding-right: 6px;
   box-sizing: border-box;
 }
 
-/* MAP WRAPPER ON RIGHT */
+/* RIGHT COLUMN: Map container matches left height exactly (flex: 1) */
 #map {
-  flex: 1.4;
+  flex: 1;
   height: 100%; 
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 
-/* Clean Custom Scrollbar for Results list */
+/* Scrollbar Customization for Left Panel List */
 #results::-webkit-scrollbar {
   width: 6px;
 }
@@ -204,10 +204,10 @@ button:hover {
   background: #25d366;
 }
 
-/* RESPONSIVE LAYOUT FOR MOBILE DEVISE: Stacks vertically cleanly without any overlapping rules */
+/* SMARTPHONE & TABLET LAYOUT RESPONSIVENESS: Eliminates all overlaps */
 @media (max-width: 768px) {
   body {
-    overflow: auto; /* Allows regular page scrolling on phones */
+    overflow-y: auto; /* Re-enables full mobile viewport scrolling */
     height: auto;
   }
   .header-top {
@@ -219,19 +219,23 @@ button:hover {
     align-self: flex-start;
   }
   .app-layout {
-    flex-direction: column-reverse; /* Places results under the map on phones cleanly */
+    flex-direction: column; /* Sets layout in a linear vertical stack for mobile view tracking */
     height: auto;
     overflow: visible;
+    padding: 12px;
+    gap: 12px;
   }
   #map {
-    height: 40vh; /* Set clear, independent height for mobile screens */
+    height: 42vh; /* Rigidly locked map viewing block prevents squash */
     width: 100%;
     flex: none;
+    order: 1; /* Places Map firmly on Top in mobile layout */
   }
   #results {
     height: auto;
     overflow: visible;
     width: 100%;
     padding-right: 0;
+    order: 2; /* Places Cards gracefully beneath map view */
   }
 }
