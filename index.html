@@ -1,1 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Find Near CARE</title>
+<link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
 
+<div class="glass header">
+  <div class="header-top">
+    <div class="logo-area">
+  <img src="https://logosandtypes.com/wp-content/uploads/2024/01/care-hospitals.svg" alt="CARE Logo" class="care-logo">
+  <h1>Find Near CARE</h1>
+</div>
+
+    
+    <div class="mac-credits">
+      <span class="credits-text">Designed & Developed by our agent Murali Manohar •2026•</span>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <input id="search" placeholder="Enter city or area (e.g., Banjara, Hitech, Nagpur)..." onkeypress="handleKeyPress(event)"/>
+    <button onclick="triggerSearch()">🔍 Search</button>
+  </div>
+</div>
+
+<div class="app-layout">
+  <div id="results-wrapper">
+    <div id="results"></div>
+  </div>
+  
+  <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
