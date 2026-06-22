@@ -10,14 +10,28 @@ body {
   display: flex;
   flex-direction: column;  /* Stacks header, workspace layout, and footer vertically */
   overflow: hidden;        /* Prevents the body itself from spilling or scrolling */
+  position: relative;      /* Establishes positioning context for the double border */
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* THE TWO-LINED CUSTOM ACCENT BOTTOM BORDER */
+body::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;             /* Total thickness of the accent strip */
+  z-index: 9999;           /* Ensures it always stays safely on top of all elements */
+  pointer-events: none;    /* Prevents the border from intercepting clicks or swipes */
+  
+  /* Creates a crisp, dual-band line splitting the primary Blue (#3b82f6) and accent Green (#22c55e) */
+  background: linear-gradient(
+    to bottom,
+    #3b82f6 0%,   #3b82f6 50%, 
+    #22c55e 50%,  #22c55e 100%
+  );
 }
+
 
 /* ==========================================================================
    2. HEADER & SEARCH AREA (Blue Block Elements)
