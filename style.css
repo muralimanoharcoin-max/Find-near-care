@@ -444,7 +444,7 @@ button:hover {
 }
 
 /* ==========================================================================
-   8. MOBILE VIEWPORT MEDIA RESPONSIVENESS (Fixes Collapse Bug)
+   8. MOBILE VIEWPORT MEDIA RESPONSIVENESS (Collapses Blank Footer Gaps)
    ========================================================================== */
 @media (max-width: 768px) {
   body {
@@ -483,20 +483,26 @@ button:hover {
     overflow: visible;
   }
 
-  /* Footer handles simple block stacking cleanly below the content */
+  /* --- FIX: Collapses the height and removes the empty spacing --- */
   .care-footer {
-    height: auto;
+    height: auto;           /* Destroys the rigid 25% screen container stretch */
     margin: 12px;
-    padding: 16px 12px;
-    gap: 14px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;              /* Standardizes tiny, neat structural padding gaps */
+    justify-content: flex-start; 
   }
 
   .footer-row-top {
-    height: auto;
+    height: auto;           /* Removes row height caps */
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
   .address-grid {
-    flex-direction: column;
+    flex-direction: column; /* Stacks cards or lists them neatly */
     align-items: stretch;
     gap: 10px;
   }
@@ -510,7 +516,7 @@ button:hover {
   }
 
   .mac-status-card {
-    height: auto;
+    height: auto;           /* Wraps tightly around the website description text */
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
@@ -519,7 +525,7 @@ button:hover {
 
   .status-col {
     max-width: 100%;
-    white-space: normal;
+    white-space: normal;    /* Allows text to wrap into multiple readable rows */
   }
 
   .status-right {
