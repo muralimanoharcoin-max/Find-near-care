@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Find Near CARE</title>
 <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css"/>
+<link rel="stylesheet" href="style.css?v=2"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
 <body>
@@ -31,23 +31,23 @@
 <div class="app-layout">
   <div id="results-wrapper">
     <div id="results">
-  <div class="welcome-placeholder">
-    <div class="magic-logo-container">
-      <div class="magic-glow"></div>
-      <div class="magic-ring"></div>
-      <div class="magic-animator">
-        <img src="https://logosandtypes.com/wp-content/uploads/2024/01/care-hospitals.svg" alt="CARE Logo" class="magic-care-logo">
+      <div class="welcome-placeholder">
+        <div class="magic-logo-container">
+          <div class="magic-glow"></div>
+          <div class="magic-ring"></div>
+          <div class="magic-animator">
+            <img src="https://logosandtypes.com/wp-content/uploads/2024/01/care-hospitals.svg" alt="CARE Logo" class="magic-care-logo">
+          </div>
+        </div>
+
+        <h3>Welcome to Find Near CARE</h3>
+        <p>Enter your current city, area, or neighborhood in the search bar above to instantly find the nearest CARE Hospital branches, driving distances, and travel times.</p>
+        <div class="tip-box">
+          <strong>💡 Try searching for:</strong> "Banjara Hills", "Hitech City", "Nagpur", or "Raipur".
+        </div>
       </div>
     </div>
-
-    <h3>Welcome to Find Near CARE</h3>
-    <p>Enter your current city, area, or neighborhood in the search bar above to instantly find the nearest CARE Hospital branches, driving distances, and travel times.</p>
-    <div class="tip-box">
-      <strong>💡 Try searching for:</strong> "Banjara Hills", "Hitech City", "Nagpur", or "Raipur".
-    </div>
   </div>
-</div>
-
   
   <div id="map"></div>
 </div>
@@ -61,46 +61,49 @@
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE Banjara Hills (IP)</h4>
         <p>📍 Road No. 1, Banjara Hills, Hyderabad</p>
-        
+        <p>📞 +91 40 6165 6565</p>
       </div>
       <div class="mac-address-card">
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE Banjara Hills (COPC)</h4>
         <p>📍 Road No. 10, Banjara Hills, Hyderabad</p>
-        
+        <p>📞 +91 40 6165 6500</p>
       </div>
       <div class="mac-address-card">
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE HITEC City</h4>
         <p>📍 Near Cyber Towers, Hitech City, Hyderabad</p>
+        <p>📞 +91 40 6166 6666</p>
       </div>
       <div class="mac-address-card">
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE Musheerabad</h4>
         <p>📍 Market Road, Musheerabad, Hyderabad</p>
-
+        <p>📞 +91 40 3041 7777</p>
       </div>
       <div class="mac-address-card">
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE Malakpet</h4>
         <p>📍 Near Malakpet Gunj, Hyderabad</p>
-
+        <p>📞 +91 40 3041 8888</p>
       </div>
       <div class="mac-address-card">
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE Nampally</h4>
         <p>📍 Exhibition Grounds Road, Hyderabad</p>
-
+        <p>📞 +91 40 3041 5555</p>
       </div>
       <div class="mac-address-card">
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE Nagpur</h4>
         <p>📍 Panchsheel Square, Wardha Road, Nagpur</p>
+        <p>📞 +91 712 398 2222</p>
       </div>
       <div class="mac-address-card">
         <div class="mac-dot-header"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
         <h4>CARE Raipur</h4>
         <p>📍 Pachpedi Naka, Dhamtari Road, Raipur</p>
+        <p>📞 +91 771 300 3300</p>
       </div>
     </div>
   </div>
@@ -111,15 +114,12 @@
       <span>An advanced single-viewport routing platform designed to calculate real-time driving geometry and proximity thresholds for regional medical systems.</span>
     </div>
     <div class="status-col status-right">
-      <strong>👑 Platform author:</strong> 
+      <strong>👑 Platform Author:</strong> 
       <span>Murali Manohar (Sufyan's Team)</span>
     </div>
   </div>
 
 </footer>
-
-
-
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
