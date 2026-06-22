@@ -379,43 +379,179 @@ button:hover {
 
 .mac-dot-header {
   position: absolute;
-  top: 10px;
-  right: 12px;
+/* ==========================================================================
+   6. BOTTOM DIRECTORY FOOTER (Split Horizontally into 2 Rows)
+   ========================================================================== */
+.care-footer {
+  height: 25vh;
+  margin: 8px 16px 16px 16px;
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-sizing: border-box;
   display: flex;
-  gap: 4px;
+  flex-direction: column;
+  justify-content: space-between; /* Evenly spaces Top Row and Bottom Row */
+  gap: 8px;
+  flex-shrink: 0;
 }
 
+/* Row 1: Address Container */
+.footer-row-top {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 65%; /* Uses majority share of the 25% zone */
+}
+
+.footer-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.address-grid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  align-items: center;
+  padding: 2px 2px 6px 2px;
+}
+
+/* Custom mini scrollbar for addresses row */
+.address-grid::-webkit-scrollbar {
+  height: 4px;
+}
+.address-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* Mac Card Layout Updates */
+.mac-address-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 250px;
+  max-width: 250px;
+  height: 52px; /* Slimmed down height to perfectly fit the row split */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mac-address-card:hover {
+  transform: translateY(-2px);
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+.mac-dot-header {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  display: flex;
+  gap: 3px;
+}
 .mac-dot-header .dot {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  display: inline-block;
 }
 .dot.r { background: #ef4444; }
 .dot.y { background: #eab308; }
 .dot.g { background: #22c55e; }
 
 .mac-address-card h4 {
-  margin: 0 0 6px 0;
-  font-size: 0.95rem;
+  margin: 0 0 4px 0;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #ffffff;
-  transition: color 0.2s ease;
 }
-
-/* Emphasize branch name text color shifts on card selection */
-.mac-address-card:hover h4 {
-  color: #3b82f6; 
-}
-
 .mac-address-card p {
-  margin: 2px 0;
-  font-size: 0.8rem;
+  margin: 1px 0;
+  font-size: 0.75rem;
   color: #94a3b8;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Row 2: Premium Mac Status Bar Card (No Color Dots) */
+.mac-status-card {
+  height: 30%; /* Balanced bottom share alignment */
+  background: rgba(15, 23, 42, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 6px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 0.78rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.status-col {
+  display: flex;
+  gap: 6px;
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
+}
+
+.status-col strong {
+  color: #3b82f6; /* Subtle high-contrast blue labels */
+}
+
+.status-col span {
+  color: #94a3b8;
+}
+
+.status-right {
+  max-width: 28%;
+  justify-content: flex-end;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 12px;
+}
+
+/* Ensure mobile stacking rules account for the dual rows */
+@media (max-width: 768px) {
+  .footer-row-top {
+    height: auto;
+  }
+  .mac-status-card {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px;
+  }
+  .status-col {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .status-right {
+    max-width: 100%;
+    border-left: none;
+    padding-left: 0;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 6px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
 
 
 /* ==========================================================================
