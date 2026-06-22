@@ -1,15 +1,19 @@
 /* ==========================================================================
-   1. BASE SYSTEM & VIEWPORT LOCKS
+   1. BASE SYSTEM & RESPONSIVE ENGINE
    ========================================================================== */
 body {
   margin: 0;
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: linear-gradient(135deg, #0f172a, #1e293b);
   color: #f8fafc;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Keeps desktop view perfectly fixed to screen bounds */
+}
+
+/* Base flex-fill helper to manage structural space distribution naturally */
+main, .app-layout {
+  flex-grow: 1;
 }
 
 .glass {
@@ -20,13 +24,13 @@ body {
 }
 
 /* ==========================================================================
-   2. HEADER & SEARCH INPUT AREA
+   2. HEADER AREA (Comfortable Padding & Elastic Content Scaling)
    ========================================================================== */
 .header {
-  padding: 14px 20px;
+  padding: 1rem 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0.75rem;
   flex-shrink: 0;
   z-index: 10;
 }
@@ -41,7 +45,7 @@ body {
 .logo-area {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
 }
 
 .care-logo {
@@ -52,7 +56,7 @@ body {
 
 .logo-area h1 {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   font-weight: 600;
   letter-spacing: -0.5px;
 }
@@ -70,12 +74,12 @@ body {
 
 .search-box {
   display: flex;
-  gap: 10px;
+  gap: 0.5rem;
   width: 100%;
 }
 
 input {
-  padding: 10px 16px;
+  padding: 0.65rem 1rem;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(0, 0, 0, 0.25);
@@ -94,7 +98,7 @@ input:focus {
 button {
   background: #3b82f6;
   color: white;
-  padding: 10px 24px;
+  padding: 0.65rem 1.5rem;
   border: none;
   border-radius: 12px;
   cursor: pointer;
@@ -108,14 +112,15 @@ button:hover {
 }
 
 /* ==========================================================================
-   3. DESKTOP WORKSPACE (Exactly 75% of remaining height area)
+   3. WORKSPACE VIEWPORT (Fluid Layout & Proportional Scaling)
    ========================================================================== */
 .app-layout {
   display: flex;
-  height: 62vh !important; /* Locks workspace container ratio tightly */
-  gap: 16px;
-  padding: 12px 16px 4px 16px;
+  flex: 1;                  /* Fills workspace completely based on device dimensions */
+  gap: 1rem;
+  padding: 0.5rem 1rem;
   box-sizing: border-box;
+  min-height: 0;            /* Safeguards flex layout rendering metrics */
 }
 
 #results-wrapper {
@@ -132,7 +137,7 @@ button:hover {
 
 #map {
   flex: 1;
-  height: 100% !important; /* Fully spreads map context into layout bounds */
+  height: 100%;            /* Intelligently hugs available screen canvas boundaries */
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
@@ -148,10 +153,10 @@ button:hover {
 }
 
 /* ==========================================================================
-   4. WELCOME PLACEHOLDER ANIMATIONS
+   4. WELCOME CORE PLATFORM ANIMATIONS
    ========================================================================== */
 .welcome-placeholder {
-  padding: 24px;
+  padding: 1.5rem;
   background: rgba(255, 255, 255, 0.03);
   border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: 16px;
@@ -162,7 +167,7 @@ button:hover {
   position: relative;
   width: 90px;
   height: 90px;
-  margin: 0 auto 16px auto;
+  margin: 0 auto 1rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -206,8 +211,8 @@ button:hover {
 }
 
 .welcome-placeholder h3 {
-  margin: 0 0 8px 0;
-  font-size: 1.25rem;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
   color: #3b82f6;
 }
 
@@ -220,7 +225,7 @@ button:hover {
 }
 
 .tip-box {
-  margin-top: 12px;
+  margin-top: 0.75rem;
   background: rgba(59, 130, 246, 0.1);
   border-left: 4px solid #3b82f6;
   padding: 10px;
@@ -231,7 +236,7 @@ button:hover {
 }
 
 /* ==========================================================================
-   5. RESULTS CARDS
+   5. INTERACTIVE MAP CARDS
    ========================================================================== */
 .card {
   background: rgba(255, 255, 255, 0.04);
@@ -295,17 +300,18 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. INTERACTIVE MAC DIRECTORY FOOTER (Exactly 25% of remaining height area)
+   6. NATURAL COMPRESSION FOOTER (Completely Adaptive & Content Hugging)
    ========================================================================== */
 .care-footer {
-  height: 23vh !important; /* Perfectly balances layout space against the map */
-  margin: 6px 16px 16px 16px;
+  height: auto;             /* Removes fixed ratios; hugs content elements cleanly */
+  margin: 0.5rem 1rem 1rem 1rem;
   border-radius: 16px;
   padding: 12px 14px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 10px;                /* Completely removes excessive blue space voids */
   flex-shrink: 0;
 }
 
@@ -316,7 +322,7 @@ button:hover {
 }
 
 .footer-title {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: #3b82f6;
   text-transform: uppercase;
@@ -422,7 +428,7 @@ button:hover {
 .status-right { border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 12px; }
 
 /* ==========================================================================
-   7. ENGINE ANIMATIONS KEYFRAMES
+   7. INTERACTIVE WEB ANIMATIONS
    ========================================================================== */
 @keyframes floatLogo {
   0% { transform: translateY(0px); }
@@ -439,13 +445,12 @@ button:hover {
 }
 
 /* ==========================================================================
-   8. MOBILE VIEWPORT MEDIA RESPONSIVENESS
+   8. MOBILE VIEWPORT MEDIA RESPONSIVENESS (Natural Finger-Scrolling Layout)
    ========================================================================== */
 @media (max-width: 768px) {
   body {
-    overflow-y: auto !important;
+    overflow-y: auto !important; /* Converts desktop lock into a smooth mobile scrolling experience */
     height: auto !important;
-    display: flex !important;
   }
   
   .header-top {
@@ -460,16 +465,17 @@ button:hover {
 
   .app-layout {
     display: flex !important;
-    flex-direction: column !important;
+    flex-direction: column !important; /* Vertically stacks containers naturally */
     height: auto !important;
     padding: 12px;
     gap: 16px;
   }
 
   #map {
-    height: 350px !important; /* Keeps map perfectly proportioned on phones */
+    height: 380px !important;       /* Locks map height to a clean layout dimension */
     width: 100% !important;
-    min-height: 350px !important;
+    min-height: 380px !important;
+    flex-shrink: 0;
   }
 
   #results-wrapper {
