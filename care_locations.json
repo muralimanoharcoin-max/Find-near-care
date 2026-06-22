@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Care Banjara COPC",
+    "lat": 17.4142629,
+    "lon": 78.4464917,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals+Outpatient+Centre,+Banjara+Hills/@17.4142629,78.4464917,15z/data=!4m2!3m1!1s0x0:0xb363d9d7937ee566?sa=X&hl=en&ved=2ahUKEwi50ozRgY37AhW5TWwGHQiLDzsQ_BJ6BAhdEB8"
+  },
+  {
+    "name": "Care Hitech",
+    "lat": 17.4305523,
+    "lon": 78.3722322,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals,+HITEC+City/@17.4305523,78.3722322,15z/data=!4m2!3m1!1s0x0:0x5b01a891704ac369?sa=X&hl=en&ved=2ahUKEwjTksKsgY37AhVLyDgGHRZkD6IQ_BJ6BAhmEB8"
+  },
+  {
+    "name": "Care Musheerabad",
+    "lat": 17.4154651,
+    "lon": 78.4978348,
+    "gmap": "https://www.google.com/maps/place/Guru+Nanak-+CARE+Hospitals+-+Musheerabad,+HYD/@17.4154651,78.4978348,15z/data=!4m2!3m1!1s0x0:0xcb0cc9cf6025d772?sa=X&hl=en&ved=2ahUKEwjyvcj5gY37AhWfSGwGHRCuDeAQ_BJ6BAhtEB8"
+  },
+  {
+    "name": "Care Malakpet",
+    "lat": 17.3768915,
+    "lon": 78.4905862,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals,+Malakpet/@17.3768915,78.4905862,15z/data=!4m2!3m1!1s0x0:0xfe6751b2d0c87cbb?sa=X&hl=en&ved=2ahUKEwi3ocO3gY37AhX9TGwGHRjrAP4Q_BJ6BAhkEB8"
+  },
+  {
+    "name": "Care Nampally",
+    "lat": 17.3857416,
+    "lon": 78.4741384,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals+-+Nampally,+Hyderabad/@17.3857416,78.4741384,15z/data=!4m2!3m1!1s0x0:0xe5e97278d79d0e21?sa=X&hl=en&ved=2ahUKEwitvI_JgY37AhUDTmwGHVdSCT4Q_BJ6BAh6EB8"
+  },
+  {
+    "name": "Care Ramnagar",
+    "lat": 17.7203227,
+    "lon": 83.3128185,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals+-+Ram+Nagar,+Visakhapatnam+-+Best+Hospital/@17.7203227,83.3128185,15z/data=!4m2!3m1!1s0x0:0x62489f0d151875b1?sa=X&hl=en&ved=2ahUKEwjJhaXvgY37AhXCS2wGHbHUAYAQ_BJ6BAh6EB8"
+  },
+  {
+    "name": "Care Aarilova",
+    "lat": 17.7614443,
+    "lon": 83.3153646,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals,+Health+City,+Arilova+%7C+Best+Hospital+in+Health+City,+Vizag/@17.7614443,83.3153646,17z/data=!4m14!1m7!3m6!1s0x3a395dca6bbd71cf:0xd6fcefa590cd2fe!2sCARE+Hospitals,+Health+City,+Arilova+%7C+Best+Hospital+in+Health+City,+Vizag!8m2!3d17.7614443!4d83.3153646!16s%2Fg%2F11tjn4wgz5!3m5!1s0x3a395dca6bbd71cf:0xd6fcefa590cd2fe!8m2!3d17.7614443!4d83.3153646!16s%2Fg%2F11tjn4wgz5?entry=ttu"
+  },
+  {
+    "name": "Care Bhubaneswar",
+    "lat": 20.3216144,
+    "lon": 85.8130766,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals,+Bhubaneswar/@20.3216144,85.8130766,15z/data=!4m2!3m1!1s0x0:0xd3b1c0dc055f67c4?sa=X&hl=en&ved=2ahUKEwj5ipajgY37AhXzwKACHejXDxIQ_BJ6BAhfEB8"
+  },
+  {
+    "name": "Care Indore",
+    "lat": 22.7322578,
+    "lon": 75.8893409,
+    "gmap": "https://www.google.com/maps/place/CARE+CHL+Hospitals,+Indore/@22.7322578,75.8893409,15z/data=!4m5!3m4!1s0x0:0x62bc8f8b155a8bd8!8m2!3d22.7322578!4d75.8893409?hl=en"
+  },
+  {
+    "name": "Care Raipur",
+    "lat": 21.2130464,
+    "lon": 81.6536938,
+    "gmap": "https://www.google.com/maps/place/Ramkrishna+CARE+Hospitals,+Raipur+%7C+Best+Hospital/@21.2130464,81.6536938,15z/data=!4m2!3m1!1s0x0:0x5979620a26ee43b0?sa=X&hl=en&ved=2ahUKEwi33JuCgo37AhVaSGwGHW1PCE8Q_BJ6BAhbEB8"
+  },
+  {
+    "name": "Care Nagpur",
+    "lat": 21.138545,
+    "lon": 79.0791634,
+    "gmap": "https://www.google.com/maps/place/CARE+Hospitals,+Nagpur/@21.138545,79.0791634,15z/data=!4m2!3m1!1s0x0:0xeac5a74bb47df23a?sa=X&hl=en&ved=2ahUKEwiV3bzAgY37AhVx-zgGHSUsBxAQ_BJ6BAhmEB8"
+  }
+]
