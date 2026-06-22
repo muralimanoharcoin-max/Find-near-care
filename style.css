@@ -246,3 +246,103 @@ button:hover {
     order: 2; /* List cascades vertically beneath map smoothly */
   }
 }
+/* --- Magical Welcome Placeholder & Logo Animations --- */
+
+.welcome-placeholder {
+  padding: 32px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  text-align: center; /* Centered content for better visual balance */
+  margin-top: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Container to align animations perfectly */
+.magic-logo-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 1. Floating Logo Animation */
+.magic-care-logo {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  z-index: 3;
+  animation: floatLogo 4s ease-in-out infinite;
+}
+
+/* 2. Background Neon Glow Pulse */
+.magic-glow {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(147, 100, 181, 0.2) 60%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(8px);
+  z-index: 1;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+/* 3. Magical Spinning Particle Ring */
+.magic-ring {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px dashed rgba(59, 130, 246, 0.6);
+  border-top-color: rgba(147, 100, 181, 0.8);
+  border-bottom-color: rgba(34, 197, 94, 0.5);
+  z-index: 2;
+  animation: spinRing 6s linear infinite;
+}
+
+.welcome-placeholder h3 {
+  margin-top: 10px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.welcome-placeholder p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left; /* Kept text left-aligned for clear reading */
+}
+
+.tip-box {
+  margin-top: 16px;
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 4px solid #3b82f6;
+  padding: 12px;
+  border-radius: 4px 12px 12px 4px;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  text-align: left;
+}
+
+/* --- Keyframe Animations --- */
+
+@keyframes floatLogo {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  100% { transform: scale(1.2); opacity: 1; filter: blur(12px); }
+}
+
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
