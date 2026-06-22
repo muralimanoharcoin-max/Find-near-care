@@ -303,3 +303,221 @@ button:hover {
   margin: 6px 16px 16px 16px;
   border-radius: 16px;
   padding: 12px 14px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 10px;                /* Keeps address cards and about line perfectly near each other */
+  flex-shrink: 0;           /* Protects footer from compressing */
+}
+
+.footer-row-top {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #3b82f6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.address-grid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  align-items: center;
+  padding-bottom: 4px;
+}
+
+.address-grid::-webkit-scrollbar {
+  height: 4px;
+}
+.address-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.mac-address-card {
+  background: rgba(30, 41, 59, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 240px;
+  max-width: 240px;
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mac-address-card:hover {
+  transform: translateY(-2px);
+  background: rgba(15, 23, 42, 0.75);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+.mac-dot-header {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  display: flex;
+  gap: 3px;
+}
+
+.mac-dot-header .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.dot.r { background: #ef4444; }
+.dot.y { background: #eab308; }
+.dot.g { background: #22c55e; }
+
+.mac-address-card h4 {
+  margin: 0 0 2px 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.mac-address-card p {
+  margin: 1px 0;
+  font-size: 0.72rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mac-status-card {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 6px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 0.75rem;
+}
+
+.status-col {
+  display: flex;
+  gap: 6px;
+  color: #cbd5e1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-col strong { color: #3b82f6; }
+.status-col span { color: #94a3b8; }
+.status-right { border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 12px; }
+
+/* ==========================================================================
+   7. KEYFRAME ENGINE ANIMATIONS
+   ========================================================================== */
+@keyframes floatLogo {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes pulseGlow {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  100% { transform: scale(1.1); opacity: 0.9; }
+}
+@keyframes spinRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   8. MOBILE RESPONSIVENESS (Seamless Smartphone Finger-Scrolling Layout)
+   ========================================================================== */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto !important;  /* Release the screen boundary lock so mobile can scroll naturally */
+    height: auto !important;
+  }
+  
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .mac-credits {
+    align-self: flex-start;
+  }
+
+  .app-layout {
+    display: flex !important;
+    flex-direction: column !important; /* Stack columns on top of each other */
+    height: auto !important;
+    padding: 12px;
+    gap: 16px;
+  }
+
+  #map {
+    height: 380px !important;       /* Gives map a comfortable static box on mobile viewports */
+    width: 100% !important;
+    min-height: 380px !important;
+    flex-shrink: 0;
+  }
+
+  #results-wrapper {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .care-footer {
+    height: auto !important;
+    margin: 12px !important;
+    padding: 14px !important;
+    gap: 14px !important;
+  }
+
+  .address-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .mac-address-card {
+    min-width: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 12px !important;
+  }
+
+  .mac-status-card {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    padding: 12px !important;
+  }
+
+  .status-col {
+    max-width: 100% !important;
+    white-space: normal !important;
+  }
+
+  .status-right {
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding-top: 8px !important;
+    width: 100% !important;
+  }
+}
