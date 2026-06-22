@@ -483,16 +483,17 @@ button:hover {
     overflow: visible;
   }
 
-  /* --- FIX: Collapses the height and removes the empty spacing --- */
+    /* --- FIX: Collapses the height, forces elements together, and removes empty space --- */
   .care-footer {
-    height: auto;           /* Destroys the rigid 25% screen container stretch */
+    height: auto !important;          /* !important forces it to override the desktop 25vh */
     margin: 12px;
     padding: 12px;
     display: flex;
     flex-direction: column;
-    gap: 12px;              /* Standardizes tiny, neat structural padding gaps */
-    justify-content: flex-start; 
+    gap: 12px;                        /* This gives a tight, perfect gap between row 1 and row 2 */
+    justify-content: flex-start !important; /* Force items to sit tight at the top instead of spreading */
   }
+
 
   .footer-row-top {
     height: auto;           /* Removes row height caps */
