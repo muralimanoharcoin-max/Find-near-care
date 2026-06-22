@@ -468,11 +468,13 @@ button:hover {
     gap: 16px;
   }
 
-  #map {
-    height: 45vh !important;
+    #map {
+    height: 350px !important; /* Locks it to a perfect, compact height on phone screens */
     width: 100% !important;
-    min-height: 320px;
+    min-height: 350px !important;
+    margin-bottom: 16px;
   }
+
 
   #results-wrapper {
     height: auto !important;
