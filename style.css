@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. CORE BASE & LAYOUT (Locks Desktop View to 100% Window Height)
+   1. BASE SYSTEM & VIEWPORT LOCKS
    ========================================================================== */
 body {
   margin: 0;
@@ -9,7 +9,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Prevents global page scroll bleed on desktop */
+  overflow: hidden; /* Keeps desktop viewport fixed without page scrollbars */
 }
 
 .glass {
@@ -20,14 +20,15 @@ body {
 }
 
 /* ==========================================================================
-   2. HEADER & SEARCH BAR ELEMENTS
+   2. HEADER & SEARCH INPUT AREA
    ========================================================================== */
 .header {
   padding: 14px 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   flex-shrink: 0;
+  z-index: 10;
 }
 
 .header-top {
@@ -44,14 +45,14 @@ body {
 }
 
 .care-logo {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   object-fit: contain;
 }
 
 .logo-area h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: -0.5px;
 }
@@ -62,10 +63,9 @@ body {
 }
 
 .credits-text {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.1px;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .search-box {
@@ -101,7 +101,6 @@ button {
   font-weight: 600;
   font-size: 0.95rem;
   transition: background 0.2s;
-  white-space: nowrap;
 }
 
 button:hover {
@@ -109,15 +108,16 @@ button:hover {
 }
 
 /* ==========================================================================
-   3. MIDDLE WORKSPACE (Upper 75% Layout Split)
+   3. DESKTOP WORKSPACE (Top 75% Grid Layout Split)
    ========================================================================== */
 .app-layout {
   display: flex;
-  height: calc(75vh - 120px); /* Strictly leaves bottom 25% window room open */
+  height: 53vh; /* Strict desktop allocation */
   gap: 16px;
-  padding: 16px 16px 8px 16px;
+  padding: 16px 16px 4px 16px;
   box-sizing: border-box;
   min-height: 0;
+  flex-shrink: 0;
 }
 
 #results-wrapper {
@@ -125,7 +125,7 @@ button:hover {
   height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
-  padding-right: 6px;
+  padding-right: 4px;
 }
 
 #results {
@@ -138,9 +138,9 @@ button:hover {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  z-index: 1;
 }
 
-/* Webkit Custom Scrollbars for Results Wrapper List */
 #results-wrapper::-webkit-scrollbar {
   width: 6px;
 }
@@ -150,117 +150,107 @@ button:hover {
 }
 
 /* ==========================================================================
-/* ==========================================================================
-   4. WELCOME STATE & MAGICAL MOMENTS ANIMATIONS (Fixed Ring & Scale Bug)
+   4. WELCOME PLACEHOLDER ANIMATIONS
    ========================================================================== */
 .welcome-placeholder {
-  padding: 32px 24px;
+  padding: 24px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px dashed rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   text-align: center;
-  margin-top: 4px;
 }
 
-/* Ensure container allows overflow space for the spinning ring and glowing aura */
 .magic-logo-container {
   position: relative;
-  width: 110px;
-  height: 110px;
-  margin: 10px auto 24px auto;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 16px auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Base floating handler */
 .magic-animator {
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 5;
-  animation: floatLogo 3s ease-in-out infinite !important;
+  animation: floatLogo 3.5s ease-in-out infinite;
 }
 
-/* Clean rendering bounds for the SVG image asset */
 .magic-care-logo {
-  width: 55px;
-  height: 55px;
+  width: 48px;
+  height: 48px;
   object-fit: contain;
-  display: block;
 }
 
-/* High-intensity backend glow layer */
 .magic-glow {
   position: absolute;
-  width: 70px;
-  height: 70px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.6) 0%, rgba(147, 100, 181, 0.25) 60%, transparent 100%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(147, 100, 181, 0.2) 70%, transparent 100%);
   border-radius: 50%;
-  filter: blur(10px);
+  filter: blur(8px);
   z-index: 1;
-  animation: pulseGlow 2s ease-in-out infinite alternate !important;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
 }
 
-/* High-priority hardware-accelerated spin ring layer */
 .magic-ring {
   position: absolute;
-  width: 95px;
-  height: 95px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border: 3px dashed rgba(59, 130, 246, 0.5);
+  border: 2px dashed rgba(59, 130, 246, 0.4);
   border-top-color: #9364b5;
   border-bottom-color: #22c55e;
   z-index: 3;
-  animation: spinRing 4s linear infinite !important;
-  transform-origin: center center;
+  animation: spinRing 6s linear infinite;
 }
 
 .welcome-placeholder h3 {
-  margin: 0 0 12px 0;
-  font-size: 1.4rem;
-  font-weight: 600;
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
   color: #3b82f6;
 }
 
 .welcome-placeholder p {
   color: #94a3b8;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
   text-align: left;
+  margin: 0;
 }
 
 .tip-box {
-  margin-top: 16px;
+  margin-top: 12px;
   background: rgba(59, 130, 246, 0.1);
   border-left: 4px solid #3b82f6;
-  padding: 12px;
+  padding: 10px;
   border-radius: 4px 12px 12px 4px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: #cbd5e1;
   text-align: left;
 }
 
-
 /* ==========================================================================
-   5. HOSPITAL SEARCH RESULTS CARDS
+   5. RESULTS CARDS
    ========================================================================== */
 .card {
   background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 16px;
+  padding: 14px;
   margin-bottom: 12px;
-  border-radius: 14px;
+  border-radius: 12px;
 }
 
 .nearest-card {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.35);
 }
 
 .card-header {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
+  font-weight: 600;
   margin-bottom: 6px;
   display: flex;
   align-items: center;
@@ -269,28 +259,24 @@ button:hover {
 
 .badge {
   background: #22c55e;
-  font-size: 0.7rem;
-  padding: 4px 8px;
+  font-size: 0.65rem;
+  padding: 3px 8px;
   border-radius: 20px;
-  font-weight: bold;
 }
 
 .card-body {
   color: #94a3b8;
-  font-size: 0.95rem;
-  margin-bottom: 12px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 
 .card-actions {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
 }
 
 .action-btn {
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
   font-size: 0.8rem;
   padding: 8px 12px;
   background: #3b82f6;
@@ -301,8 +287,8 @@ button:hover {
 
 .action-btn.secondary {
   background: rgba(255, 255, 255, 0.1);
-  color: white;
   border: none;
+  color: white;
   cursor: pointer;
 }
 
@@ -311,105 +297,25 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. BOTTOM DIRECTORY FOOTER (Lower 25% Area with Hover Effects)
+   6. INTERACTIVE MAC DIRECTORY FOOTER (Bottom 25% Balanced Area)
    ========================================================================== */
 .care-footer {
-  height: 25vh;
-  margin: 8px 16px 16px 16px;
+  height: 25vh; /* Fixed percentage area allocation */
+  margin: 6px 16px 16px 16px;
   border-radius: 16px;
-  padding: 12px 16px;
+  padding: 12px 14px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: space-between;
   flex-shrink: 0;
 }
 
-.footer-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #3b82f6;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.address-grid {
-  display: flex;
-  gap: 14px;
-  overflow-x: auto; /* Lets you slide through all hospital cards effortlessly on desktop */
-  flex: 1;
-  padding: 6px 4px 10px 4px; /* Leave space for card scaling hover offsets */
-  align-items: center;
-}
-
-/* Custom mini scrollbar for the cards timeline */
-.address-grid::-webkit-scrollbar {
-  height: 5px;
-}
-.address-grid::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-}
-.address-grid::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Base Mac Card Styling */
-.mac-address-card {
-  background: rgba(30, 41, 59, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 14px;
-  min-width: 280px;
-  max-width: 280px;
-  height: 85px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  
-  /* Critical for smooth mouse interaction response */
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
-              background-color 0.25s ease, 
-              border-color 0.25s ease, 
-              box-shadow 0.25s ease;
-  will-change: transform, box-shadow;
-}
-
-/* --- MAGICAL MOUSE HOVER STATE RESPONSIVENESS --- */
-.mac-address-card:hover {
-  transform: translateY(-5px) scale(1.02); /* Card lifts up and scales cleanly */
-  background: rgba(15, 23, 42, 0.75); /* Darkens dynamically */
-  border-color: rgba(59, 130, 246, 0.5); /* Glowing blue outline focus */
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 12px rgba(59, 130, 246, 0.2); /* Neon dropshadow aura */
-}
-
-.mac-dot-header {
-  position: absolute;
-/* ==========================================================================
-   6. BOTTOM DIRECTORY FOOTER (Split Horizontally into 2 Rows)
-   ========================================================================== */
-.care-footer {
-  height: 25vh;
-  margin: 8px 16px 16px 16px;
-  border-radius: 16px;
-  padding: 10px 14px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Evenly spaces Top Row and Bottom Row */
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-/* Row 1: Address Container */
 .footer-row-top {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  height: 65%; /* Uses majority share of the 25% zone */
+  gap: 6px;
+  height: 65%;
 }
 
 .footer-title {
@@ -425,10 +331,9 @@ button:hover {
   gap: 12px;
   overflow-x: auto;
   align-items: center;
-  padding: 2px 2px 6px 2px;
+  padding-bottom: 4px;
 }
 
-/* Custom mini scrollbar for addresses row */
 .address-grid::-webkit-scrollbar {
   height: 4px;
 }
@@ -437,15 +342,14 @@ button:hover {
   border-radius: 4px;
 }
 
-/* Mac Card Layout Updates */
 .mac-address-card {
-  background: rgba(30, 41, 59, 0.4);
+  background: rgba(30, 41, 59, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   padding: 10px 12px;
-  min-width: 250px;
-  max-width: 250px;
-  height: 52px; /* Slimmed down height to perfectly fit the row split */
+  min-width: 240px;
+  max-width: 240px;
+  height: 52px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -457,7 +361,7 @@ button:hover {
 
 .mac-address-card:hover {
   transform: translateY(-2px);
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(15, 23, 42, 0.75);
   border-color: rgba(59, 130, 246, 0.4);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
 }
@@ -469,6 +373,7 @@ button:hover {
   display: flex;
   gap: 3px;
 }
+
 .mac-dot-header .dot {
   width: 5px;
   height: 5px;
@@ -479,149 +384,149 @@ button:hover {
 .dot.g { background: #22c55e; }
 
 .mac-address-card h4 {
-  margin: 0 0 4px 0;
+  margin: 0 0 2px 0;
   font-size: 0.85rem;
   font-weight: 600;
   color: #ffffff;
 }
+
 .mac-address-card p {
   margin: 1px 0;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: #94a3b8;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Row 2: Premium Mac Status Bar Card (No Color Dots) */
+/* Lower Split: Horizontal Branding Status Line */
 .mac-status-card {
-  height: 30%; /* Balanced bottom share alignment */
-  background: rgba(15, 23, 42, 0.35);
+  height: 28%;
+  background: rgba(15, 23, 42, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 10px;
-  padding: 6px 16px;
+  border-radius: 8px;
+  padding: 4px 14px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  font-size: 0.78rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  font-size: 0.75rem;
 }
 
 .status-col {
   display: flex;
   gap: 6px;
   color: #cbd5e1;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 70%;
+  white-space: nowrap;
 }
 
-.status-col strong {
-  color: #3b82f6; /* Subtle high-contrast blue labels */
-}
-
-.status-col span {
-  color: #94a3b8;
-}
-
-.status-right {
-  max-width: 28%;
-  justify-content: flex-end;
-  border-left: 1px solid rgba(255, 255, 255, 0.08);
-  padding-left: 12px;
-}
-
-/* Ensure mobile stacking rules account for the dual rows */
-@media (max-width: 768px) {
-  .footer-row-top {
-    height: auto;
-  }
-  .mac-status-card {
-    height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    padding: 10px;
-  }
-  .status-col {
-    max-width: 100%;
-    flex-wrap: wrap;
-  }
-  .status-right {
-    max-width: 100%;
-    border-left: none;
-    padding-left: 0;
-    margin-top: 4px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 6px;
-    width: 100%;
-    justify-content: flex-start;
-  }
-}
-
-
+.status-col strong { color: #3b82f6; }
+.status-col span { color: #94a3b8; }
+.status-right { border-left: 1px solid rgba(255, 255, 255, 0.08); padding-left: 12px; }
 
 /* ==========================================================================
-   7. KEYFRAMES FOR ANIMATIONS (Forced Engine Processing)
+   7. ENGINE ANIMATIONS KEYFRAMES
    ========================================================================== */
 @keyframes floatLogo {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-6px); }
   100% { transform: translateY(0px); }
 }
-
 @keyframes pulseGlow {
-  0% { transform: scale(0.85); opacity: 0.5; }
-  100% { transform: scale(1.15); opacity: 1; }
+  0% { transform: scale(0.9); opacity: 0.5; }
+  100% { transform: scale(1.1); opacity: 0.9; }
 }
-
 @keyframes spinRing {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-
 /* ==========================================================================
-   8. MOBILE RESPONSIVE ADAPTABILITY
+   8. MOBILE VIEWPORT MEDIA RESPONSIVENESS (Fixes Collapse Bug)
    ========================================================================== */
 @media (max-width: 768px) {
   body {
-    overflow-y: auto;
+    overflow-y: auto; /* Restores natural linear screen scrolling */
     height: auto;
   }
+  
   .header-top {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
+  
   .mac-credits {
     align-self: flex-start;
   }
+
+  /* Changes layout container into a standard block flow column */
   .app-layout {
+    display: flex;
     flex-direction: column;
     height: auto;
     padding: 12px;
-    gap: 12px;
+    gap: 16px;
   }
+
+  /* Forces explicit view heights so components can never collapse */
   #map {
-    height: 40vh;
-    flex: none;
-    order: 1;
+    height: 45vh;
+    width: 100%;
+    min-height: 320px;
   }
+
   #results-wrapper {
     height: auto;
     overflow: visible;
-    order: 2;
   }
+
+  /* Footer handles simple block stacking cleanly below the content */
   .care-footer {
     height: auto;
     margin: 12px;
-    order: 3;
+    padding: 16px 12px;
+    gap: 14px;
   }
+
+  .footer-row-top {
+    height: auto;
+  }
+
   .address-grid {
     flex-direction: column;
-    overflow-x: visible;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .mac-address-card {
+    min-width: 0;
+    max-width: none;
+    width: 100%;
+    height: auto;
+    padding: 12px;
+  }
+
+  .mac-status-card {
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .status-col {
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .status-right {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding-top: 8px;
+    width: 100%;
   }
 }
