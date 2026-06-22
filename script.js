@@ -116,7 +116,7 @@ async function searchLocation(query) {
       </div>`;
     });
 
-    document.getElementById("results").innerHTML = html;
+    document.getElementById("results-wrapper").innerHTML = html;
 
   } catch (error) {
     console.error("Search operations error:", error);
