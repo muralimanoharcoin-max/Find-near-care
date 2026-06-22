@@ -1,1 +1,305 @@
-gggghh
+/* ==========================================================================
+   1. BASE SYSTEM & DEVICE VIEWPORT MANAGEMENT
+   ========================================================================== */
+body {
+  margin: 0;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #f8fafc;
+  height: 100vh;           /* Lock exactly to the device screen height */
+  display: flex;
+  flex-direction: column;  /* Stack elements vertically */
+  overflow: hidden;        /* Prevent the whole page from scrolling on desktop */
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ==========================================================================
+   2. HEADER & SEARCH AREA (Comfortable Content Hugging)
+   ========================================================================== */
+.header {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;          /* Take only what it needs, never shrink or grow */
+  z-index: 10;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.care-logo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.logo-area h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.mac-credits {
+  display: flex;
+  align-items: center;
+}
+
+.credits-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+input {
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  flex-grow: 1;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+button {
+  background: #3b82f6;
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #2563eb;
+}
+
+/* ==========================================================================
+   3. DESKTOP WORKSPACE (Natively Fills Remaining Screen Space)
+   ========================================================================== */
+.app-layout {
+  display: flex;
+  flex: 1;                 /* Natively consumes 100% of the remaining screen height */
+  gap: 16px;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  min-height: 0;           /* CRITICAL: Tells Leaflet Map exactly how to calculate size */
+}
+
+#results-wrapper {
+  flex: 1.3;
+  height: 100%;
+  overflow-y: auto;        /* Only the results column scrolls internally if long */
+  box-sizing: border-box;
+  padding-right: 4px;
+}
+
+#results {
+  width: 100%;
+}
+
+#map {
+  flex: 1;
+  height: 100% !important; /* Spreads beautifully into its native flex container */
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+#results-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+#results-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+/* ==========================================================================
+   4. WELCOME PLACEHOLDER ANIMATIONS
+   ========================================================================== */
+.welcome-placeholder {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.magic-logo-container {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.magic-animator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  animation: floatLogo 3.5s ease-in-out infinite;
+}
+
+.magic-care-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.magic-glow {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(147, 100, 181, 0.2) 70%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(8px);
+  z-index: 1;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+.magic-ring {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px dashed rgba(59, 130, 246, 0.4);
+  border-top-color: #9364b5;
+  border-bottom-color: #22c55e;
+  z-index: 3;
+  animation: spinRing 6s linear infinite;
+}
+
+.welcome-placeholder h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.25rem;
+  color: #3b82f6;
+}
+
+.welcome-placeholder p {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  text-align: left;
+  margin: 0;
+}
+
+.tip-box {
+  margin-top: 12px;
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 4px solid #3b82f6;
+  padding: 10px;
+  border-radius: 4px 12px 12px 4px;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  text-align: left;
+}
+
+/* ==========================================================================
+   5. RESULTS CARDS
+   ========================================================================== */
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.nearest-card {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+}
+
+.card-header {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  background: #22c55e;
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.card-body {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.action-btn.wa-btn {
+  background: #25d366;
+}
+
+/* ==========================================================================
+   6. INTERACTIVE FOOTER (Tight Content Hugging - No Dead Blue Voids)
+   ========================================================================== */
+.care-footer {
+  height: auto;             /* Lets container dynamically size to the content */
+  margin: 6px 16px 16px 16px;
+  border-radius: 16px;
+  padding: 12px 14px;
