@@ -302,7 +302,7 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. BOTTOM DIRECTORY FOOTER (Lower 25% Panel Area)
+   6. BOTTOM DIRECTORY FOOTER (Lower 25% Area with Hover Effects)
    ========================================================================== */
 .care-footer {
   height: 25vh;
@@ -326,37 +326,60 @@ button:hover {
 
 .address-grid {
   display: flex;
-  gap: 12px;
-  overflow-x: auto; /* Handles desktop horizontal dashboard scrolling */
+  gap: 14px;
+  overflow-x: auto; /* Lets you slide through all hospital cards effortlessly on desktop */
   flex: 1;
-  padding-bottom: 4px;
+  padding: 6px 4px 10px 4px; /* Leave space for card scaling hover offsets */
+  align-items: center;
 }
 
+/* Custom mini scrollbar for the cards timeline */
 .address-grid::-webkit-scrollbar {
-  height: 4px;
+  height: 5px;
 }
 .address-grid::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+}
+.address-grid::-webkit-scrollbar-track {
+  background: transparent;
 }
 
+/* Base Mac Card Styling */
 .mac-address-card {
-  background: rgba(15, 23, 42, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 12px;
-  min-width: 260px;
-  flex: 1;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 14px;
+  min-width: 280px;
+  max-width: 280px;
+  height: 85px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  
+  /* Critical for smooth mouse interaction response */
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              background-color 0.25s ease, 
+              border-color 0.25s ease, 
+              box-shadow 0.25s ease;
+  will-change: transform, box-shadow;
+}
+
+/* --- MAGICAL MOUSE HOVER STATE RESPONSIVENESS --- */
+.mac-address-card:hover {
+  transform: translateY(-5px) scale(1.02); /* Card lifts up and scales cleanly */
+  background: rgba(15, 23, 42, 0.75); /* Darkens dynamically */
+  border-color: rgba(59, 130, 246, 0.5); /* Glowing blue outline focus */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 12px rgba(59, 130, 246, 0.2); /* Neon dropshadow aura */
 }
 
 .mac-dot-header {
   position: absolute;
-  top: 8px;
+  top: 10px;
   right: 12px;
   display: flex;
   gap: 4px;
@@ -377,6 +400,12 @@ button:hover {
   font-size: 0.95rem;
   font-weight: 600;
   color: #ffffff;
+  transition: color 0.2s ease;
+}
+
+/* Emphasize branch name text color shifts on card selection */
+.mac-address-card:hover h4 {
+  color: #3b82f6; 
 }
 
 .mac-address-card p {
@@ -387,6 +416,7 @@ button:hover {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 
 /* ==========================================================================
    7. KEYFRAMES FOR ANIMATIONS
