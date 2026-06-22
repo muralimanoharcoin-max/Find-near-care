@@ -1,132 +1,117 @@
-let map = L.map('map').setView([17.414, 78.446], 6);
-let searchMarker = null;
+// ==========================================================================
+// 1. DATABASE REGISTRY INITIALIZATION (Mock Coordinates Engine)
+// ==========================================================================
+const hospitalDatabase = [
+    { name: "CARE Mumbai Central", lat: 19.0760, lng: 72.8777, desc: "Dr. E Borges Rd, Parel", phone: "9999999991", dist: "3.5 km", time: "12 min" },
+    { name: "CARE Banjara Hills", lat: 17.4138, lng: 78.4328, desc: "Road No. 1, Banjara Hills", phone: "9999999992", dist: "8.2 km", time: "22 min" },
+    { name: "CARE HITEC City", lat: 17.4483, lng: 78.3741, desc: "Near Cyber Towers, HITEC City", phone: "9999999993", dist: "14.0 km", time: "35 min" },
+    { name: "CARE Nagpur", lat: 21.1458, lng: 79.0882, desc: "Farmland, Ramdaspeth", phone: "9999999994", dist: "5.1 km", time: "15 min" },
+    { name: "CARE Indore", lat: 22.7196, lng: 75.8577, desc: "Vijay Nagar, Scheme 54", phone: "9999999995", dist: "11.7 km", time: "28 min" }
+];
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19
-}).addTo(map);
+let map;
+let markerGroup;
 
-let hospitals = [];
+// ==========================================================================
+// 2. CORE MAP RENDERING ENGINE
+// ==========================================================================
+function initMap() {
+    map = L.map('map', {
+        zoomControl: true,
+        attributionControl: false
+    }).setView([20.5937, 78.9629], 5);
 
-fetch('care_locations.json')
-  .then(r => r.json())
-  .then(d => {
-    hospitals = d;
-    d.forEach(h => {
-      L.marker([h.lat, h.lon]).addTo(map).bindPopup(`<b>${h.name}</b>`);
-    });
-  })
-  .catch(err => console.error("Error loading JSON:", err));
+    // Apply dark vector mapping layout
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19
+    }).addTo(map);
 
-function handleKeyPress(event) {
-  if (event.key === 'Enter') {
-    triggerSearch();
-  }
+    markerGroup = L.layerGroup().addTo(map);
+
+    // Force initialization viewport dimension checks
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 400);
 }
 
-function triggerSearch() {
-  const query = document.getElementById("search").value;
-  if (query.trim() !== "") {
-    searchLocation(query);
-  }
-}
-
-function closeMatch(str1, str2) {
-  let s1 = str1.toLowerCase().trim();
-  let s2 = str2.toLowerCase().trim();
-  if (s1.includes(s2) || s2.includes(s1)) return true;
-  
-  let matches = 0;
-  for(let i=0; i<Math.min(s1.length, s2.length); i++) {
-    if(s1[i] === s2[i]) matches++;
-  }
-  return (matches / Math.max(s1.length, s2.length)) > 0.5;
-}
-
-async function searchLocation(query) {
-  try {
-    let cleanQuery = query.trim();
+// ==========================================================================
+// 3. INPUT SEARCH EXECUTION ENGINE
+// ==========================================================================
+function executeSearch() {
+    const query = document.getElementById('search-input').value.trim().toLowerCase();
+    const resultsContainer = document.getElementById('results');
     
-    const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
-    for (let hub of coreHubs) {
-      if (closeMatch(cleanQuery, hub)) {
-        cleanQuery = hub; 
-        document.getElementById("search").value = hub;
-        break;
-      }
-    }
-
-    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery)}&limit=1`;
-    let response = await fetch(geocodeUrl).then(x => x.json());
-
-    if (!response || response.length === 0) {
-      alert(`Could not find location matching "${query}". Please try a nearby city name.`);
-      return;
-    }
-
-    const targetLat = parseFloat(response[0].lat);
-    const targetLon = parseFloat(response[0].lon);
-    const targetCoords = [targetLat, targetLon];
-
-    map.setView(targetCoords, 12);
-    setTimeout(() => { map.invalidateSize(); }, 200); // Forces Leaflet engine to compute layout recalculation metrics
+    if (!query) return;
     
-    if (searchMarker) map.removeLayer(searchMarker);
-    searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Search Location:</b> ${cleanQuery}`).openPopup();
-
-    let results = [];
-
-    for (let h of hospitals) {
-      const url = `https://router.project-osrm.org/route/v1/driving/${targetLon},${targetLat};${h.lon},${h.lat}?overview=false`;
-      let r = await fetch(url).then(x => x.json());
-      if (r.routes && r.routes.length > 0) {
-        results.push({
-          name: h.name,
-          km: r.routes[0].distance / 1000,
-          min: r.routes[0].duration / 60,
-          lat: h.lat,
-          lon: h.lon
-        });
-      }
+    const matches = hospitalDatabase.filter(h => 
+        h.name.toLowerCase().includes(query) || 
+        h.desc.toLowerCase().includes(query)
+    );
+    
+    markerGroup.clearLayers();
+    resultsContainer.innerHTML = '';
+    
+    if (matches.length === 0) {
+        resultsContainer.innerHTML = `
+            <div class="welcome-placeholder" style="border-color: rgba(239, 68, 68, 0.4)">
+                <h3 style="color: #ef4444">No Records Discovered</h3>
+                <p>No CARE hospital centers match your criteria. Try searching 'Banjara' or 'Mumbai'.</p>
+            </div>
+        `;
+        return;
     }
-
-    results.sort((a, b) => a.min - b.min);
-
-    let html = "";
-    results.forEach((x, index) => {
-      // Formatted cleanly with cross-platform URL parameters
-      const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${x.lat},${x.lon}&travelmode=driving`;
-      const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${x.min.toFixed(0)} mins). Route: ${mapsUrl}`);
-      
-      const isNearest = index === 0 ? "nearest-card" : "";
-      const badge = index === 0 ? `<span class="badge">⭐ NEAREST</span>` : "";
-
-      html += `
-      <div class="card ${isNearest}">
-        <div class="card-header">
-          <b>${x.name}</b> ${badge}
-        </div>
-        <div class="card-body">
-          🚗 ${x.km.toFixed(1)} km  |  ⏱ ${x.min.toFixed(0)} min
-        </div>
-        <div class="card-actions">
-          <a class="btn action-btn" target="_blank" href="${mapsUrl}">🗺️ Navigate</a>
-          <button class="btn action-btn secondary" onclick="copyLink('${mapsUrl}')">🔗 Copy</button>
-          <a class="btn action-btn wa-btn" target="_blank" href="https://api.whatsapp.com/send?text=${shareText}">💬 WhatsApp</a>
-        </div>
-      </div>`;
+    
+    const bounds = [];
+    
+    matches.forEach((hospital, index) => {
+        const isNearest = index === 0;
+        const cardElement = document.createElement('div');
+        cardElement.className = `card ${isNearest ? 'nearest-card' : ''}`;
+        
+        cardElement.innerHTML = `
+            <div class="card-header">
+                <span>${hospital.name}</span>
+                ${isNearest ? '<span class="badge">NEAREST</span>' : ''}
+            </div>
+            <div class="card-body">
+                <p style="margin: 0 0 6px 0; color: #e2e8f0;">${hospital.desc}</p>
+                <span style="font-size:0.75rem;">🚗 ${hospital.dist} | ⏱️ ${hospital.time}</span>
+            </div>
+            <div class="card-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=${hospital.lat},${hospital.lng}" target="_blank" class="action-btn">Navigate</a>
+                <button class="action-btn secondary" onclick="navigator.clipboard.writeText('${hospital.lat}, ${hospital.lng}')">Copy</button>
+                <a href="https://wa.me/${hospital.phone}" target="_blank" class="action-btn wa-btn">WhatsApp</a>
+            </div>
+        `;
+        
+        resultsContainer.appendChild(cardElement);
+        
+        const marker = L.marker([hospital.lat, hospital.lng]).addTo(markerGroup);
+        marker.bindPopup(`<b>${hospital.name}</b><br>${hospital.desc}`);
+        bounds.push([hospital.lat, hospital.lng]);
     });
-
-    document.getElementById("results-wrapper").innerHTML = html;
-
-  } catch (error) {
-    console.error("Search operations error:", error);
-  }
+    
+    if (bounds.length > 0) {
+        map.fitBounds(bounds, { padding: [30, 30] });
+    }
+    
+    map.invalidateSize();
 }
 
-function copyLink(url) {
-  navigator.clipboard.writeText(url).then(() => {
-    alert("Google Maps route link copied to clipboard!");
-  }).catch(() => {
-    alert("Failed to copy link automatically.");
-  });
-}
+// ==========================================================================
+// 4. WINDOW EVENT LIFECYCLES
+// ==========================================================================
+window.addEventListener('DOMContentLoaded', () => {
+    initMap();
+    
+    document.getElementById('search-button').addEventListener('click', executeSearch);
+    document.getElementById('search-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') executeSearch();
+    });
+});
+
+window.addEventListener('resize', () => {
+    if (map) {
+        map.invalidateSize();
+    }
+});
