@@ -7,7 +7,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let hospitals = [];
 
-// Fetch hospital branch coordinates data
 fetch('care_locations.json')
   .then(r => r.json())
   .then(d => {
@@ -16,7 +15,7 @@ fetch('care_locations.json')
       L.marker([h.lat, h.lon]).addTo(map).bindPopup(`<b>${h.name}</b>`);
     });
   })
-  .catch(err => console.error("Error loading care_locations.json:", err));
+  .catch(err => console.error("Error loading JSON:", err));
 
 function handleKeyPress(event) {
   if (event.key === 'Enter') {
@@ -31,7 +30,6 @@ function triggerSearch() {
   }
 }
 
-// Typo/Fuzzy matching algorithm helper
 function closeMatch(str1, str2) {
   let s1 = str1.toLowerCase().trim();
   let s2 = str2.toLowerCase().trim();
@@ -48,7 +46,6 @@ async function searchLocation(query) {
   try {
     let cleanQuery = query.trim();
     
-    // Auto-correction matching for common hub locations
     const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
     for (let hub of coreHubs) {
       if (closeMatch(cleanQuery, hub)) {
@@ -70,9 +67,8 @@ async function searchLocation(query) {
     const targetLon = parseFloat(response[0].lon);
     const targetCoords = [targetLat, targetLon];
 
-    // Reset map view center and build standard map marker
     map.setView(targetCoords, 12);
-    setTimeout(() => { map.invalidateSize(); }, 200); // Forces Leaflet to re-calculate layout bounds
+    setTimeout(() => { map.invalidateSize(); }, 200); // Forces Leaflet engine to compute layout recalculation metrics
     
     if (searchMarker) map.removeLayer(searchMarker);
     searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Search Location:</b> ${cleanQuery}`).openPopup();
@@ -97,6 +93,7 @@ async function searchLocation(query) {
 
     let html = "";
     results.forEach((x, index) => {
+      // Formatted cleanly with cross-platform URL parameters
       const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${x.lat},${x.lon}&travelmode=driving`;
       const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${x.min.toFixed(0)} mins). Route: ${mapsUrl}`);
       
