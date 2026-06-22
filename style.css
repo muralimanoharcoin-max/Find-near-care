@@ -6,7 +6,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Lock the master page body tracking window viewport */
+  overflow: hidden;
 }
 
 .glass {
@@ -41,7 +41,6 @@ body {
   width: 40px;
   height: 40px;
   object-fit: contain;
-  background: transparent; /* Ensures it blends into your dark theme glass header */
 }
 
 .logo-area h1 {
@@ -51,7 +50,6 @@ body {
   letter-spacing: -0.5px;
 }
 
-/* Restored credit text alignment rules */
 .mac-credits {
   display: flex;
   align-items: center;
@@ -67,7 +65,7 @@ body {
 .search-box {
   display: flex;
   gap: 10px;
-  width: 50%;
+  width: 100%;
 }
 
 input {
@@ -104,46 +102,124 @@ button:hover {
   background: #2563eb;
 }
 
-/* Strictly locks desktop workspace below the search header bar */
 .app-layout {
   display: flex;
   flex: 1;
   gap: 16px;
   padding: 16px;
   box-sizing: border-box;
-  height: calc(90vh - 150px); /* Fits perfectly on 100% browser zoom windows */
+  height: calc(100vh - 160px); 
   min-height: 0; 
 }
 
-/* RESULTS WRAPPER: Matches Map height perfectly without growing like a train */
 #results-wrapper {
   flex: 1.3;
-  height: 60%;
+  height: 100%;
   overflow-y: auto;
   box-sizing: border-box;
   padding-right: 6px;
 }
 
 #results {
-  width: 105%;
+  width: 100%;
 }
 
-/* MAP WRAPPER: Sits cleanly parallel on right side at 100% height matches */
 #map {
   flex: 1;
-  height: 60%; 
+  height: 100%; 
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 
-/* Scrollbar layout styles for Left panel */
 #results-wrapper::-webkit-scrollbar {
   width: 6px;
 }
 #results-wrapper::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
+}
+
+/* --- Welcome Box & Magic Animations --- */
+.welcome-placeholder {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.magic-logo-container {
+  position: relative;
+  width: 70px; /* Reduced scale to make layout compact */
+  height: 70px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.magic-animator {
+  animation: floatLogo 3.5s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.magic-care-logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.magic-glow {
+  position: absolute;
+  width: 45px;
+  height: 45px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.5) 0%, rgba(147, 100, 181, 0.2) 70%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(6px);
+  z-index: 1;
+  animation: pulseGlow 1.8s ease-in-out infinite alternate;
+}
+
+.magic-ring {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px dashed rgba(59, 130, 246, 0.4);
+  border-top-color: #9364b5;
+  border-bottom-color: #22c55e;
+  z-index: 2;
+  animation: spinRing 5s linear infinite;
+}
+
+.welcome-placeholder h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.welcome-placeholder p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: left;
+}
+
+.tip-box {
+  margin-top: 14px;
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 4px solid #3b82f6;
+  padding: 12px;
+  border-radius: 4px 12px 12px 4px;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  text-align: left;
 }
 
 .card {
@@ -211,7 +287,7 @@ button:hover {
   background: #25d366;
 }
 
-/* RESPONSIVE MOBILE HANDOFF */
+/* --- Mobile Stack Setup --- */
 @media (max-width: 768px) {
   body {
     overflow-y: auto;
@@ -236,112 +312,27 @@ button:hover {
     height: 42vh;
     width: 100%;
     flex: none;
-    order: 1; /* Keep map on top for crisp UX viewports */
+    order: 1;
   }
   #results-wrapper {
     height: auto;
     overflow: visible;
     width: 100%;
     padding-right: 0;
-    order: 2; /* List cascades vertically beneath map smoothly */
+    order: 2;
   }
 }
-/* --- Magical Welcome Placeholder & Logo Animations --- */
 
-.welcome-placeholder {
-  padding: 32px 24px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px dashed rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  text-align: center; /* Centered content for better visual balance */
-  margin-top: 4px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Container to align animations perfectly */
-.magic-logo-container {
-  position: relative;
-  width: 100px;
-  height: 100px;
-  margin: 0 auto 20px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* 1. Floating Logo Animation */
-.magic-care-logo {
-  width: 70px;
-  height: 70px;
-  object-fit: contain;
-  z-index: 3;
-  animation: floatLogo 4s ease-in-out infinite;
-}
-
-/* 2. Background Neon Glow Pulse */
-.magic-glow {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(147, 100, 181, 0.2) 60%, transparent 100%);
-  border-radius: 50%;
-  filter: blur(8px);
-  z-index: 1;
-  animation: pulseGlow 2s ease-in-out infinite alternate;
-}
-
-/* 3. Magical Spinning Particle Ring */
-.magic-ring {
-  position: absolute;
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  border: 2px dashed rgba(59, 130, 246, 0.6);
-  border-top-color: rgba(147, 100, 181, 0.8);
-  border-bottom-color: rgba(34, 197, 94, 0.5);
-  z-index: 2;
-  animation: spinRing 6s linear infinite;
-}
-
-.welcome-placeholder h3 {
-  margin-top: 10px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #3b82f6;
-}
-
-.welcome-placeholder p {
-  color: #94a3b8;
-  font-size: 0.95rem;
-  line-height: 1.6;
-  text-align: left; /* Kept text left-aligned for clear reading */
-}
-
-.tip-box {
-  margin-top: 16px;
-  background: rgba(59, 130, 246, 0.1);
-  border-left: 4px solid #3b82f6;
-  padding: 12px;
-  border-radius: 4px 12px 12px 4px;
-  font-size: 0.9rem;
-  color: #cbd5e1;
-  text-align: left;
-}
-
-/* --- Keyframe Animations --- */
-
+/* Keyframes */
 @keyframes floatLogo {
   0% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-8px) rotate(2deg); }
+  50% { transform: translateY(-6px) rotate(3deg); }
   100% { transform: translateY(0px) rotate(0deg); }
 }
-
 @keyframes pulseGlow {
-  0% { transform: scale(0.9); opacity: 0.5; }
-  100% { transform: scale(1.2); opacity: 1; filter: blur(12px); }
+  0% { transform: scale(0.9); opacity: 0.6; }
+  100% { transform: scale(1.2); opacity: 1; }
 }
-
 @keyframes spinRing {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
