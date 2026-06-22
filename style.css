@@ -127,41 +127,17 @@ button:hover {
 .app-layout {
   display: flex;
   flex-direction: row;     /* Default side-by-side split row layout for desktop screens */
-  flex: 1;                 /* Dynamically stretches to consume 100% of available screen depth */
+  flex: 1;                 /* Dynamically stretches to consume available screen depth */
   gap: 16px;
-  padding: 4px 16px;
+  
+  /* ADJUSTED: Increased top/bottom padding to 20px compresses the map and results 
+     vessels into a shorter, sleeker format, giving the page more breathing room */
+  padding: 20px 16px;      
+  
   box-sizing: border-box;
   min-height: 0;           /* CRITICAL: Instructs Leaflet Map how to safely size container bounds */
 }
 
-#results-wrapper {
-  flex: 1.2;               /* Yellow Box Layout block */
-  height: 100%;
-  overflow-y: auto;        /* Allows the results column to scroll cleanly if too long */
-  box-sizing: border-box;
-  padding-right: 4px;
-}
-
-#results {
-  width: 100%;
-}
-
-#map {
-  flex: 1.5;               /* Red Box Layout block */
-  height: 100% !important; /* Forces layout tracking inside flexible parent limits */
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  z-index: 1;
-}
-
-#results-wrapper::-webkit-scrollbar {
-  width: 6px;
-}
-#results-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-}
 
 /* ==========================================================================
    4. COMPONENT INTERFACES & PLATFORM ANIMATIONS
