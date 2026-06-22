@@ -295,10 +295,10 @@ button:hover {
 }
 
 /* ==========================================================================
-   6. INTERACTIVE MAC DIRECTORY FOOTER (Tight Content Hugging)
+   6. INTERACTIVE MAC DIRECTORY FOOTER (Absolute Bottom Compression Fix)
    ========================================================================== */
 .care-footer {
-  height: auto; /* Hugs elements closely - eliminates blank space */
+  height: auto !important;
   margin: 6px 16px 16px 16px;
   border-radius: 16px;
   padding: 12px 14px;
@@ -306,13 +306,14 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  flex-shrink: 0;
+  position: relative; /* Base anchor context */
 }
 
 .footer-row-top {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-bottom: 0 !important; /* Forces the gap to respect the 12px layout definition */
 }
 
 .footer-title {
@@ -396,7 +397,7 @@ button:hover {
   text-overflow: ellipsis;
 }
 
-/* Lower Split: Horizontal Branding Status Line */
+/* Lower Split: Forces structural layout items to hug each other vertically */
 .mac-status-card {
   background: rgba(15, 23, 42, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.04);
@@ -407,6 +408,7 @@ button:hover {
   align-items: center;
   box-sizing: border-box;
   font-size: 0.75rem;
+  margin-top: 0 !important; 
 }
 
 .status-col {
