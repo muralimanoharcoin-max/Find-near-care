@@ -71,7 +71,7 @@ body {
 .search-box {
   display: flex;
   gap: 10px;
-  width: 40%;
+  width: 45%;
 }
 
 input {
@@ -108,7 +108,7 @@ button:hover {
 }
 
 /* ==========================================================================
-   3. DESKTOP WORKSPACE (Exactly 75% of the remaining screen height)
+   3. DESKTOP WORKSPACE (Exactly 65% of the remaining screen height)
    ========================================================================== */
 .app-layout {
   display: flex;
@@ -121,7 +121,7 @@ button:hover {
 
 #results-wrapper {
   flex: 1.3;
-  height: 100%;
+  height: 65%;
   overflow-y: auto;
   box-sizing: border-box;
   padding-right: 4px;
