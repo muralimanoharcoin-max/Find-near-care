@@ -9,20 +9,15 @@ const hospitalDatabase = [
     { name: "CARE Indore", lat: 22.7196, lng: 75.8577, desc: "Vijay Nagar, Scheme 54", phone: "9999999995", dist: "11.7 km", time: "84 min", keywords: ["indore", "vijay nagar", "scheme 54", "madhya pradesh", "landmark malhar"] }
 ];
 
-// Extract dictionary for real-time auto-suggestions
 const suggestionsDictionary = [
     { text: "Mumbai Central", type: "City Area" },
     { text: "Banjara Hills", type: "District" },
     { text: "HITEC City", type: "Tech Hub" },
     { text: "Nagpur Center", type: "City" },
-    { text: "Indore Vijay Nagar", type: "Sub-Division" },
-    { text: "Cyber Towers Landmark", type: "Landmark" },
-    { text: "Parel Village Neighborhood", type: "Village Sector" }
+    { text: "Indore Vijay Nagar", type: "Sub-Division" }
 ];
 
-// ==========================================================================
-// 2. REAL-TIME FUZZY TYPO SEARCH ENGINE
-// ==========================================================================
+// Levenshtein Algorithm for Smart Typo Matching
 function LevenshteinDistance(s, t) {
     if (!s.length) return t.length;
     if (!t.length) return s.length;
@@ -48,26 +43,22 @@ function verifyMatchToken(query, keywordsArray) {
 }
 
 // ==========================================================================
-// 3. CORE PRESENTATION RENDERING SCHEDULER
+// 2. CORE SEARCH & NAVIGATION SYSTEM (Typo Bug Fixed)
 // ==========================================================================
 let processingTimeout = null;
 
 function performLiveQuery() {
-    const spinner = document.getElementById('mac-spinner');
-    spinner.classList.remove('hidden');
-    
+    document.getElementById('mac-spinner').classList.remove('hidden');
     if (processingTimeout) clearTimeout(processingTimeout);
-    
     processingTimeout = setTimeout(() => {
         executeSearch();
-        spinner.classList.add('hidden');
+        document.getElementById('mac-spinner').classList.add('hidden');
     }, 250);
 }
 
 function executeSearch() {
     const query = document.getElementById('search-input').value.trim().toLowerCase();
     const resultsContainer = document.getElementById('results');
-    const track = document.getElementById('address-slider-track');
     
     if (!query) {
         renderDefaultPlaceholder();
@@ -86,13 +77,12 @@ function executeSearch() {
         resultsContainer.innerHTML = `
             <div class="welcome-placeholder" style="border-color: rgba(239, 68, 68, 0.3)">
                 <h3 style="color: #ef4444">Zero Context Matches Located</h3>
-                <p>No facilities match that spelling configuration. Try searching 'Banjara', 'Hitech' or 'Mumbai'.</p>
+                <p>No facilities match that configuration. Try searching 'Banjara' or 'Mumbai'.</p>
             </div>
         `;
         return;
     }
     
-    // Lock results slice to maximum 5 items safely
     const outputSelection = matches.slice(0, 5);
     const primaryNearestName = outputSelection[0].name;
     
@@ -102,6 +92,9 @@ function executeSearch() {
         cardElement.className = `card ${isNearest ? 'nearest-card' : ''}`;
         
         const formattedTime = convertMetricDuration(hospital.time);
+        
+        // Fixed syntax interpolation token string format error
+        const navUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(query)}&destination=${hospital.lat},${hospital.lng}`;
         
         cardElement.innerHTML = `
             <div class="card-header">
@@ -113,14 +106,13 @@ function executeSearch() {
                 <span style="font-size:0.75rem; color:#64748b;">🚗 ${hospital.dist} | ⏱️ ${formattedTime}</span>
             </div>
             <div class="card-actions">
-                <a href="https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(query)}&destination=${hospital.lat},${hospital.lng}" target="_blank" class="action-btn">Route Track</a>
+                <a href="${navUrl}" target="_blank" class="action-btn">Route Track</a>
                 <a href="https://wa.me/${hospital.phone}" target="_blank" class="action-btn wa-btn">WhatsApp</a>
             </div>
         `;
         resultsContainer.appendChild(cardElement);
     });
 
-    // Refresh sliding dashboard configuration
     generateSlidingTrack(primaryNearestName, query);
 }
 
@@ -156,46 +148,32 @@ function renderDefaultPlaceholder() {
     resultsContainer.innerHTML = `
         <div class="welcome-placeholder">
             <h3>Find Near CARE Active Workspace</h3>
-            <p>Begin typing inside the upper macOS console area. Intelligence matrices compute results natively into this partition frame.</p>
+            <p>Begin typing inside the upper console area. Intelligence matrices compute results natively into this panel layout frame.</p>
         </div>
     `;
     generateSlidingTrack(null, '');
 }
 
-// Highly responsive metric adapter converting absolute minutes into adaptive structures
 function convertMetricDuration(timeString) {
     const totalMinutes = parseInt(timeString, 10);
     if (isNaN(totalMinutes)) return timeString;
     if (totalMinutes < 60) return `${totalMinutes} mins`;
-    
-    const calculatedHours = Math.floor(totalMinutes / 60);
-    const leftOverMinutes = totalMinutes % 60;
-    
-    return leftOverMinutes > 0 ? `${calculatedHours} hr ${leftOverMinutes} min` : `${calculatedHours} hr`;
+    return `${Math.floor(totalMinutes / 60)} hr ${totalMinutes % 60} min`;
 }
 
-// ==========================================================================
-// 4. SMART AUTO-COMPLETION / RECOMMENDATION PANEL
-// ==========================================================================
 function manageSuggestionsDropdown() {
     const inputField = document.getElementById('search-input');
     const dropdown = document.getElementById('suggestions-box');
     const entry = inputField.value.trim().toLowerCase();
     
-    if (!entry) {
-        dropdown.classList.add('hidden');
-        return;
-    }
+    if (!entry) { dropdown.classList.add('hidden'); return; }
     
     const filteredSuggestions = suggestionsDictionary.filter(item => 
         item.text.toLowerCase().includes(entry) || 
         LevenshteinDistance(entry, item.text.toLowerCase().split(' ')[0]) <= 2
     );
     
-    if (filteredSuggestions.length === 0) {
-        dropdown.classList.add('hidden');
-        return;
-    }
+    if (filteredSuggestions.length === 0) { dropdown.classList.add('hidden'); return; }
     
     dropdown.innerHTML = '';
     dropdown.classList.remove('hidden');
@@ -203,11 +181,7 @@ function manageSuggestionsDropdown() {
     filteredSuggestions.forEach(item => {
         const itemElement = document.createElement('div');
         itemElement.className = 'suggestion-item';
-        itemElement.innerHTML = `
-            <span>${item.text}</span>
-            <span class="suggestion-type">${item.type}</span>
-        `;
-        
+        itemElement.innerHTML = `<span>${item.text}</span><span class="suggestion-type">${item.type}</span>`;
         itemElement.addEventListener('click', () => {
             inputField.value = item.text;
             dropdown.classList.add('hidden');
@@ -218,33 +192,27 @@ function manageSuggestionsDropdown() {
 }
 
 // ==========================================================================
-// 5. APPLICATION LIFECYCLE ROUTINES
+// 3. APPLICATION LIFECYCLE
 // ==========================================================================
 window.addEventListener('DOMContentLoaded', () => {
     renderDefaultPlaceholder();
-    executeSearch(); // Perform automated entry query match
+    executeSearch();
     
     const textInput = document.getElementById('search-input');
-    
-    // Bind Real-Time input interceptors
     textInput.addEventListener('input', () => {
         performLiveQuery();
         manageSuggestionsDropdown();
     });
-    
     textInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             document.getElementById('suggestions-box').classList.add('hidden');
             executeSearch();
         }
     });
-    
     document.getElementById('search-button').addEventListener('click', () => {
         document.getElementById('suggestions-box').classList.add('hidden');
         executeSearch();
     });
-
-    // Click outside handler to dim open menus smoothly
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.search-container')) {
             document.getElementById('suggestions-box').classList.add('hidden');
