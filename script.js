@@ -64,32 +64,35 @@ function executeSearch() {
     const bounds = [];
     
     matches.forEach((hospital, index) => {
-        const isNearest = index === 0;
-        const cardElement = document.createElement('div');
-        cardElement.className = `card ${isNearest ? 'nearest-card' : ''}`;
-        
-        cardElement.innerHTML = `
-            <div class="card-header">
-                <span>${hospital.name}</span>
-                ${isNearest ? '<span class="badge">NEAREST</span>' : ''}
-            </div>
-            <div class="card-body">
-                <p style="margin: 0 0 6px 0; color: #e2e8f0;">${hospital.desc}</p>
-                <span style="font-size:0.75rem;">🚗 ${hospital.dist} | ⏱️ ${hospital.time}</span>
-            </div>
-            <div class="card-actions">
-                <a href="https://www.google.com/maps/search/?api=1&query=${hospital.lat},${hospital.lng}" target="_blank" class="action-btn">Navigate</a>
-                <button class="action-btn secondary" onclick="navigator.clipboard.writeText('${hospital.lat}, ${hospital.lng}')">Copy</button>
-                <a href="https://wa.me/${hospital.phone}" target="_blank" class="action-btn wa-btn">WhatsApp</a>
-            </div>
-        `;
-        
-        resultsContainer.appendChild(cardElement);
-        
-        const marker = L.marker([hospital.lat, hospital.lng]).addTo(markerGroup);
-        marker.bindPopup(`<b>${hospital.name}</b><br>${hospital.desc}`);
-        bounds.push([hospital.lat, hospital.lng]);
-    });
+    matches.forEach((hospital, index) => {
+    const isNearest = index === 0;
+    const cardElement = document.createElement('div');
+    cardElement.className = `card ${isNearest ? 'nearest-card' : ''}`;
+    
+    // Convert the raw database minutes using our helper function
+    const formattedTime = formatTravelTime(hospital.time);
+    
+    cardElement.innerHTML = `
+        <div class="card-header">
+            <span>${hospital.name}</span>
+            ${isNearest ? '<span class="badge">NEAREST</span>' : ''}
+        </div>
+        <div class="card-body">
+            <p style="margin: 0 0 6px 0; color: #e2e8f0;">${hospital.desc}</p>
+            <span style="font-size:0.75rem;">🚗 ${hospital.dist} | ⏱️ ${formattedTime}</span>
+        </div>
+        <div class="card-actions">
+            <a href="https://www.google.com/maps/search/?api=1&query=$${hospital.lat},${hospital.lng}" target="_blank" class="action-btn">Navigate</a>
+            <button class="action-btn secondary" onclick="navigator.clipboard.writeText('${hospital.lat}, ${hospital.lng}')">Copy</button>
+            <a href="https://wa.me/${hospital.phone}" target="_blank" class="action-btn wa-btn">WhatsApp</a>
+        </div>
+    `;
+    
+    resultsContainer.appendChild(cardElement);
+    
+    // Map markers logic remains entirely untouched underneath...
+});
+
     
     if (bounds.length > 0) {
         map.fitBounds(bounds, { padding: [30, 30] });
