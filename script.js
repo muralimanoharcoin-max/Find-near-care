@@ -123,7 +123,7 @@ async function searchLocation(query) {
           <b>${x.name}</b> ${badge}
         </div>
         <div class="card-body">
-          🚗 ${x.km.toFixed(1)} km &nbsp;|&nbsp; ⏱️ ${timeDisplay}
+          🚗 ${x.km.toFixed(1)} km  |  ⏱️ ${timeDisplay}
         </div>
         <div class="card-actions">
           <a class="action-btn" target="_blank" href="${mapsUrl}">🗺️ Navigate</a>
