@@ -15,10 +15,7 @@
         <header class="mac-header glass">
             <div class="header-top">
                 <div class="logo-area">
-                    <svg class="care-logo" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="100" height="40" rx="8" fill="#1e3a8a"/>
-                        <text x="50" y="25" font-family="'SF Pro Display', sans-serif" font-weight="bold" font-size="16" fill="#ffffff" text-anchor="middle">CARE</text>
-                    </svg>
+                    <img src="Care-Hospitals.png" alt="CARE Logo" class="care-logo-premium">
                     <h1 class="apple-title">Find Near CARE</h1>
                 </div>
                 <div class="mac-credits-wrapper">
@@ -43,6 +40,15 @@
             <section id="results-wrapper">
                 <div id="results">
                     </div>
+                
+                <div id="no-results-state" class="hidden">
+                    <div class="magic-container">
+                        <div class="magic-glow"></div>
+                        <img src="Care-Hospitals.png" alt="CARE Magic Logo" class="magic-logo">
+                        <p class="magic-text">No hospitals found matching your area.</p>
+                        <span class="magic-subtext">Try refining your search keywords</span>
+                    </div>
+                </div>
             </section>
             
             <section class="map-view-canvas">
@@ -55,7 +61,7 @@
             
             <div class="slider-outer-container">
                 <div class="slider-track" id="address-slider-track">
-                    </div>
+                </div>
             </div>
             
             <div class="mac-meta-dock">
