@@ -338,3 +338,95 @@ button:hover { background: #2563eb; }
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+/* ==========================================================================
+   ISOLATED WELCOME CONTAINER & MAGIC LOGO LAYER
+   ========================================================================== */
+
+/* Outer wrapper container for the initial screen layout state */
+.welcome-placeholder {
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  text-align: center;
+  margin: 10px;
+  box-sizing: border-box;
+}
+
+/* Rigid frame anchoring the rotating vector rings in place */
+.magic-logo-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* Layer 1: Core Center Floating Graphic element */
+.magic-animator {
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: macFloat 3.5s ease-in-out infinite;
+}
+
+/* Layer 2: Flashing Ambient Backlight Mesh Glow */
+.magic-glow {
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  top: 12.5px;
+  left: 12.5px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(34, 197, 94, 0.1) 70%, transparent 100%);
+  border-radius: 50%;
+  filter: blur(10px);
+  z-index: 1;
+  animation: macGlowPulse 2s ease-in-out infinite alternate;
+}
+
+/* Layer 3: Dashed Orbital Ring that rotates on its center axis */
+.magic-ring {
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  border: 2px dashed rgba(59, 130, 246, 0.35);
+  border-top-color: #9364b5;   /* Premium Mac Purple Segment */
+  border-bottom-color: #22c55e;/* Brand Green Segment */
+  z-index: 3;
+  box-sizing: border-box;
+  animation: macRingSpin 8s linear infinite;
+}
+
+/* Text components within placeholder */
+.welcome-placeholder h3 { 
+  margin: 0 0 8px 0; 
+  font-size: 1.05rem; 
+  color: #3b82f6; 
+}
+.welcome-placeholder p { 
+  color: #94a3b8; 
+  font-size: 0.82rem; 
+  line-height: 1.5; 
+  margin: 0; 
+}
+
+/* INTERPOLATED KEYFRAME MECHANICS */
+@keyframes macFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes macGlowPulse {
+  0% { transform: scale(0.9); opacity: 0.4; }
+  100% { transform: scale(1.1); opacity: 0.8; }
+}
+@keyframes macRingSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
