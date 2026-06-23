@@ -1,1 +1,462 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.mac-viewport-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+.glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+}
+
+/* ==========================================================================
+   HEADER SECTION
+   ========================================================================== */
+.mac-header {
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.care-logo-premium {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    background: transparent;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.08));
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), filter 0.3s ease;
+}
+
+.care-logo-premium:hover {
+    transform: scale(1.06);
+    filter: drop-shadow(0px 4px 12px rgba(56, 189, 248, 0.45));
+}
+
+.apple-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    color: #1d1d1f;
+}
+
+.mac-credits-wrapper {
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.steel-shine {
+    background: linear-gradient(90deg, #86868b, #1d1d1f, #86868b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+/* ==========================================================================
+   SEARCH BAR
+   ========================================================================== */
+.search-container {
+    width: 100%;
+    max-width: 640px;
+}
+
+.search-box {
+    display: flex;
+    position: relative;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    padding: 4px;
+    transition: background-color 0.2s ease;
+}
+
+.search-box:focus-within {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 10px 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: #1d1d1f;
+    outline: none;
+}
+
+.search-box button {
+    background: #0071e3;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.search-box button:hover {
+    background: #0077ed;
+}
+
+.mac-spinner {
+    position: absolute;
+    right: 105px;
+    top: 13px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-top-color: #0071e3;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   MAIN LAYOUT ENGINE (Full Width Grid Style)
+   ========================================================================== */
+.app-layout {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 170px);
+    position: relative;
+}
+
+#results-wrapper {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#results {
+    padding: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   APPLE DESIGN CARDS
+   ========================================================================== */
+.card {
+    background: #f5f5f7;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.nearest-card {
+    background: linear-gradient(145deg, #f0f7ff, #e0f0ff);
+    border-color: rgba(0, 113, 227, 0.15);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 1rem;
+    color: #1d1d1f;
+    margin-bottom: 8px;
+}
+
+.badge {
+    background: #0071e3;
+    color: #ffffff;
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 6px;
+    letter-spacing: 0.02em;
+}
+
+.card-body {
+    font-size: 0.9rem;
+    color: #86868b;
+    margin-bottom: 18px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 10px 4px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    background: #1d1d1f;
+    color: #ffffff;
+    transition: opacity 0.2s ease;
+}
+
+.action-btn:hover {
+    opacity: 0.9;
+}
+
+.action-btn.secondary {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1d1d1f;
+}
+
+.action-btn.wa-btn {
+    background: #25d366;
+    color: white;
+}
+
+.welcome-placeholder {
+    grid-column: 1 / -1;
+    padding: 60px 16px;
+    text-align: center;
+    color: #86868b;
+}
+
+.welcome-placeholder h3 {
+    color: #1d1d1f;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+}
+
+.welcome-placeholder p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   MAGICAL "ABSENT RESULTS" ENGINES
+   ========================================================================== */
+#no-results-state {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 350px;
+    text-align: center;
+}
+
+.magic-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 320px;
+}
+
+.magic-glow {
+    position: absolute;
+    top: 10px;
+    width: 130px;
+    height: 130px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(147, 51, 234, 0) 70%);
+    border-radius: 50%;
+    animation: magicPulse 3.5s infinite ease-in-out;
+    z-index: 1;
+}
+
+.magic-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    background: transparent;
+    margin-bottom: 22px;
+    z-index: 2;
+    animation: magicFloat 4.5s infinite ease-in-out;
+}
+
+.magic-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin: 4px 0;
+    letter-spacing: -0.01em;
+    z-index: 2;
+}
+
+.magic-subtext {
+    font-size: 0.85rem;
+    color: #86868b;
+    z-index: 2;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   FOOTER DASHBOARD
+   ========================================================================== */
+.bottom-dashboard {
+    position: relative;
+    margin-top: auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-outer-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 12px 24px;
+    background: rgba(0,0,0,0.01);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.slider-track {
+    display: flex;
+    gap: 12px;
+    width: max-content;
+}
+
+.slider-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.slider-card.nearest-card {
+    background: #f0f7ff;
+    border-color: rgba(0, 113, 227, 0.2);
+}
+
+.slide-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    display: flex;
+    justify-content: space-between;
+}
+
+.slide-text {
+    font-size: 0.72rem;
+    color: #86868b;
+    margin-bottom: 4px;
+}
+
+.mac-meta-dock {
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.72rem;
+    color: #86868b;
+}
+
+.dock-left {
+    display: flex;
+    gap: 6px;
+}
+
+.dock-bold {
+    color: #1d1d1f;
+    font-weight: 600;
+}
+
+.brand-base-stripe {
+    height: 4px;
+    background: linear-gradient(90deg, #0071e3, #38bdf8, #9333ea);
+    width: 100%;
+}
+
+/* ==========================================================================
+   ANIMATIONS
+   ========================================================================== */
+@keyframes magicFloat {
+    0% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
+    50% {
+        transform: translateY(-9px) scale(1.02) rotate(1.5deg);
+        filter: drop-shadow(0 14px 18px rgba(56, 189, 248, 0.28));
+    }
+    100% {
+        transform: translateY(0px) scale(1) rotate(0deg);
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    }
+}
+
+@keyframes magicPulse {
+    0% {
+        transform: scale(0.85);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scale(1.18);
+        opacity: 0.85;
+    }
+    100% {
+        transform: scale(0.85);
+        opacity: 0.4;
+    }
+}
 
