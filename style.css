@@ -1,0 +1,248 @@
+body {
+  margin: 0;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #f8fafc;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Lock the master page body tracking window viewport */
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.care-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  background: transparent; /* Ensures it blends into your dark theme glass header */
+}
+
+.logo-area h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+/* Restored credit text alignment rules */
+.mac-credits {
+  display: flex;
+  align-items: center;
+}
+
+.credits-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.1px;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  width: 50%;
+}
+
+input {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  flex-grow: 1;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+button {
+  background: #3b82f6;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+button:hover {
+  background: #2563eb;
+}
+
+/* Strictly locks desktop workspace below the search header bar */
+.app-layout {
+  display: flex;
+  flex: 1;
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  height: calc(90vh - 150px); /* Fits perfectly on 100% browser zoom windows */
+  min-height: 0; 
+}
+
+/* RESULTS WRAPPER: Matches Map height perfectly without growing like a train */
+#results-wrapper {
+  flex: 1.3;
+  height: 60%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-right: 6px;
+}
+
+#results {
+  width: 105%;
+}
+
+/* MAP WRAPPER: Sits cleanly parallel on right side at 100% height matches */
+#map {
+  flex: 1;
+  height: 60%; 
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+/* Scrollbar layout styles for Left panel */
+#results-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+#results-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+}
+
+.nearest-card {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.card-header {
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  background: #22c55e;
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.card-body {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn.wa-btn {
+  background: #25d366;
+}
+
+/* RESPONSIVE MOBILE HANDOFF */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .mac-credits {
+    align-self: flex-start;
+  }
+  .app-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    padding: 12px;
+    gap: 12px;
+  }
+  #map {
+    height: 42vh;
+    width: 100%;
+    flex: none;
+    order: 1; /* Keep map on top for crisp UX viewports */
+  }
+  #results-wrapper {
+    height: auto;
+    overflow: visible;
+    width: 100%;
+    padding-right: 0;
+    order: 2; /* List cascades vertically beneath map smoothly */
+  }
+}
