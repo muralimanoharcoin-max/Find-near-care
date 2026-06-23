@@ -1,248 +1,426 @@
-body {
-  margin: 0;
-  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  color: #f8fafc;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* Lock the master page body tracking window viewport */
+/* ==========================================================================
+   RESET & SYSTEM BASICS
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Stops giant asset blowouts completely */
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f5f5f7;
+    color: #1d1d1f;
+    -webkit-font-smoothing: antialiased;
+}
+
+.mac-viewport-container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.header {
-  padding: 16px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  flex-shrink: 0;
+/* ==========================================================================
+   HEADER CONSOLE
+   ========================================================================== */
+.mac-header {
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex-shrink: 0; /* Prevents compression */
 }
 
 .header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .logo-area {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.care-logo {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  background: transparent; /* Ensures it blends into your dark theme glass header */
+/* Strict dimensions preventing giant logo leakage visible in 1000127919.jpg */
+img.care-logo-premium {
+    height: 32px !important;
+    width: auto !important;
+    max-width: 120px !important;
+    object-fit: contain;
+    background: transparent;
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.05));
 }
 
-.logo-area h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.5px;
+.apple-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    color: #1d1d1f;
 }
 
-/* Restored credit text alignment rules */
-.mac-credits {
-  display: flex;
-  align-items: center;
+.mac-credits-wrapper {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #86868b;
 }
 
-.credits-text {
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.1px;
+.steel-shine {
+    background: linear-gradient(90deg, #86868b, #1d1d1f, #86868b);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 4s linear infinite;
+}
+
+@keyframes shine {
+    to { background-position: 200% center; }
+}
+
+/* ==========================================================================
+   SEARCH SYSTEM
+   ========================================================================== */
+.search-container {
+    width: 100%;
+    max-width: 500px;
 }
 
 .search-box {
-  display: flex;
-  gap: 10px;
-  width: 50%;
+    display: flex;
+    position: relative;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 10px;
+    padding: 3px;
 }
 
-input {
-  padding: 12px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.25);
-  color: white;
-  flex-grow: 1;
-  font-size: 0.95rem;
-  transition: all 0.3s;
+.search-box input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    color: #1d1d1f;
+    outline: none;
 }
 
-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  background: rgba(0, 0, 0, 0.4);
+.search-box button {
+    background: #0071e3;
+    color: #ffffff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-button {
-  background: #3b82f6;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: background 0.2s;
-  white-space: nowrap;
+.search-box button:hover {
+    background: #0077ed;
 }
 
-button:hover {
-  background: #2563eb;
+.mac-spinner {
+    position: absolute;
+    right: 95px;
+    top: 11px;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-top-color: #0071e3;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
 }
 
-/* Strictly locks desktop workspace below the search header bar */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   MAIN DASHBOARD WORKSPACE (SCROLLABLE CARD CAROUSEL/GRID)
+   ========================================================================== */
 .app-layout {
-  display: flex;
-  flex: 1;
-  gap: 16px;
-  padding: 16px;
-  box-sizing: border-box;
-  height: calc(90vh - 150px); /* Fits perfectly on 100% browser zoom windows */
-  min-height: 0; 
+    flex: 1; 
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
 }
 
-/* RESULTS WRAPPER: Matches Map height perfectly without growing like a train */
 #results-wrapper {
-  flex: 1.3;
-  height: 60%;
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding-right: 6px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 20px;
+    -webkit-overflow-scrolling: touch;
 }
 
 #results {
-  width: 105%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
 }
 
-/* MAP WRAPPER: Sits cleanly parallel on right side at 100% height matches */
-#map {
-  flex: 1;
-  height: 60%; 
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-
-/* Scrollbar layout styles for Left panel */
-#results-wrapper::-webkit-scrollbar {
-  width: 6px;
-}
-#results-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-}
-
+/* ==========================================================================
+   CARDS FRAMEWORK
+   ========================================================================== */
 .card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 16px;
-  margin-bottom: 12px;
-  border-radius: 14px;
+    background: #f5f5f7;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
 }
 
 .nearest-card {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.4);
+    background: linear-gradient(145deg, #f0f7ff, #e0f0ff);
+    border-color: rgba(0, 113, 227, 0.12);
 }
 
 .card-header {
-  font-size: 1.15rem;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1d1d1f;
 }
 
 .badge {
-  background: #22c55e;
-  font-size: 0.7rem;
-  padding: 4px 8px;
-  border-radius: 20px;
-  font-weight: bold;
+    background: #0071e3;
+    color: #ffffff;
+    font-size: 0.6rem;
+    font-weight: 600;
+    padding: 2px 5px;
+    border-radius: 4px;
 }
 
 .card-body {
-  color: #94a3b8;
-  font-size: 0.95rem;
-  margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: #515154;
+    margin: 10px 0 14px 0;
 }
 
 .card-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 6px;
 }
 
 .action-btn {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.8rem;
-  padding: 8px 12px;
-  background: #3b82f6;
-  color: white;
-  border-radius: 8px;
-  font-weight: 500;
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 8px 2px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: #1d1d1f;
+    color: #ffffff;
 }
 
 .action-btn.secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: none;
-  cursor: pointer;
+    background: rgba(0, 0, 0, 0.05);
+    color: #1d1d1f;
 }
 
 .action-btn.wa-btn {
-  background: #25d366;
+    background: #25d366;
+    color: white;
 }
 
-/* RESPONSIVE MOBILE HANDOFF */
-@media (max-width: 768px) {
-  body {
-    overflow-y: auto;
-    height: auto;
-  }
-  .header-top {
+.welcome-placeholder {
+    grid-column: 1 / -1;
+    padding: 40px 12px;
+    text-align: center;
+    color: #86868b;
+}
+
+.welcome-placeholder h3 {
+    color: #1d1d1f;
+    font-size: 1.15rem;
+    margin-bottom: 8px;
+}
+
+.welcome-placeholder p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   PREMIUM CONTROLLED EMPTY STATE ANIMATION
+   ========================================================================== */
+#no-results-state {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 40px 0;
+}
+
+.magic-container {
+    position: relative;
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .mac-credits {
-    align-self: flex-start;
-  }
-  .app-layout {
+    align-items: center;
+    max-width: 280px;
+    text-align: center;
+}
+
+.magic-glow {
+    position: absolute;
+    top: 5px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.2) 0%, rgba(147, 51, 234, 0) 70%);
+    border-radius: 50%;
+    animation: magicPulse 3s infinite ease-in-out;
+    z-index: 1;
+}
+
+/* Clamped magic logo dimensions preventing the blowout */
+img.magic-logo {
+    width: 70px !important;
+    height: 70px !important;
+    object-fit: contain !important;
+    background: transparent;
+    margin-bottom: 16px;
+    z-index: 2;
+    animation: magicFloat 4s infinite ease-in-out;
+}
+
+.magic-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 4px;
+    z-index: 2;
+}
+
+.magic-subtext {
+    font-size: 0.8rem;
+    color: #86868b;
+    z-index: 2;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   FOOTER PROFILE DOCK
+   ========================================================================== */
+.bottom-dashboard {
+    width: 100%;
+    display: flex;
     flex-direction: column;
-    height: auto;
-    overflow: visible;
-    padding: 12px;
+    flex-shrink: 0; /* Prevents compression */
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+}
+
+.slider-outer-container {
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 24px;
+    background: rgba(0,0,0,0.01);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.slider-track {
+    display: flex;
     gap: 12px;
-  }
-  #map {
-    height: 42vh;
+    width: max-content;
+}
+
+.slider-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 8px;
+    padding: 8px 12px;
+    min-width: 200px;
+}
+
+.slider-card.nearest-card {
+    background: #f0f7ff;
+    border-color: rgba(0, 113, 227, 0.15);
+}
+
+.slide-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1d1d1f;
+}
+
+.slide-text {
+    font-size: 0.68rem;
+    color: #86868b;
+}
+
+.mac-meta-dock {
+    padding: 8px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.68rem;
+    color: #86868b;
+}
+
+.dock-left {
+    display: flex;
+    gap: 4px;
+}
+
+.dock-bold {
+    color: #1d1d1f;
+    font-weight: 600;
+}
+
+.brand-base-stripe {
+    height: 4px;
+    background: linear-gradient(90deg, #0071e3, #38bdf8, #9333ea);
     width: 100%;
-    flex: none;
-    order: 1; /* Keep map on top for crisp UX viewports */
-  }
-  #results-wrapper {
-    height: auto;
-    overflow: visible;
-    width: 100%;
-    padding-right: 0;
-    order: 2; /* List cascades vertically beneath map smoothly */
-  }
+}
+
+/* ==========================================================================
+   ENGINE KEYFRAMES
+   ========================================================================== */
+@keyframes magicFloat {
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-6px) scale(1.03); }
+    100% { transform: translateY(0px) scale(1); }
+}
+
+@keyframes magicPulse {
+    0% { transform: scale(0.9); opacity: 0.4; }
+    50% { transform: scale(1.15); opacity: 0.8; }
+    100% { transform: scale(0.9); opacity: 0.4; }
 }
