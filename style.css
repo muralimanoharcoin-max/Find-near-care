@@ -370,3 +370,122 @@ button {
   #results-wrapper { order: 2; height: auto; }
   .mac-credits-wrapper { display: none; }
 }
+/* ==========================================================================
+   PREMIUM LOGO & MAGIC ANIMATION STYLES (Add this to your style.css)
+   ========================================================================== */
+
+/* 1. Header Premium Transparent Logo */
+.care-logo-premium {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
+    background: transparent;
+    mix-blend-mode: multiply; /* Ensures any white background fringes are transparent */
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.care-logo-premium:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0px 4px 8px rgba(30, 58, 138, 0.3));
+}
+
+/* 2. Hidden State Class Utility */
+.hidden {
+    display: none !important;
+}
+
+/* 3. Magic Empty State Layout Workspace */
+#no-results-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 280px;
+    padding: 24px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.magic-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 320px;
+}
+
+/* Premium Glowing Ring behind the Logo */
+.magic-glow {
+    position: absolute;
+    top: 20px;
+    width: 110px;
+    height: 110px;
+    background: radial-gradient(circle, rgba(147, 51, 234, 0.2) 0%, rgba(56, 189, 248, 0) 70%);
+    border-radius: 50%;
+    animation: magicPulse 3s infinite ease-in-out;
+    z-index: 1;
+}
+
+/* Magic Floating Logo Animation */
+.magic-logo {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    background: transparent;
+    margin-bottom: 20px;
+    z-index: 2;
+    filter: drop-shadow(0 4px 12px rgba(147, 51, 234, 0.25));
+    animation: magicFloat 4s infinite ease-in-out;
+}
+
+/* Text Stylings */
+.magic-text {
+    font-family: 'SF Pro Display', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 8px 0 4px 0;
+    z-index: 2;
+}
+
+.magic-subtext {
+    font-family: 'SF Pro Display', sans-serif;
+    font-size: 0.85rem;
+    color: #64748b;
+    z-index: 2;
+}
+
+/* ==========================================================================
+   ANIMATION KEYFRAMES
+   ========================================================================== */
+
+@keyframes magicFloat {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+        filter: drop-shadow(0 4px 12px rgba(147, 51, 234, 0.25));
+    }
+    50% {
+        transform: translateY(-12px) rotate(2deg);
+        filter: drop-shadow(0 15px 20px rgba(56, 189, 248, 0.35));
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+        filter: drop-shadow(0 4px 12px rgba(147, 51, 234, 0.25));
+    }
+}
+
+@keyframes magicPulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+}
