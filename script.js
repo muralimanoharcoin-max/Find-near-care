@@ -1,11 +1,3 @@
-// Initialize map using exactly your setup coordinate profile
-let map = L.map('map').setView([17.414, 78.446], 6);
-let searchMarker = null;
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  maxZoom: 19
-}).addTo(map);
-
 let hospitals = [];
 
 // Read dynamically from your real data source
@@ -13,9 +5,6 @@ fetch('care_locations.json')
   .then(r => r.json())
   .then(d => {
     hospitals = d;
-    d.forEach(h => {
-      L.marker([h.lat, h.lon]).addTo(map).bindPopup(`<b>${h.name}</b>`);
-    });
     // Generate initial baseline slide track at bootup
     populateStaticSlider(d);
   });
@@ -34,7 +23,7 @@ function triggerSearch() {
 }
 
 /**
- * Smart Helper to format minutes into a combination of hours and minutes if needed
+ * Smart Helper to format minutes into hours and minutes if needed
  */
 function formatTravelTime(totalMinutes) {
   const mins = Math.round(totalMinutes);
@@ -68,12 +57,6 @@ async function searchLocation(query) {
 
     const targetLat = parseFloat(response[0].lat);
     const targetLon = parseFloat(response[0].lon);
-    const targetCoords = [targetLat, targetLon];
-
-    map.setView(targetCoords, 11);
-    
-    if (searchMarker) map.removeLayer(searchMarker);
-    searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Your Search:</b> ${query}`).openPopup();
 
     let results = [];
 
@@ -123,7 +106,7 @@ async function searchLocation(query) {
           <b>${x.name}</b> ${badge}
         </div>
         <div class="card-body">
-          🚗 ${x.km.toFixed(1)} km  |  ⏱️ ${timeDisplay}
+          🚗 ${x.km.toFixed(1)} km &nbsp;|&nbsp; ⏱️ ${timeDisplay}
         </div>
         <div class="card-actions">
           <a class="action-btn" target="_blank" href="${mapsUrl}">🗺️ Navigate</a>
@@ -140,7 +123,6 @@ async function searchLocation(query) {
 
   } catch (error) {
     console.error("Search error:", error);
-    // If runtime exceptions strike, ensure app gracefully triggers the animated fallback state
     document.getElementById("results").innerHTML = "";
     document.getElementById('no-results-state').classList.remove('hidden');
   } finally {
@@ -192,7 +174,6 @@ function copyLink(url) {
   });
 }
 
-// Setup initial static state display layout context boundaries
 window.addEventListener('DOMContentLoaded', () => {
     document.getElementById("results").innerHTML = `
         <div class="welcome-placeholder">
