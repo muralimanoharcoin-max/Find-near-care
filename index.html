@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Find Near CARE - Official Portal</title>
+    <title>Find Near CARE</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,23 +15,26 @@
         <header class="mac-header glass">
             <div class="header-top">
                 <div class="logo-area">
+                    <svg class="care-logo" viewBox="0 0 100 40" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="100" height="40" rx="8" fill="#1e3a8a"/>
+                        <text x="50" y="25" font-family="'SF Pro Display', sans-serif" font-weight="bold" font-size="16" fill="#ffffff" text-anchor="middle">CARE</text>
+                    </svg>
                     <h1 class="apple-title">Find Near CARE</h1>
                 </div>
-                <div class="mac-credits">
-                    <span class="credits-text steel-shine">Designed & Developed by our agent Murali Manohar • 2026</span>
+                <div class="mac-credits-wrapper">
+                    <span class="steel-shine">Designed & Developed by our agent Murali Manohar • 2026</span>
                 </div>
             </div>
             
             <div class="search-container">
                 <div class="search-box">
-                    <input type="text" id="search-input" placeholder="Search city or branch (e.g., Banjara, Hitech, Indore)..." value="Banjara" autocomplete="off">
+                    <input type="text" id="search" placeholder="Enter city, area, village, or landmark..." onkeypress="handleKeyPress(event)" autocomplete="off">
                     <div id="mac-spinner" class="mac-spinner hidden"></div>
-                    <button id="search-button">
+                    <button onclick="triggerSearch()">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         Search
                     </button>
                 </div>
-                <div id="suggestions-box" class="suggestions-dropdown hidden"></div>
             </div>
         </header>
 
@@ -40,39 +45,8 @@
                     </div>
             </section>
             
-            <section class="magic-canvas glass">
-                <div class="canvas-center-wrapper">
-                    <div class="magic-logo-container">
-                        <div class="magic-ring"></div>
-                        <div class="magic-glow"></div>
-                        <div class="magic-animator">
-                            <svg class="official-care-logo" viewBox="0 0 200 200" width="100" height="100">
-                                <circle cx="100" cy="100" r="28" fill="none" />
-                                <text x="100" y="116" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-weight="bold" font-size="52" fill="#8b5cf6" text-anchor="middle">e</text>
-                                <g stroke="#38bdf8" stroke-width="5" stroke-linecap="round">
-                                    <line x1="100" y1="15" x2="100" y2="35" />
-                                    <line x1="100" y1="165" x2="100" y2="185" />
-                                    <line x1="15" y1="100" x2="35" y2="100" />
-                                    <line x1="165" y1="100" x2="185" y2="100" />
-                                    <line x1="40" y1="40" x2="54" y2="54" />
-                                    <line x1="146" y1="146" x2="160" y2="160" />
-                                    <line x1="160" y1="40" x2="146" y2="54" />
-                                    <line x1="54" y1="146" x2="40" y2="160" />
-                                    <line x1="70" y1="22" x2="78" y2="38" />
-                                    <line x1="130" y1="178" x2="122" y2="162" />
-                                    <line x1="130" y1="22" x2="122" y2="38" />
-                                    <line x1="70" y1="178" x2="78" y2="162" />
-                                    <line x1="22" y1="70" x2="38" y2="78" />
-                                    <line x1="178" y1="130" x2="162" y2="122" />
-                                    <line x1="178" y1="70" x2="162" y2="78" />
-                                    <line x1="22" y1="130" x2="38" y2="122" />
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                    <h2 class="canvas-title">CARE Core Intelligence Engine</h2>
-                    <p class="canvas-subtitle">Real-time healthcare node monitoring system active across all networks.</p>
-                </div>
+            <section class="map-view-canvas">
+                <div id="map"></div>
             </section>
 
         </main>
@@ -84,13 +58,6 @@
                     </div>
             </div>
             
-            <div class="future-expansion-block">
-                <div class="expansion-placeholder">
-                    <span class="placeholder-icon">＋</span>
-                    <span class="placeholder-text">Reserved Partition for Upcoming Telehealth & Live Queue Matrix</span>
-                </div>
-            </div>
-
             <div class="mac-meta-dock">
                 <div class="dock-left">
                     <span class="dock-bold">About CARE Network:</span>
@@ -106,6 +73,7 @@
 
     </div>
 
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
