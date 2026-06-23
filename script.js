@@ -106,7 +106,7 @@ async function searchLocation(query) {
           <b>${x.name}</b> ${badge}
         </div>
         <div class="card-body">
-          🚗 ${x.km.toFixed(1)} km  |  ⏱ ${x.min.toFixed(0)} min
+          🚗 ${x.km.toFixed(1)} km  |  ⏱️ ${formatTravelTime(x.min)}
         </div>
         <div class="card-actions">
           <a class="btn action-btn" target="_blank" href="${mapsUrl}">🗺️ Navigate</a>
@@ -114,6 +114,7 @@ async function searchLocation(query) {
           <a class="btn action-btn wa-btn" target="_blank" href="https://api.whatsapp.com/send?text=${shareText}">💬 WhatsApp</a>
         </div>
       </div>`;
+
     });
 
     document.getElementById("results-wrapper").innerHTML = html;
