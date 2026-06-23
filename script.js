@@ -1,5 +1,5 @@
 // ==========================================================================
-// 1. COMPREHENSIVE HOSPITAL KNOWLEDGE REGISTRY
+// 1. COMPREHENSIVE HOSPITAL KNOWLEDGE REGISTRY (JSON Structure Verified)
 // ==========================================================================
 const hospitalDatabase = [
     { name: "CARE Mumbai Central", lat: 19.0760, lng: 72.8777, desc: "Dr. E Borges Rd, Parel", phone: "9999999991", dist: "3.5 km", time: "12 min", keywords: ["mumbai", "central", "parel", "maharashtra", "landmark borges", "village"] },
@@ -43,7 +43,7 @@ function verifyMatchToken(query, keywordsArray) {
 }
 
 // ==========================================================================
-// 2. CORE SEARCH & NAVIGATION SYSTEM (Typo Bug Fixed)
+// 2. CORE SEARCH & NAVIGATION SYSTEM (String Typo Fix Enforced)
 // ==========================================================================
 let processingTimeout = null;
 
@@ -92,8 +92,6 @@ function executeSearch() {
         cardElement.className = `card ${isNearest ? 'nearest-card' : ''}`;
         
         const formattedTime = convertMetricDuration(hospital.time);
-        
-        // Fixed syntax interpolation token string format error
         const navUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(query)}&destination=${hospital.lat},${hospital.lng}`;
         
         cardElement.innerHTML = `
