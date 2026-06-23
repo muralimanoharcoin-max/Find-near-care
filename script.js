@@ -115,3 +115,16 @@ window.addEventListener('resize', () => {
         map.invalidateSize();
     }
 });
+// Converts raw minutes (e.g., 137) into a readable "X hr Y min" format
+function formatTravelTime(totalMinutes) {
+    // Extract the numeric digits out of strings like "117 min" or 117
+    const mins = parseInt(totalMinutes, 10);
+    
+    if (isNaN(mins)) return totalMinutes; // Fallback if string format is unexpected
+    if (mins < 60) return `${mins} min`;
+    
+    const hours = Math.floor(mins / 60);
+    const remainingMins = mins % 60;
+    
+    return remainingMins > 0 ? `${hours} hr ${remainingMins} min` : `${hours} hr`;
+}
