@@ -33,15 +33,35 @@ function triggerSearch() {
   }
 }
 
+/**
+ * Smart Helper to format minutes into a combination of hours and minutes if needed
+ */
+function formatTravelTime(totalMinutes) {
+  const mins = Math.round(totalMinutes);
+  if (mins < 60) {
+    return `${mins} min`;
+  }
+  const hours = Math.floor(mins / 60);
+  const remainingMins = mins % 60;
+  return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours}h`;
+}
+
 async function searchLocation(query) {
   // Turn on active visual processing animation
   document.getElementById('mac-spinner').classList.remove('hidden');
+  
+  // Hide empty state animation template by default on new execution
+  document.getElementById('no-results-state').classList.add('hidden');
+
   try {
     const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
     let response = await fetch(geocodeUrl).then(x => x.json());
 
+    // Trigger premium animated logo layout when results are absent
     if (response.length === 0) {
-      alert("Location not found. Please try another search term.");
+      document.getElementById("results").innerHTML = "";
+      document.getElementById('address-slider-track').innerHTML = "";
+      document.getElementById('no-results-state').classList.remove('hidden');
       document.getElementById('mac-spinner').classList.add('hidden');
       return;
     }
@@ -77,14 +97,22 @@ async function searchLocation(query) {
       }
     }
 
+    // Trigger premium animated logo layout if OSRM brings back no valid travel branches
+    if (results.length === 0) {
+      document.getElementById("results").innerHTML = "";
+      document.getElementById('address-slider-track').innerHTML = "";
+      document.getElementById('no-results-state').classList.remove('hidden');
+      return;
+    }
+
     // Proximity logic
     results.sort((a, b) => a.min - b.min);
 
     let html = "";
     results.forEach((x, index) => {
-      // Fixed template backtick syntax parsing bug perfectly
       const mapsUrl = x.gmap || `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${x.lat},${x.lon}`;
-      const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${x.min.toFixed(0)} mins). Route: ${mapsUrl}`);
+      const timeDisplay = formatTravelTime(x.min);
+      const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${timeDisplay}). Route: ${mapsUrl}`);
       
       const isNearest = index === 0 ? "nearest-card" : "";
       const badge = index === 0 ? `<span class="badge">⭐ NEAREST</span>` : "";
@@ -95,7 +123,7 @@ async function searchLocation(query) {
           <b>${x.name}</b> ${badge}
         </div>
         <div class="card-body">
-          🚗 ${x.km.toFixed(1)} km &nbsp;|&nbsp; ⏱️ ${x.min.toFixed(0)} min
+          🚗 ${x.km.toFixed(1)} km &nbsp;|&nbsp; ⏱️ ${timeDisplay}
         </div>
         <div class="card-actions">
           <a class="action-btn" target="_blank" href="${mapsUrl}">🗺️ Navigate</a>
@@ -112,7 +140,9 @@ async function searchLocation(query) {
 
   } catch (error) {
     console.error("Search error:", error);
-    alert("Error fetching routing details.");
+    // If runtime exceptions strike, ensure app gracefully triggers the animated fallback state
+    document.getElementById("results").innerHTML = "";
+    document.getElementById('no-results-state').classList.remove('hidden');
   } finally {
     document.getElementById('mac-spinner').classList.add('hidden');
   }
@@ -140,11 +170,14 @@ function updateBottomSlider(sortedResults) {
         const isFirst = index === 0;
         const slide = document.createElement('div');
         slide.className = `slider-card ${isFirst ? 'nearest-card' : ''}`;
+        
+        const timeDisplay = formatTravelTime(h.min);
+        
         slide.innerHTML = `
             <div class="slide-title">
                <span>${h.name}</span> ${isFirst ? '📍' : ''}
             </div>
-            <p class="slide-text">🚗 ${h.km.toFixed(1)} km away (${h.min.toFixed(0)} mins)</p>
+            <p class="slide-text">🚗 ${h.km.toFixed(1)} km away (${timeDisplay})</p>
             <a href="${h.gmap}" target="_blank" class="action-btn secondary" style="font-size:0.65rem; padding:4px 8px;">Map Route</a>
         `;
         track.appendChild(slide);
