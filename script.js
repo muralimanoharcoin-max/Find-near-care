@@ -1,219 +1,170 @@
-// ==========================================================================
-// 1. COMPREHENSIVE HOSPITAL KNOWLEDGE REGISTRY (JSON Structure Verified)
-// ==========================================================================
-const hospitalDatabase = [
-    { name: "CARE Mumbai Central", lat: 19.0760, lng: 72.8777, desc: "Dr. E Borges Rd, Parel", phone: "9999999991", dist: "3.5 km", time: "12 min", keywords: ["mumbai", "central", "parel", "maharashtra", "landmark borges", "village"] },
-    { name: "CARE Banjara Hills", lat: 17.4138, lng: 78.4328, desc: "Road No. 1, Banjara Hills", phone: "9999999992", dist: "8.2 km", time: "52 min", keywords: ["hyderabad", "banjara hills", "road no 1", "telangana", "landmark gvk"] },
-    { name: "CARE HITEC City", lat: 17.4483, lng: 78.3741, desc: "Near Cyber Towers, HITEC City", phone: "9999999993", dist: "14.0 km", time: "135 min", keywords: ["hyderabad", "hitech city", "cyber towers", "madhapur", "landmark cyber"] },
-    { name: "CARE Nagpur", lat: 21.1458, lng: 79.0882, desc: "Farmland, Ramdaspeth", phone: "9999999994", dist: "5.1 km", time: "18 min", keywords: ["nagpur", "ramdaspeth", "farmland", "maharashtra", "landmark wardha"] },
-    { name: "CARE Indore", lat: 22.7196, lng: 75.8577, desc: "Vijay Nagar, Scheme 54", phone: "9999999995", dist: "11.7 km", time: "84 min", keywords: ["indore", "vijay nagar", "scheme 54", "madhya pradesh", "landmark malhar"] }
-];
+// Initialize map using exactly your setup coordinate profile
+let map = L.map('map').setView([17.414, 78.446], 6);
+let searchMarker = null;
 
-const suggestionsDictionary = [
-    { text: "Mumbai Central", type: "City Area" },
-    { text: "Banjara Hills", type: "District" },
-    { text: "HITEC City", type: "Tech Hub" },
-    { text: "Nagpur Center", type: "City" },
-    { text: "Indore Vijay Nagar", type: "Sub-Division" }
-];
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19
+}).addTo(map);
 
-// Levenshtein Algorithm for Smart Typo Matching
-function LevenshteinDistance(s, t) {
-    if (!s.length) return t.length;
-    if (!t.length) return s.length;
-    const arr = [];
-    for (let i = 0; i <= t.length; i++) { arr[i] = [i]; }
-    for (let j = 0; j <= s.length; j++) { arr[0][j] = j; }
-    for (let i = 1; i <= t.length; i++) {
-        for (let j = 1; j <= s.length; j++) {
-            arr[i][j] = t.charAt(i - 1) === s.charAt(j - 1) 
-                ? arr[i - 1][j - 1] 
-                : Math.min(arr[i - 1][j - 1] + 1, Math.min(arr[i][j - 1] + 1, arr[i - 1][j] + 1));
+let hospitals = [];
+
+// Read dynamically from your real data source
+fetch('care_locations.json')
+  .then(r => r.json())
+  .then(d => {
+    hospitals = d;
+    d.forEach(h => {
+      L.marker([h.lat, h.lon]).addTo(map).bindPopup(`<b>${h.name}</b>`);
+    });
+    // Generate initial baseline slide track at bootup
+    populateStaticSlider(d);
+  });
+
+function handleKeyPress(event) {
+  if (event.key === 'Enter') {
+    triggerSearch();
+  }
+}
+
+function triggerSearch() {
+  const query = document.getElementById("search").value;
+  if (query.trim() !== "") {
+    searchLocation(query);
+  }
+}
+
+async function searchLocation(query) {
+  // Turn on active visual processing animation
+  document.getElementById('mac-spinner').classList.remove('hidden');
+  try {
+    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`;
+    let response = await fetch(geocodeUrl).then(x => x.json());
+
+    if (response.length === 0) {
+      alert("Location not found. Please try another search term.");
+      document.getElementById('mac-spinner').classList.add('hidden');
+      return;
+    }
+
+    const targetLat = parseFloat(response[0].lat);
+    const targetLon = parseFloat(response[0].lon);
+    const targetCoords = [targetLat, targetLon];
+
+    map.setView(targetCoords, 11);
+    
+    if (searchMarker) map.removeLayer(searchMarker);
+    searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Your Search:</b> ${query}`).openPopup();
+
+    let results = [];
+
+    // Live calculations via your OSRM routing loops
+    for (let h of hospitals) {
+      const url = `https://router.project-osrm.org/route/v1/driving/${targetLon},${targetLat};${h.lon},${h.lat}?overview=false`;
+      try {
+        let r = await fetch(url).then(x => x.json());
+        if (r.routes && r.routes.length > 0) {
+          results.push({
+            name: h.name,
+            km: r.routes[0].distance / 1000,
+            min: r.routes[0].duration / 60,
+            lat: h.lat,
+            lon: h.lon,
+            gmap: h.gmap
+          });
         }
+      } catch(e) {
+        console.error("OSRM Route step skipped:", e);
+      }
     }
-    return arr[t.length][s.length];
-}
 
-function verifyMatchToken(query, keywordsArray) {
-    return keywordsArray.some(keyword => {
-        if (keyword.includes(query) || query.includes(keyword)) return true;
-        const words = keyword.split(' ');
-        return words.some(w => LevenshteinDistance(query, w) <= 2);
-    });
-}
+    // Proximity logic
+    results.sort((a, b) => a.min - b.min);
 
-// ==========================================================================
-// 2. CORE SEARCH & NAVIGATION SYSTEM (String Typo Fix Enforced)
-// ==========================================================================
-let processingTimeout = null;
+    let html = "";
+    results.forEach((x, index) => {
+      // Fixed template backtick syntax parsing bug perfectly
+      const mapsUrl = x.gmap || `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${x.lat},${x.lon}`;
+      const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${x.min.toFixed(0)} mins). Route: ${mapsUrl}`);
+      
+      const isNearest = index === 0 ? "nearest-card" : "";
+      const badge = index === 0 ? `<span class="badge">⭐ NEAREST</span>` : "";
 
-function performLiveQuery() {
-    document.getElementById('mac-spinner').classList.remove('hidden');
-    if (processingTimeout) clearTimeout(processingTimeout);
-    processingTimeout = setTimeout(() => {
-        executeSearch();
-        document.getElementById('mac-spinner').classList.add('hidden');
-    }, 250);
-}
-
-function executeSearch() {
-    const query = document.getElementById('search-input').value.trim().toLowerCase();
-    const resultsContainer = document.getElementById('results');
-    
-    if (!query) {
-        renderDefaultPlaceholder();
-        return;
-    }
-    
-    const matches = hospitalDatabase.filter(h => 
-        h.name.toLowerCase().includes(query) || 
-        h.desc.toLowerCase().includes(query) ||
-        verifyMatchToken(query, h.keywords)
-    );
-    
-    resultsContainer.innerHTML = '';
-    
-    if (matches.length === 0) {
-        resultsContainer.innerHTML = `
-            <div class="welcome-placeholder" style="border-color: rgba(239, 68, 68, 0.3)">
-                <h3 style="color: #ef4444">Zero Context Matches Located</h3>
-                <p>No facilities match that configuration. Try searching 'Banjara' or 'Mumbai'.</p>
-            </div>
-        `;
-        return;
-    }
-    
-    const outputSelection = matches.slice(0, 5);
-    const primaryNearestName = outputSelection[0].name;
-    
-    outputSelection.forEach((hospital, index) => {
-        const isNearest = index === 0;
-        const cardElement = document.createElement('div');
-        cardElement.className = `card ${isNearest ? 'nearest-card' : ''}`;
-        
-        const formattedTime = convertMetricDuration(hospital.time);
-        const navUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(query)}&destination=${hospital.lat},${hospital.lng}`;
-        
-        cardElement.innerHTML = `
-            <div class="card-header">
-                <span>${hospital.name}</span>
-                ${isNearest ? '<span class="badge">NEAREST</span>' : ''}
-            </div>
-            <div class="card-body">
-                <p style="margin: 0 0 6px 0; color: #e2e8f0;">${hospital.desc}</p>
-                <span style="font-size:0.75rem; color:#64748b;">🚗 ${hospital.dist} | ⏱️ ${formattedTime}</span>
-            </div>
-            <div class="card-actions">
-                <a href="${navUrl}" target="_blank" class="action-btn">Route Track</a>
-                <a href="https://wa.me/${hospital.phone}" target="_blank" class="action-btn wa-btn">WhatsApp</a>
-            </div>
-        `;
-        resultsContainer.appendChild(cardElement);
+      html += `
+      <div class="card ${isNearest}">
+        <div class="card-header">
+          <b>${x.name}</b> ${badge}
+        </div>
+        <div class="card-body">
+          🚗 ${x.km.toFixed(1)} km &nbsp;|&nbsp; ⏱️ ${x.min.toFixed(0)} min
+        </div>
+        <div class="card-actions">
+          <a class="action-btn" target="_blank" href="${mapsUrl}">🗺️ Navigate</a>
+          <button class="action-btn secondary" onclick="copyLink('${mapsUrl}')">🔗 Copy Link</button>
+          <a class="action-btn wa-btn" target="_blank" href="https://api.whatsapp.com/send?text=${shareText}">💬 WhatsApp</a>
+        </div>
+      </div>`;
     });
 
-    generateSlidingTrack(primaryNearestName, query);
+    document.getElementById("results").innerHTML = html;
+    
+    // Update bottom layout row to reflect sorted proximity context matches
+    updateBottomSlider(results);
+
+  } catch (error) {
+    console.error("Search error:", error);
+    alert("Error fetching routing details.");
+  } finally {
+    document.getElementById('mac-spinner').classList.add('hidden');
+  }
 }
 
-function generateSlidingTrack(nearestName, currentOrigin) {
+function populateStaticSlider(dataList) {
     const track = document.getElementById('address-slider-track');
     track.innerHTML = '';
-    
-    hospitalDatabase.forEach(hospital => {
-        const checkAlert = hospital.name === nearestName;
-        const originParam = currentOrigin ? encodeURIComponent(currentOrigin) : 'Current+Location';
-        const directionalUrl = `https://www.google.com/maps/dir/?api=1&origin=${originParam}&destination=${hospital.lat},${hospital.lng}`;
-        
+    dataList.forEach(h => {
         const slide = document.createElement('div');
-        slide.className = `slider-card ${checkAlert ? 'blink-pulse-alert' : ''}`;
-        
+        slide.className = 'slider-card';
         slide.innerHTML = `
-            <div class="slide-title">
-                <span>${hospital.name}</span>
-                ${checkAlert ? '📍' : ''}
-            </div>
-            <p class="slide-text">${hospital.desc}</p>
-            <div class="slide-foot">
-                <span style="font-size:0.7rem; color:rgba(255,255,255,0.3)">Contact: ${hospital.phone}</span>
-                <a href="${directionalUrl}" target="_blank" class="action-btn secondary" style="font-size:0.68rem; padding:4px 8px;">Map Directions</a>
-            </div>
+            <div class="slide-title">${h.name}</div>
+            <p class="slide-text">Lat: ${h.lat.toFixed(4)} | Lon: ${h.lon.toFixed(4)}</p>
+            <a href="${h.gmap}" target="_blank" class="action-btn secondary" style="font-size:0.65rem; padding:4px 8px;">View Node Map</a>
         `;
         track.appendChild(slide);
     });
 }
 
-function renderDefaultPlaceholder() {
-    const resultsContainer = document.getElementById('results');
-    resultsContainer.innerHTML = `
+function updateBottomSlider(sortedResults) {
+    const track = document.getElementById('address-slider-track');
+    track.innerHTML = '';
+    sortedResults.forEach((h, index) => {
+        const isFirst = index === 0;
+        const slide = document.createElement('div');
+        slide.className = `slider-card ${isFirst ? 'nearest-card' : ''}`;
+        slide.innerHTML = `
+            <div class="slide-title">
+               <span>${h.name}</span> ${isFirst ? '📍' : ''}
+            </div>
+            <p class="slide-text">🚗 ${h.km.toFixed(1)} km away (${h.min.toFixed(0)} mins)</p>
+            <a href="${h.gmap}" target="_blank" class="action-btn secondary" style="font-size:0.65rem; padding:4px 8px;">Map Route</a>
+        `;
+        track.appendChild(slide);
+    });
+}
+
+function copyLink(url) {
+  navigator.clipboard.writeText(url).then(() => {
+    alert("Google Maps route link copied to clipboard!");
+  }).catch(() => {
+    alert("Failed to copy link automatically.");
+  });
+}
+
+// Setup initial static state display layout context boundaries
+window.addEventListener('DOMContentLoaded', () => {
+    document.getElementById("results").innerHTML = `
         <div class="welcome-placeholder">
             <h3>Find Near CARE Active Workspace</h3>
-            <p>Begin typing inside the upper console area. Intelligence matrices compute results natively into this panel layout frame.</p>
+            <p>Begin typing inside the upper input console bar. Live geolocation routing matrices compute results instantly.</p>
         </div>
     `;
-    generateSlidingTrack(null, '');
-}
-
-function convertMetricDuration(timeString) {
-    const totalMinutes = parseInt(timeString, 10);
-    if (isNaN(totalMinutes)) return timeString;
-    if (totalMinutes < 60) return `${totalMinutes} mins`;
-    return `${Math.floor(totalMinutes / 60)} hr ${totalMinutes % 60} min`;
-}
-
-function manageSuggestionsDropdown() {
-    const inputField = document.getElementById('search-input');
-    const dropdown = document.getElementById('suggestions-box');
-    const entry = inputField.value.trim().toLowerCase();
-    
-    if (!entry) { dropdown.classList.add('hidden'); return; }
-    
-    const filteredSuggestions = suggestionsDictionary.filter(item => 
-        item.text.toLowerCase().includes(entry) || 
-        LevenshteinDistance(entry, item.text.toLowerCase().split(' ')[0]) <= 2
-    );
-    
-    if (filteredSuggestions.length === 0) { dropdown.classList.add('hidden'); return; }
-    
-    dropdown.innerHTML = '';
-    dropdown.classList.remove('hidden');
-    
-    filteredSuggestions.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'suggestion-item';
-        itemElement.innerHTML = `<span>${item.text}</span><span class="suggestion-type">${item.type}</span>`;
-        itemElement.addEventListener('click', () => {
-            inputField.value = item.text;
-            dropdown.classList.add('hidden');
-            executeSearch();
-        });
-        dropdown.appendChild(itemElement);
-    });
-}
-
-// ==========================================================================
-// 3. APPLICATION LIFECYCLE
-// ==========================================================================
-window.addEventListener('DOMContentLoaded', () => {
-    renderDefaultPlaceholder();
-    executeSearch();
-    
-    const textInput = document.getElementById('search-input');
-    textInput.addEventListener('input', () => {
-        performLiveQuery();
-        manageSuggestionsDropdown();
-    });
-    textInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            document.getElementById('suggestions-box').classList.add('hidden');
-            executeSearch();
-        }
-    });
-    document.getElementById('search-button').addEventListener('click', () => {
-        document.getElementById('suggestions-box').classList.add('hidden');
-        executeSearch();
-    });
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.search-container')) {
-            document.getElementById('suggestions-box').classList.add('hidden');
-        }
-    });
 });
