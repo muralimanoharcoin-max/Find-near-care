@@ -37,13 +37,14 @@ body {
   gap: 14px;
 }
 
-/* CLEAN VECTOR COUPLING: Direct alpha map visibility using brightness boosts to make the dark elements pop on the dark layout gradient background */
+/* FIXED LOGO RENDERING ENGINE: Employs blend-multiplication to isolate and delete white background pixels while keeping true logo colors intact */
 .care-logo {
-  height: 34px !important;
+  height: 44px !important;
   width: auto !important;
   object-fit: contain;
   display: block;
-  filter: brightness(0) invert(1); /* Converts the dark logo into pristine white to contrast with dark mode */
+  mix-blend-mode: multiply;
+  filter: contrast(1.15) brightness(1.1);
 }
 
 /* Premium Apple Typography Design Rules */
@@ -264,14 +265,16 @@ button:hover {
   z-index: 1;
 }
 
+/* FIXED EMPTY STATE IMAGE: Merges perfectly into background canvas while restoring native pink and cyan logo colors */
 img.magic-logo {
-  width: 140px !important;
+  width: 110px !important;
   height: auto !important;
   object-fit: contain !important;
   display: block;
   margin-bottom: 24px;
   z-index: 2;
-  filter: brightness(0) invert(1); /* Direct vector mask color fill inversion */
+  mix-blend-mode: multiply;
+  filter: contrast(1.15) brightness(1.1);
   animation: magicFloat 4.5s infinite ease-in-out;
 }
 
