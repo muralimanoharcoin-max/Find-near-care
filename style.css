@@ -54,8 +54,8 @@ body {
 
 /* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
 .care-logo {
-  width: 60px !important;
-  height: 60px !important;
+  width: 69px !important;
+  height: 69px !important;
   object-fit: contain !important;
   display: block !important;
   }
@@ -98,7 +98,7 @@ body {
 
 /* Metallic Silver Light Shine Overlay Effect */
 .mac-credits::after {
-  content: '';
+  content: 'test';
   position: absolute;
   top: 0;
   left: -150%;
@@ -325,7 +325,49 @@ button:hover {
   max-width: 280px;
   text-align: center;
 }
+/* OUTER DOTED RADAR RING: Rainbow gradient ring rotating clockwise */
+.magic-container::before {
+  content: '';
+  position: absolute;
+  top: -18px; /* Perfectly centered behind the 64px logo */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  
+  /* Creates the high-tech dotted pattern using border styling */
+  border: 2px dotted transparent;
+  background: linear-gradient(135deg, #3b82f6, #a855f7, #10b981, #f59e0b) border-box;
+  
+  /* Mask keeps only the dotted border visible, hiding the inner solid color fill */
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+  animation: radarClockwise 8s linear infinite;
+  z-index: 1;
+}
 
+/* INNER DOTTED RADAR RING: Tight counter-rotating ring for complexity */
+.magic-container::after {
+  content: '';
+  position: absolute;
+  top: -8px; 
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  
+  border: 1.5px dotted transparent;
+  background: linear-gradient(-135deg, #ec4899, #3b82f6, #06b6d4) border-box;
+  
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  
+  opacity: 0.75;
+  animation: radarCounterClockwise 5s linear infinite;
+  z-index: 1;
+}
 .magic-glow {
   position: absolute;
   top: -15px;
