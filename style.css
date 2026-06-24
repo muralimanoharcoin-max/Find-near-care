@@ -3,7 +3,7 @@ body {
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: linear-gradient(135deg, #0f172a, #1e293b) !important;
   color: #f8fafc;
-  height: 100vh;
+  height: 98vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -53,8 +53,8 @@ body {
 }
 
 .care-logo {
-  width: 85% !important;
-  height: 85% !important;
+  width: 35% !important;
+  height: 35% !important;
   object-fit: contain;
   display: block;
 }
@@ -166,7 +166,7 @@ button:hover {
 
 #map {
   flex: 1;
-  height: 100%; 
+  height: 98%; 
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
