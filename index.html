@@ -14,11 +14,14 @@
 
 <div class="glass header">
   <div class="header-top">
-    <!-- Inside the Header Container -->
-<div class="logo-area">
-  <img src="https://logosandtypes.com/wp-content/uploads/2024/01/Care-Hospitals.png" alt="CARE Logo" class="care-logo">
-  <h1 class="apple-bold-title">Find Near CARE</h1>
-</div>
+    <div class="logo-area">
+      <!-- FIXED: Wrapped in a protective container badge to prevent broken transparency rendering -->
+      <div class="logo-badge">
+        <img src="Care-Hospitals_2.png" alt="CARE Logo" class="care-logo">
+      </div>
+      <h1 class="apple-bold-title">Find Near CARE</h1>
+    </div>
+    
     <div class="mac-credits">
       <span class="credits-text">Designed & Developed by our agent Murali Manohar •2026•</span>
     </div>
@@ -30,7 +33,7 @@
       <!-- Apple Processing Spinner Element -->
       <div id="mac-spinner" class="mac-spinner hidden"></div>
     </div>
-    <button onclick="triggerSearch()">Search</button>
+    <button onclick="triggerSearch()">🔍 Search</button>
   </div>
 </div>
 
@@ -43,10 +46,12 @@
     <div id="no-results-state" class="hidden">
       <div class="magic-container">
         <div class="magic-glow"></div>
-        <!-- FIXED: Direct source integration into the glowing animation array -->
-        <img src="https://logosandtypes.com/wp-content/uploads/2024/01/Care-Hospitals.png" alt="CARE Magic Logo" class="magic-logo">
-        <p class="magic-text">try searching with City/area.</p>
-        <span class="mmagic-subtext>Try refining your search keywords</span>
+        <!-- FIXED: Wrapped in the magic floating badge container -->
+        <div class="magic-badge-wrapper">
+          <img src="Care-Hospitals_2.png" alt="CARE Magic Logo" class="magic-logo">
+        </div>
+        <p class="magic-text">No hospitals found matching your area.</p>
+        <span class="magic-subtext">Try refining your search keywords</span>
       </div>
     </div>
   </div>
