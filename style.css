@@ -54,8 +54,8 @@ body {
 
 /* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
 .care-logo {
-  width: 32px !important;
-  height: 32px !important;
+  width: 60px !important;
+  height: 60px !important;
   object-fit: contain !important;
   display: block !important;
   }
@@ -356,11 +356,11 @@ button:hover {
 
 /* FIXED MAGIC PANEL LOGO: Forces the asset into a beautifully balanced, floating layout size */
 .magic-logo {
-  width: 64px !important;
-  height: 64px !important;
+  width: 94px !important;
+  height: 94px !important;
   object-fit: contain !important;
   display: block !important;
-  margin-bottom: 16px !important;
+  margin-bottom: 8px !important;
   z-index: 2 !important;
   animation: magicFloat 4.5s infinite ease-in-out;
 }
