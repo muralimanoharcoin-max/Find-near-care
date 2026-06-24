@@ -29,27 +29,6 @@ function triggerSearch() {
   const searchInput = document.getElementById('search').value;
   const spinner = document.getElementById('mac-spinner');
   
-  if (!searchInput.trim()) return; // Don't do anything if search is empty
-
-  // 1. SHOW THE SPINNER (Remove the hidden class)
-  spinner.classList.remove('hidden');
-
-  // Simulate or execute your actual fetch/search engine logic
-  // Replace this setTimeout block with your real fetch API call if you have one
-  setTimeout(() => {
-    
-    /* ========================================================
-       YOUR EXISTING SEARCH / HOSPITAL FILTER LOGIC GOES HERE
-       ======================================================== */
-    console.log("Searching for:", searchInput);
-
-    // 2. HIDE THE SPINNER WHEN DONE (Add the hidden class back)
-    spinner.classList.add('hidden');
-
-  }, 1500); // Simulates a 1.5 second loading delay
-}
-
-
 /**
  * Custom travel conversion utility processing hours and minutes elegantly
  */
