@@ -1,13 +1,23 @@
+// Initialize Leaflet Map Engine centered on regional coords
+let map = L.map('map').setView([17.414, 78.446], 6);
+let searchMarker = null;
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19
+}).addTo(map);
+
 let hospitals = [];
 
-// Load the local database configuration cleanly
+// Fetch data from local data payload
 fetch('care_locations.json')
   .then(r => r.json())
   .then(d => {
     hospitals = d;
-    populateStaticSlider(d);
+    d.forEach(h => {
+      L.marker([h.lat, h.lon]).addTo(map).bindPopup(`<b>${h.name}</b>`);
+    });
   })
-  .catch(err => console.error("Error loading JSON:", err));
+  .catch(err => console.error("Error loading JSON file structure:", err));
 
 function handleKeyPress(event) {
   if (event.key === 'Enter') {
@@ -23,13 +33,11 @@ function triggerSearch() {
 }
 
 /**
- * Converts minutes automatically to readable hours and minutes strings
+ * Custom travel conversion utility processing hours and minutes elegantly
  */
 function formatTravelTime(totalMinutes) {
   const mins = Math.round(totalMinutes);
-  if (mins < 60) {
-    return `${mins} min`;
-  }
+  if (mins < 60) return `${mins} min`;
   const hours = Math.floor(mins / 60);
   const remainingMins = mins % 60;
   return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours}h`;
@@ -48,13 +56,15 @@ function closeMatch(str1, str2) {
 }
 
 async function searchLocation(query) {
+  // Clear lists, trigger processing state spin arrays
   document.getElementById('mac-spinner').classList.remove('hidden');
   document.getElementById('no-results-state').classList.add('hidden');
-  
+  document.getElementById("results").innerHTML = "";
+
   try {
     let cleanQuery = query.trim();
-    const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
     
+    const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
     for (let hub of coreHubs) {
       if (closeMatch(cleanQuery, hub)) {
         cleanQuery = hub; 
@@ -73,24 +83,33 @@ async function searchLocation(query) {
 
     const targetLat = parseFloat(response[0].lat);
     const targetLon = parseFloat(response[0].lon);
+    const targetCoords = [targetLat, targetLon];
+
+    map.setView(targetCoords, 12);
+    setTimeout(() => { map.invalidateSize(); }, 200);
+    
+    if (searchMarker) map.removeLayer(searchMarker);
+    searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Search Location:</b> ${cleanQuery}`).openPopup();
+
     let results = [];
 
+    // OSRM Engine Network Routing Matrix
     for (let h of hospitals) {
       const url = `https://router.project-osrm.org/route/v1/driving/${targetLon},${targetLat};${h.lon},${h.lat}?overview=false`;
       try {
         let r = await fetch(url).then(x => x.json());
         if (r.routes && r.routes.length > 0) {
-          // Normalizes data keys safely matching care_locations.json standard mapping variables
-          const chosenGmap = h.gmap || h.googleMaps || `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${h.lat},${h.lon}`;
           results.push({
             name: h.name,
             km: r.routes[0].distance / 1000,
             min: r.routes[0].duration / 60,
-            gmap: chosenGmap
+            lat: h.lat,
+            lon: h.lon,
+            gmap: h.gmap || h.googleMaps
           });
         }
-      } catch(e) {
-        console.error("OSRM route step failed:", e);
+      } catch (e) {
+        console.error("Routing error instance:", e);
       }
     }
 
@@ -99,12 +118,15 @@ async function searchLocation(query) {
       return;
     }
 
+    // Sort outputs starting with the closest facility
     results.sort((a, b) => a.min - b.min);
 
     let html = "";
     results.forEach((x, index) => {
+      const mapsUrl = x.gmap || `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${x.lat},${x.lon}&travelmode=driving`;
       const timeDisplay = formatTravelTime(x.min);
-      const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${timeDisplay}). Route: ${x.gmap}`);
+      const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${timeDisplay}). Route: ${mapsUrl}`);
+      
       const isNearest = index === 0 ? "nearest-card" : "";
       const badge = index === 0 ? `<span class="badge">⭐ NEAREST</span>` : "";
 
@@ -114,73 +136,42 @@ async function searchLocation(query) {
           <b>${x.name}</b> ${badge}
         </div>
         <div class="card-body">
-          🚗 ${x.km.toFixed(1)} km  |  ⏱️ ${timeDisplay}
+          🚗 ${x.km.toFixed(1)} km &nbsp;|&nbsp; ⏱️ ${timeDisplay}
         </div>
         <div class="card-actions">
-          <a class="action-btn" target="_blank" href="${x.gmap}">🗺️ Navigate</a>
-          <button class="action-btn secondary" onclick="copyLink('${x.gmap}')">🔗 Copy</button>
+          <a class="action-btn" target="_blank" href="${mapsUrl}">🗺️ Navigate</a>
+          <button class="action-btn secondary" onclick="copyLink('${mapsUrl}')">🔗 Copy</button>
           <a class="action-btn wa-btn" target="_blank" href="https://api.whatsapp.com/send?text=${shareText}">💬 WhatsApp</a>
         </div>
       </div>`;
     });
 
     document.getElementById("results").innerHTML = html;
-    updateBottomSlider(results);
 
   } catch (error) {
-    console.error("Search operations error:", error);
+    console.error("Global operational error context:", error);
     clearViews();
   } finally {
+    // Hide standard loading wheel array indicator
     document.getElementById('mac-spinner').classList.add('hidden');
   }
 }
 
 function clearViews() {
   document.getElementById("results").innerHTML = "";
-  document.getElementById('address-slider-track').innerHTML = "";
   document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
 }
 
-function populateStaticSlider(dataList) {
-    const track = document.getElementById('address-slider-track');
-    track.innerHTML = '';
-    dataList.forEach(h => {
-        const slide = document.createElement('div');
-        slide.className = 'slider-card';
-        slide.innerHTML = `<div class="slide-title">${h.name}</div><p class="slide-text">Node Online</p>`;
-        track.appendChild(slide);
-    });
-}
-
-function updateBottomSlider(sortedResults) {
-    const track = document.getElementById('address-slider-track');
-    track.innerHTML = '';
-    sortedResults.forEach((h, index) => {
-        const isFirst = index === 0;
-        const slide = document.createElement('div');
-        slide.className = `slider-card ${isFirst ? 'nearest-card' : ''}`;
-        slide.innerHTML = `
-            <div class="slide-title">${h.name} ${isFirst ? '📍' : ''}</div>
-            <p class="slide-text">🚗 ${h.km.toFixed(1)} km (${formatTravelTime(h.min)})</p>
-        `;
-        track.appendChild(slide);
-    });
-}
-
 function copyLink(url) {
   navigator.clipboard.writeText(url).then(() => {
-    alert("Google Maps route link copied to clipboard!");
-  }).catch(() => {
-    alert("Failed to copy link automatically.");
+    alert("Navigation route link copied to clipboard!");
+  }).catch(err => {
+    console.error("Could not copy string text: ", err);
   });
 }
 
+// Ensure interface boots up cleanly with magic logo view visible
 window.addEventListener('DOMContentLoaded', () => {
-    document.getElementById("results").innerHTML = `
-        <div class="welcome-placeholder">
-            <h3>Find Near CARE Dashboard</h3>
-            <p>Enter an area above to compute live traveling matrices instantly.</p>
-        </div>
-    `;
+  clearViews();
 });
