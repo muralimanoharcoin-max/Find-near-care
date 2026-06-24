@@ -37,14 +37,26 @@ body {
   gap: 14px;
 }
 
-/* FIXED LOGO RENDERING ENGINE: Employs blend-multiplication to isolate and delete white background pixels while keeping true logo colors intact */
+/* FIXED CONTAINER: Creates a clean round white backing badge container so the logo shows perfectly on dark screens */
+.logo-badge {
+  width: 42px;
+  height: 42px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
 .care-logo {
-  height: 44px !important;
-  width: auto !important;
+  width: 85% !important;
+  height: 85% !important;
   object-fit: contain;
   display: block;
-  mix-blend-mode: multiply;
-  filter: contrast(1.15) brightness(1.1);
 }
 
 /* Premium Apple Typography Design Rules */
@@ -257,25 +269,36 @@ button:hover {
 .magic-glow {
   position: absolute;
   top: -15px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.28) 0%, rgba(147, 51, 234, 0) 70%);
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(147, 51, 234, 0) 70%);
   border-radius: 50%;
   animation: magicPulse 3.5s infinite ease-in-out;
   z-index: 1;
 }
 
-/* FIXED EMPTY STATE IMAGE: Merges perfectly into background canvas while restoring native pink and cyan logo colors */
+/* Fixed container setup for the floating animation magic state */
+.magic-badge-wrapper {
+  width: 100px;
+  height: 100px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  margin-bottom: 22px;
+  z-index: 2;
+  animation: magicFloat 4.5s infinite ease-in-out;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
 img.magic-logo {
-  width: 110px !important;
-  height: auto !important;
+  width: 90% !important;
+  height: 90% !important;
   object-fit: contain !important;
   display: block;
-  margin-bottom: 24px;
-  z-index: 2;
-  mix-blend-mode: multiply;
-  filter: contrast(1.15) brightness(1.1);
-  animation: magicFloat 4.5s infinite ease-in-out;
 }
 
 .magic-text {
@@ -310,7 +333,7 @@ img.magic-logo {
 
 @keyframes magicPulse {
   0%, 100% { transform: scale(0.85); opacity: 0.4; }
-  50% { transform: scale(1.2); opacity: 0.85; }
+  50% { transform: scale(1.2) opacity: 0.85; }
 }
 
 /* RESPONSIVE MOBILE MODES */
