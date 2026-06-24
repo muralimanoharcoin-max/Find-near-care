@@ -54,8 +54,8 @@ body {
 
 /* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
 .care-logo {
-  width: 24px !important;
-  height: 24px !important;
+  width: 32px !important;
+  height: 32px !important;
   object-fit: contain !important;
   display: block !important;
   }
