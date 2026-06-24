@@ -8,7 +8,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 let hospitals = [];
 
-// Fetch data from local data payload
+// Fetch data from local configuration payload
 fetch('care_locations.json')
   .then(r => r.json())
   .then(d => {
@@ -56,7 +56,7 @@ function closeMatch(str1, str2) {
 }
 
 async function searchLocation(query) {
-  // Clear lists, trigger processing state spin arrays
+  // Clear lists, trigger processing loading icons
   document.getElementById('mac-spinner').classList.remove('hidden');
   document.getElementById('no-results-state').classList.add('hidden');
   document.getElementById("results").innerHTML = "";
@@ -149,10 +149,9 @@ async function searchLocation(query) {
     document.getElementById("results").innerHTML = html;
 
   } catch (error) {
-    console.error("Global operational error context:", error);
+    console.error("Global operational error:", error);
     clearViews();
   } finally {
-    // Hide standard loading wheel array indicator
     document.getElementById('mac-spinner').classList.add('hidden');
   }
 }
@@ -171,7 +170,7 @@ function copyLink(url) {
   });
 }
 
-// Ensure interface boots up cleanly with magic logo view visible
+// Initial boot settings
 window.addEventListener('DOMContentLoaded', () => {
   clearViews();
 });
