@@ -98,7 +98,7 @@ body {
 
 /* Metallic Silver Light Shine Overlay Effect */
 .mac-credits::after {
-  content: 'test';
+  content: ' ';
   position: absolute;
   top: 0;
   left: -150%;
@@ -327,7 +327,7 @@ button:hover {
 }
 /* OUTER DOTED RADAR RING: Rainbow gradient ring rotating clockwise */
 .magic-container::before {
-  content: 'test';
+  content: ' ';
   position: absolute;
   top: 18px; /* Perfectly centered behind the 64px logo */
   width: 100px;
