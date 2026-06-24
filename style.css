@@ -52,12 +52,13 @@ body {
   box-sizing: border-box;
 }
 
+/* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
 .care-logo {
-  width: 35% !important;
-  height: 35% !important;
-  object-fit: contain;
-  display: block;
-}
+  width: 42px !important;
+  height: 42px !important;
+  object-fit: contain !important;
+  display: block !important;
+  }
 
 /* Premium Apple Typography Design Rules */
 .apple-bold-title {
@@ -294,11 +295,15 @@ button:hover {
   box-sizing: border-box;
 }
 
-img.magic-logo {
-  width: 90% !important;
-  height: 90% !important;
+/* FIXED MAGIC PANEL LOGO: Forces the asset into a beautifully balanced, floating layout size */
+.magic-logo {
+  width: 110px !important;
+  height: 110px !important;
   object-fit: contain !important;
-  display: block;
+  display: block !important;
+  margin-bottom: 24px !important;
+  z-index: 2 !important;
+  animation: magicFloat 4.5s infinite ease-in-out;
 }
 
 .magic-text {
