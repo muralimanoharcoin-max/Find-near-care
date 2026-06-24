@@ -39,8 +39,8 @@ body {
 
 /* FIXED CONTAINER: Creates a clean round white backing badge container so the logo shows perfectly on dark screens */
 .logo-badge {
-  width: 42px;
-  height: 42px;
+  width: 80px;
+  height: 80px;
   background-color: #ffffff;
   border-radius: 50%;
   display: flex;
@@ -54,8 +54,8 @@ body {
 
 /* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
 .care-logo {
-  width: 75px !important;
-  height: 75px !important;
+  width: 80px !important;
+  height: 80px !important;
   object-fit: contain !important;
   display: block !important;
   }
@@ -76,7 +76,7 @@ body {
   display: flex;
   align-items: center;
   padding: 6px 14px;
-  border-radius: 6px;
+  border-radius: 12px;
   
   /* Realistic brushed steel metallic baseline gradient */
   background: linear-gradient(145deg, #334155, #1e293b);
@@ -98,7 +98,7 @@ body {
 
 /* Metallic Silver Light Shine Overlay Effect */
 .mac-credits::after {
-  content: ' ';
+  content: '';
   position: absolute;
   top: 0;
   left: -150%;
@@ -107,7 +107,7 @@ body {
   
   /* Ultra-bright silver light bar */
   background: linear-gradient(
-    140deg,
+    90deg,
     rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 0.03) 25%,
     rgba(255, 255, 255, 0.45) 50%,
@@ -226,9 +226,9 @@ button:hover {
 
 #map {
   flex: 1;
-  height: 98%; 
+  height: 95%; 
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 5px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
 
@@ -327,9 +327,9 @@ button:hover {
 }
 /* OUTER DOTED RADAR RING: Rainbow gradient ring rotating clockwise */
 .magic-container::before {
-  content: ' ';
+  content: '';
   position: absolute;
-  top: 18px; /* Perfectly centered behind the 64px logo */
+  top: -8px; /* Perfectly centered behind the 64px logo */
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -423,7 +423,7 @@ button:hover {
   content: '';
   position: absolute;
   /* Centering Engine */
-  top: 32px; /* Positioned at the exact midpoint of your 64px logo */
+  top: 40px; /* Positioned at the exact midpoint of your 64px logo */
   left: 50%;
   width: 100px;
   height: 100px;
