@@ -26,9 +26,56 @@ function handleKeyPress(event) {
 }
 
 function triggerSearch() {
-  const searchInput = document.getElementById('search').value;
+  const query = document.getElementById('search').value.trim();
   const spinner = document.getElementById('mac-spinner');
+  const resultsContainer = document.getElementById('results');
+  const emptyState = document.getElementById('no-results-state');
+
+  if (!query) return;
+
+  // Show spinner
+  if (spinner) spinner.classList.remove('hidden');
+
+  /* ========================================================
+     1. RESET VIEW STATES: Hide empty panel & clear old cards
+     ======================================================== */
+  if (emptyState) emptyState.classList.add('hidden');
+  if (resultsContainer) resultsContainer.innerHTML = '';
+
+  // Simulate/Perform hospital filtering logic
+  setTimeout(() => {
+    if (spinner) spinner.classList.add('hidden');
+
+    // Example filtering check (Make sure your array variable matches your exact data array name)
+    const matched = hospitalData.filter(h => 
+      h.name.toLowerCase().includes(query.toLowerCase()) || 
+      h.address.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (matched.length === 0) {
+      /* ========================================================
+         2. SHOW EMPTY STATE IF NO MATCHES
+         ======================================================== */
+      if (emptyState) emptyState.classList.remove('hidden');
+    } else {
+      /* ========================================================
+         3. RENDER MATCHED RESULTS CARDS
+         ======================================================== */
+      if (emptyState) emptyState.classList.add('hidden'); // Guarantee it stays hidden
+      
+      matched.forEach(hospital => {
+        // Your existing card creation template logic goes here
+        resultsContainer.innerHTML += `
+          <div class="card">
+            <div class="card-header">${hospital.name}</div>
+            <div class="card-body">${hospital.address}</div>
+          </div>
+        `;
+      });
+    }
+  }, 400); 
 }
+
 /**
  * Custom travel conversion utility processing hours and minutes elegantly
  */
