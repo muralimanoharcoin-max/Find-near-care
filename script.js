@@ -28,7 +28,7 @@ function handleKeyPress(event) {
 function triggerSearch() {
   const searchInput = document.getElementById('search').value;
   const spinner = document.getElementById('mac-spinner');
-  
+}
 /**
  * Custom travel conversion utility processing hours and minutes elegantly
  */
