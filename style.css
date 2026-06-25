@@ -346,9 +346,10 @@ button:hover {
 
 .action-btn.wa-btn {
   background: #25d366;
-  }
+}
+
 /* ==========================================================================
-   INTERACTIVE EMPTY STATE ENGINE - PERFECT CONCENTRIC RINGS FIX
+   UPDATED: WIPRO-STYLE CONCENTRIC DOTTED LOOP ANIMATION ENGINE (CARE PURPLE)
    ========================================================================== */
 #no-results-state {
   display: flex;
@@ -359,7 +360,7 @@ button:hover {
   min-height: 260px;
 }
 
-/* THE MAGIC CONTAINER: Structural anchor centered for the pseudo rings */
+/* THE MAGIC CONTAINER: Structural center anchor for the purple dotted layers */
 .magic-container {
   position: relative;
   display: flex;
@@ -369,65 +370,73 @@ button:hover {
   text-align: center;
 }
 
-/* OUTSIDE SEPARATE RAINBOW DOTS ENGINE: Recentered for larger logo */
-.magic-container::before {
-  content: '';
+/* Master setup blueprint for the custom segmented loops using care purple (#897AB9) */
+.dotted-ring {
   position: absolute;
-  top: 45px; /* Re-aligned to the center of your new 90px logo */
+  top: 45px; /* Centered with the 90px logo element */
   left: 50%;
-  
-  width: 140px !important; /* Slightly widened so the bigger logo fits beautifully inside */
-  max-width: 140px !important;
-  height: 140px !important;
-  max-height: 140px !important;
-  border-radius: 50% !important;
-  
-  background: conic-gradient(#3b82f6, #a855f7, #06b6d4, #22c55e, #f59e0b, #3b82f6);
-  -webkit-mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
-  mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
-  
-  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.6));
-  animation: radarClockwise 14s linear infinite;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #897AB9 0%, rgba(137, 122, 185, 0.3) 50%, #897AB9 100%);
+  border: none;
+  pointer-events: none;
+  transform-origin: center center;
+}
+
+/* OUTER DOTTED LOOP: Widened loop radius with slow breathing pulse transformations */
+.dotted-ring.ring-outer {
+  width: 155px;
+  height: 155px;
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg), 
+                radial-gradient(circle, transparent 72px, #fff 73px);
+  mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg), 
+        radial-gradient(circle, transparent 72px, #fff 73px);
+  animation: 
+    wiproClockwise 14s linear infinite,
+    wiproPulseOuter 4s ease-in-out infinite;
   z-index: 1;
 }
 
-/* INSIDE SEPARATE RAINBOW DOTS ENGINE: Recentered for larger logo */
-.magic-container::after {
-  content: '';
-  position: absolute;
-  top: 45px; /* Re-aligned to the center of your new 90px logo */
-  left: 50%;
-  
-  width: 114px !important;
-  max-width: 114px !important;
-  height: 114px !important;
-  max-height: 114px !important;
-  border-radius: 50% !important;
-  
-  background: conic-gradient(#ec4899, #3b82f6, #06b6d4, #ec4899);
-  -webkit-mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
-  mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
-  
+/* MIDDLE DOTTED LOOP: Spins counter-clockwise at medium speed */
+.dotted-ring.ring-middle {
+  width: 125px;
+  height: 125px;
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg), 
+                radial-gradient(circle, transparent 57px, #fff 58px);
+  mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg), 
+        radial-gradient(circle, transparent 57px, #fff 58px);
   opacity: 0.85;
-  animation: radarCounterClockwise 9s linear infinite;
+  animation: wiproCounterClockwise 9s linear infinite;
   z-index: 1;
 }
 
-/* THE MAGIC GLOW: Expanded backlighting glow */
+/* INNER DOTTED LOOP: Small diameter orbit layer spinning quickly right behind logo */
+.dotted-ring.ring-inner {
+  width: 98px;
+  height: 98px;
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 6deg, transparent 6deg 19deg), 
+                radial-gradient(circle, transparent 44px, #fff 45px);
+  mask: repeating-conic-gradient(#fff 0deg 6deg, transparent 6deg 19deg), 
+                radial-gradient(circle, transparent 44px, #fff 45px);
+  opacity: 0.65;
+  animation: wiproClockwise 5.5s linear infinite;
+  z-index: 1;
+}
+
+/* THE MAGIC GLOW: Matching ambient backlight shadow aura for Care Purple */
 .magic-glow {
   position: absolute;
   top: 45px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0) 70%);
+  width: 165px;
+  height: 165px;
+  background: radial-gradient(circle, rgba(137, 122, 185, 0.3) 0%, rgba(137, 122, 185, 0) 70%);
   border-radius: 50%;
   z-index: 0;
   animation: glowPulse 4s infinite ease-in-out;
 }
 
-/* LOGO LAYER: Clean central color anchor behind the letter "e" only */
+/* LOGO LAYER: Clean central color anchor behind the branding image asset */
 .magic-logo {
   width: 90px !important;  
   height: 90px !important; 
@@ -461,18 +470,24 @@ button:hover {
   font-size: 0.85rem;
   color: #94a3b8;
   z-index: 2;
-  }
+}
+
 /* ==========================================================================
-   ANIMATION KEYFRAMES WITH EMBEDDED TRANSLATION RESETS
+   WIPRO LOOP ANIMATION KEYFRAMES WITH EMBEDDED TRANSLATION RESETS
    ========================================================================== */
-@keyframes radarClockwise {
+@keyframes wiproClockwise {
   from { transform: translate(-50%, -50%) rotate(0deg); }
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-@keyframes radarCounterClockwise {
+@keyframes wiproCounterClockwise {
   from { transform: translate(-50%, -50%) rotate(360deg); }
   to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes wiproPulseOuter {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.07); opacity: 0.8; }
 }
 
 @keyframes logoFloat {
@@ -527,4 +542,4 @@ button:hover {
     padding-right: 0;
     order: 2;
   }
-    }
+}
