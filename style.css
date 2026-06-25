@@ -177,11 +177,11 @@ input:focus {
   right: 14px;
   width: 18px;
   height: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.15);
   border-top-color: #3b82f6;
-  border-radius: 30%;
+  border-radius: 25%;
   animation: spin 0.5s linear infinite;
-  z-index: 10;
+  z-index: 1;
 }
 
 button {
@@ -418,72 +418,70 @@ button:hover {
   text-align: center;
 }
 
-/* OUTSIDE DOTTED RADAR RING: Fixed to genuine dotted spacing & pulled up */
+/* OUTSIDE SEPARATE RAINBOW DOTS ENGINE: Pulled up and perfectly spaced */
 .magic-container::before {
   content: '';
   position: absolute;
-  
-  /* POSITION CORRECTION: Pulled up to perfectly align with the center of your logo */
-  top: 38px; 
+  top: 36px; /* Moves rings perfectly up to align with the center of your 75px logo */
   left: 50%;
   
-  width: 100px !important;
-  max-width: 100px !important;
-  height: 100px !important;
-  max-height: 100px !important;
-  
+  width: 120px !important;
+  max-width: 120px !important;
+  height: 120px !important;
+  max-height: 120px !important;
   border-radius: 50% !important;
   
-  /* GENUINE DOT ENGINE: Uses real color dots instead of linear gradient masks */
-  border: 3px dotted #3b82f6; /* Premium Cyan/Blue Dots */
+  /* CRITICAL SEPARATE RAINBOW DOTS MATRIX */
+  background: conic-gradient(#3b82f6, #a855f7, #06b6d4, #22c55e, #f59e0b, #3b82f6);
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
+  mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
   
-  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
-  animation: radarClockwise 12s linear infinite; /* Slightly slowed down for elegance */
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.6));
+  animation: radarClockwise 14s linear infinite;
   z-index: 1;
 }
 
-/* INSIDE DOTTED RADAR RING: Fixed to genuine dotted spacing & pulled up */
+/* INSIDE SEPARATE RAINBOW DOTS ENGINE: Alternate spacing counter-rotating */
 .magic-container::after {
   content: '';
   position: absolute;
-  
-  /* POSITION CORRECTION: Aligned matching center coordinates */
-  top: 38px; 
+  top: 36px; /* Centered precisely with the outer ring */
   left: 50%;
   
-  width: 84px !important;
-  max-width: 84px !important;
-  height: 84px !important;
-  max-height: 84px !important;
-  
+  width: 96px !important;
+  max-width: 96px !important;
+  height: 96px !important;
+  max-height: 96px !important;
   border-radius: 50% !important;
   
-  /* GENUINE DOT ENGINE: Uses real color dots instead of linear gradient masks */
-  border: 2px dotted #a855f7; /* Vibrant Purple Dots */
+  /* CRITICAL SEPARATE RAINBOW DOTS MATRIX */
+  background: conic-gradient(#ec4899, #3b82f6, #06b6d4, #ec4899);
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
+  mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
   
-  opacity: 0.8;
-  animation: radarCounterClockwise 8s linear infinite; /* Slightly slowed down for elegance */
+  opacity: 0.85;
+  animation: radarCounterClockwise 9s linear infinite;
   z-index: 1;
 }
 
-/* THE MAGIC GLOW: Maintained soft ambient backlighting centered */
+/* THE MAGIC GLOW: Clean ambient soft light background */
 .magic-glow {
   position: absolute;
-  top: 38px;
+  top: 36px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 140px;
-  height: 140px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(147, 51, 234, 0) 70%);
+  width: 130px;
+  height: 130px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0) 70%);
   border-radius: 50%;
   z-index: 0;
   animation: glowPulse 4s infinite ease-in-out;
 }
 
-/* LOGO LAYER: Floats flawlessly over the dead-center rings */
+/* LOGO LAYER: Floats flawlessly directly in the sweet spot center */
 .magic-logo {
-  width: 85px !important;
-  height: 85px !important;
+  width: 75px !important;
+  height: 75px !important;
   object-fit: contain !important;
   display: block !important;
   margin-bottom: 34px !important;
@@ -528,6 +526,7 @@ button:hover {
   0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
   50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
 }
+
 
 
 /* RESPONSIVE MOBILE MODES */
