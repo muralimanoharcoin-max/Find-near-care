@@ -1,3 +1,8 @@
+
+// GLOBAL VARIABLE FOR ROUTING (Place at the top of script.js)
+let activeRouteLayer = null; 
+
+
 // Initialize Leaflet Map Engine centered on regional coords
 let map = L.map('map').setView([17.414, 78.446], 6);
 let searchMarker = null;
