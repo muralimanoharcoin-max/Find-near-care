@@ -121,7 +121,7 @@ async function searchLocation(query) {
       return;
     }
 
-    // Sort outputs starting with the closest facility
+        // Sort outputs starting with the closest facility
     results.sort((a, b) => a.min - b.min);
 
     let html = "";
@@ -139,21 +139,24 @@ async function searchLocation(query) {
           <b>${x.name}</b> ${badge}
         </div>
         <div class="card-body">
-          🚗 ${x.km.toFixed(1)} km &nbsp;|&nbsp; ⏱️ ${timeDisplay}
+          🚗 ${x.km.toFixed(1)} km  |  ⏱️ ${timeDisplay}
         </div>
         <div class="card-actions">
           <button class="action-btn local-navigate-btn" 
+                  type="button"
                   data-start-lat="${targetLat}" 
                   data-start-lng="${targetLon}" 
                   data-end-lat="${x.lat}" 
                   data-end-lng="${x.lon}">
             🗺️ Navigate
           </button>
-          <button class="action-btn secondary" onclick=\"copyLink('${mapsUrl}')\">🔗 Copy</button>
+          
+          <button class="action-btn secondary" type="button" onclick="copyLink('${mapsUrl}')">🔗 Copy</button>
+          
           <a class="action-btn wa-btn" target="_blank" href="https://api.whatsapp.com/send?text=${shareText}">💬 WhatsApp</a>
         </div>
       </div>`;
-    });
+
 
     document.getElementById("results").innerHTML = html;
 
