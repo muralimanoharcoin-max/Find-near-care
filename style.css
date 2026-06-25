@@ -58,7 +58,7 @@ body {
   height: 90px !important;
   object-fit: contain !important;
   display: block !important;
-  }
+}
 
 /* Premium Apple Typography Design Rules */
 .apple-bold-title {
@@ -139,7 +139,6 @@ body {
   }
 }
 
-
 .search-box {
   display: flex;
   gap: 12px;
@@ -171,34 +170,62 @@ input:focus {
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* TRUE APPLE BLADE WHEEL SPINNER */
+/* ==========================================================================
+   UPDATED HIGH-TECH MINI RADAR LOADING SPINNER
+   ========================================================================== */
 .mac-spinner {
   position: absolute;
   right: 14px;
   width: 18px;
   height: 18px;
-  
-  /* Creates the signature iOS fading radial gradient look */
-  background: conic-gradient(
-    from 0deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 1) 100%
-  );
-  
-  /* Mask engine: Splits the circle into 8 crisp separate radiating iOS tick blades */
-  -webkit-mask: repeating-conic-gradient(#fff 0deg 15deg, transparent 15deg 45deg);
-  mask: repeating-conic-gradient(#fff 0deg 15deg, transparent 15deg 45deg);
-  border-radius: 50%;
-  
-  /* Apple's native loading wheel snaps instantly frame-by-frame instead of smooth fluid sliding */
-  animation: appleSnap 0.8s steps(8) infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 10;
+  
+  /* Reset old background assets */
+  background: none !important;
+  -webkit-mask: none !important;
+  mask: none !important;
 }
 
-/* Apple native 8-stage frame snapping rotation timeline */
-@keyframes appleSnap {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+/* Central micro glowing radar beacon dot */
+.mac-spinner::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #3b82f6; /* Matching theme cyan/blue */
+  border-radius: 50%;
+  box-shadow: 0 0 8px #3b82f6;
+}
+
+/* Active outward pulsing radar ping wave ring */
+.mac-spinner::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1.5px solid #3b82f6;
+  border-radius: 50%;
+  box-sizing: border-box;
+  opacity: 0;
+  animation: radarMiniPulse 1.1s ease-out infinite;
+}
+
+/* Radar ping expansion timeline profile */
+@keyframes radarMiniPulse {
+  0% {
+    transform: scale(0.3);
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 button {
@@ -256,7 +283,6 @@ button:hover {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
 }
-
 .card {
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(10px);
@@ -320,9 +346,7 @@ button:hover {
 
 .action-btn.wa-btn {
   background: #25d366;
-}
-
-
+  }
 /* ==========================================================================
    INTERACTIVE EMPTY STATE ENGINE - PERFECT CONCENTRIC RINGS FIX
    ========================================================================== */
@@ -412,7 +436,6 @@ button:hover {
   margin-bottom: 24px !important; 
   
   /* INNER CORE BACKGROUND ENGINE */
-  /* Creates a solid #111827 circle up to 17px radius (34px wide) then snaps to pure transparency */
   background: radial-gradient(circle, #111827 0%, #0f172a 42%, transparent 39%, transparent 100%) !important;
   
   /* Remove old structural padding and frame parameters so rays stay clean */
@@ -426,10 +449,6 @@ button:hover {
   animation: logoFloat 4.5s infinite ease-in-out;
 }
 
-
-
-
-
 .magic-text {
   font-size: 1.05rem;
   font-weight: 600;
@@ -442,8 +461,7 @@ button:hover {
   font-size: 0.85rem;
   color: #94a3b8;
   z-index: 2;
-}
-
+  }
 /* ==========================================================================
    ANIMATION KEYFRAMES WITH EMBEDDED TRANSLATION RESETS
    ========================================================================== */
@@ -467,7 +485,10 @@ button:hover {
   50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
 }
 
-
+/* Utility layout visibility modifier */
+.hidden {
+  display: none !important;
+}
 
 /* RESPONSIVE MOBILE MODES */
 @media (max-width: 768px) {
@@ -506,4 +527,4 @@ button:hover {
     padding-right: 0;
     order: 2;
   }
-}
+    }
