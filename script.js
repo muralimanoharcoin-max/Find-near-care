@@ -121,7 +121,7 @@ async function searchLocation(query) {
       return;
     }
 
-        // Sort outputs starting with the closest facility
+    // Sort outputs starting with the closest facility
     results.sort((a, b) => a.min - b.min);
 
     let html = "";
@@ -150,13 +150,11 @@ async function searchLocation(query) {
                   data-end-lng="${x.lon}">
             🗺️ Navigate
           </button>
-          
           <button class="action-btn secondary" type="button" onclick="copyLink('${mapsUrl}')">🔗 Copy</button>
-          
           <a class="action-btn wa-btn" target="_blank" href="https://api.whatsapp.com/send?text=${shareText}">💬 WhatsApp</a>
         </div>
       </div>`;
-
+    });
 
     document.getElementById("results").innerHTML = html;
 
@@ -172,6 +170,12 @@ function clearViews() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
+  
+  // Custom error state messaging inside your spinning magic container logo panel
+  const mainErrorText = document.querySelector('.magic-text');
+  const subErrorText = document.querySelector('.magic-subtext');
+  if (mainErrorText) mainErrorText.innerText = "No Results Found";
+  if (subErrorText) subErrorText.innerText = "We couldn't find any locations matching that city or area.";
 }
 
 function copyLink(url) {
@@ -187,83 +191,56 @@ window.addEventListener('DOMContentLoaded', () => {
   clearViews();
 });
 
-
 /* ==========================================================================
-   ROADMAP TASK: LOCAL MAP ROUTING INTERCEPT ENGINE (OSRM INTEGRATION)
+   LOCAL MAP ROUTING INTERCEPT ENGINE (OSRM INTEGRATION)
    ========================================================================== */
-
-// 1. Capture click events on any dynamically generated local-navigate buttons
 document.addEventListener('click', function (event) {
   if (event.target && event.target.classList.contains('local-navigate-btn')) {
-    
-    // Securely prevent external tabs or default anchor handling actions
     event.preventDefault();
     event.stopPropagation();
 
-    // Parse coordinates right out of the card button attributes
     const startLat = parseFloat(event.target.getAttribute('data-start-lat'));
     const startLng = parseFloat(event.target.getAttribute('data-start-lng'));
     const endLat = parseFloat(event.target.getAttribute('data-end-lat'));
     const endLng = parseFloat(event.target.getAttribute('data-end-lng'));
 
-    // Plot route geometry over the local Leaflet canvas
     calculateLocalRoute(startLat, startLng, endLat, endLng);
   }
 });
 
-// 2. Core local plotting routine
 function calculateLocalRoute(startLat, startLng, endLat, endLng) {
-  if (!map) {
-    console.error("Routing Error: Leaflet map object has not been initialized.");
-    return;
-  }
+  if (!map) return;
 
-  // Clear any existing route layers before drawing a new track
   if (activeRouteLayer) {
     map.removeLayer(activeRouteLayer);
   }
 
-  // Build free public keyless OSRM route fetch string with full overview geometry parameters
   const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`;
 
   fetch(osrmUrl)
     .then(response => response.json())
     .then(data => {
       if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
-        
-        // Extract coordinate array out of structural GeoJSON payload
         const geometryCoordinates = data.routes[0].geometry.coordinates;
-        
-        // Convert OSRM format [longitude, latitude] back to Leaflet format [latitude, longitude]
         const leafletRouteCoords = geometryCoordinates.map(coord => [coord[1], coord[0]]);
 
-        // Draw polyline on local canvas
         activeRouteLayer = L.polyline(leafletRouteCoords, {
-          color: '#3b82f6',       // High visibility cyan/blue accent color
-          weight: 5,              // Dynamic line layout footprint
-          opacity: 0.85,          // Clear opacity setting
+          color: '#3b82f6',
+          weight: 5,
+          opacity: 0.85,
           lineCap: 'round',
           lineJoin: 'round'
         }).addTo(map);
 
-        // Resize boundaries dynamically to frame the path perfectly
-        const fitBoundsLayout = L.latLngBounds([
-          [startLat, startLng],
-          [endLat, endLng]
-        ]);
+        const fitBoundsLayout = L.latLngBounds([[startLat, startLng], [endLat, endLng]]);
         map.fitBounds(fitBoundsLayout, { padding: [50, 50] });
 
-        // Force structural re-validation metrics onto map to neutralize any asynchronous rendering tile bugs
-        setTimeout(() => {
-          map.invalidateSize();
-        }, 150);
-
+        setTimeout(() => { map.invalidateSize(); }, 150);
       } else {
-        alert("Routing Failure: The system was unable to compute driving metrics across your map grid.");
+        alert("Unable to compute driving metrics across map matrix.");
       }
     })
     .catch(error => {
-      console.error("OSRM Routing Pipeline Fault:", error);
-      alert("Network Fault: Unable to securely connect with local routing server engines.");
+      console.error("OSRM Routing Fault:", error);
     });
 }
