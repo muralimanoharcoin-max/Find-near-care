@@ -26,65 +26,10 @@ function handleKeyPress(event) {
 }
 
 function triggerSearch() {
-  const query = document.getElementById('search').value.trim().toLowerCase();
-  const spinner = document.getElementById('mac-spinner');
-  const emptyState = document.getElementById('no-results-state');
-  const resultsContainer = document.getElementById('results'); // The container where cards render
-
-  // If the user typed nothing, completely stop
-  if (!query) return;
-
-  /* ========================================================
-     1. START SEARCH LOADING PHASE
-     ======================================================== */
-  spinner.classList.remove('hidden'); // Show the Apple spinner instantly!
-  if (emptyState) emptyState.classList.add('hidden'); // Hide empty/error state while querying
-  if (resultsContainer) resultsContainer.innerHTML = ''; // Clear out past search card lists
-
-  /* ========================================================
-     2. RUN SEARCH ENGINE (Simulated with a fast 800ms loading gap)
-     ======================================================== */
-  setTimeout(() => {
-    // Turn off the spinner the exact millisecond the search finishes
-    spinner.classList.add('hidden'); 
-
-    // Assuming your data array is called hospitalData. Change if yours is named differently!
-    const matched = hospitalData.filter(hospital => 
-      hospital.name.toLowerCase().includes(query) || 
-      hospital.address.toLowerCase().includes(query)
-    );
-
-    /* ========================================================
-       3. EVALUATE RESULTS OR SHOW ERROR PANEL
-       ======================================================== */
-    if (matched.length === 0) {
-      // ERROR: No matching result found! Reveal your beautiful dotted rings empty state
-      if (emptyState) {
-        emptyState.classList.remove('hidden');
-        
-        // Dynamic custom text changes inside your empty panel wrapper to guide the user
-        const titleText = emptyState.querySelector('.magic-text');
-        const subText = emptyState.querySelector('.magic-subtext');
-        if (titleText) titleText.innerText = "No Results Found";
-        if (subText) subText.innerText = `Try searching with Area+State/City"${query}". Try searching for another area.`;
-      }
-    } else {
-      // SUCCESS: Hide empty state error panel and render your interactive cards
-      if (emptyState) emptyState.classList.add('hidden');
-      
-      matched.forEach(hospital => {
-        // Run your custom template injector logic here to show found cards
-        if (resultsContainer) {
-          resultsContainer.innerHTML += `
-            <div class="hospital-card">
-              <h3>${hospital.name}</h3>
-              <p>${hospital.address}</p>
-            </div>
-          `;
-        }
-      });
-    }
-  }, 800); // 800 milliseconds of authentic Apple spinner presentation time
+  const query = document.getElementById("search").value;
+  if (query.trim() !== "") {
+    searchLocation(query);
+  }
 }
 
 
