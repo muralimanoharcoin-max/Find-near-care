@@ -67,7 +67,7 @@ async function searchLocation(query) {
   try {
     let cleanQuery = query.trim();
     
-    const coreHubs = [""];
+    const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
     for (let hub of coreHubs) {
       if (closeMatch(cleanQuery, hub)) {
         cleanQuery = hub; 
@@ -197,66 +197,4 @@ function clearViews() {
 function copyLink(url) {
   navigator.clipboard.writeText(url).then(() => {
     alert("Navigation route link copied to clipboard!");
-  }).catch(err => {
-    console.error("Could not copy string text: ", err);
-  });
-}
-
-// Initial boot settings call welcome state instead of strict errors
-window.addEventListener('DOMContentLoaded', () => {
-  showWelcomeState();
-});
-
-/* ==========================================================================
-   LOCAL MAP ROUTING INTERCEPT ENGINE (OSRM INTEGRATION)
-   ========================================================================== */
-document.addEventListener('click', function (event) {
-  if (event.target && event.target.classList.contains('local-navigate-btn')) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const startLat = parseFloat(event.target.getAttribute('data-start-lat'));
-    const startLng = parseFloat(event.target.getAttribute('data-start-lng'));
-    const endLat = parseFloat(event.target.getAttribute('data-end-lat'));
-    const endLng = parseFloat(event.target.getAttribute('data-end-lng'));
-
-    calculateLocalRoute(startLat, startLng, endLat, endLng);
-  }
-});
-
-function calculateLocalRoute(startLat, startLng, endLat, endLng) {
-  if (!map) return;
-
-  if (activeRouteLayer) {
-    map.removeLayer(activeRouteLayer);
-  }
-
-  const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`;
-
-  fetch(osrmUrl)
-    .then(response => response.json())
-    .then(data => {
-      if (data.code === 'Ok' && data.routes && data.routes.length > 0) {
-        const geometryCoordinates = data.routes[0].geometry.coordinates;
-        const leafletRouteCoords = geometryCoordinates.map(coord => [coord[1], coord[0]]);
-
-        activeRouteLayer = L.polyline(leafletRouteCoords, {
-          color: '#3b82f6',
-          weight: 5,
-          opacity: 0.85,
-          lineCap: 'round',
-          lineJoin: 'round'
-        }).addTo(map);
-
-        const fitBoundsLayout = L.latLngBounds([[startLat, startLng], [endLat, endLng]]);
-        map.fitBounds(fitBoundsLayout, { padding: [50, 50] });
-
-        setTimeout(() => { map.invalidateSize(); }, 150);
-      } else {
-        alert("Unable to compute driving metrics across map matrix.");
-      }
-    })
-    .catch(error => {
-      console.error("OSRM Routing Fault:", error);
-    });
-}
+  }).catch(err
