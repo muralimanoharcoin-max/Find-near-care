@@ -335,7 +335,7 @@ button:hover {
   border-radius: 50%;
   
   /* Creates the high-tech dotted pattern using border styling */
-  border: 2px dotted transparent;
+  border: 8px dotted transparent;
   background: linear-gradient(135deg, #3b82f6, #a855f7, #10b981, #f59e0b) border-box;
   
   /* Mask keeps only the dotted border visible, hiding the inner solid color fill */
@@ -482,8 +482,8 @@ button:hover {
 
 /* LOGO LAYER: Floats flawlessly over the dead-center rings */
 .magic-logo {
-  width: 75px !important;
-  height: 75px !important;
+  width: 85px !important;
+  height: 85px !important;
   object-fit: contain !important;
   display: block !important;
   margin-bottom: 34px !important;
