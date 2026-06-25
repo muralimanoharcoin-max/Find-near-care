@@ -418,60 +418,62 @@ button:hover {
   text-align: center;
 }
 
-/* OUTSIDE DOTTED RADAR RING: Snapped to absolute center */
+/* OUTSIDE DOTTED RADAR RING: Fixed to genuine dotted spacing & pulled up */
 .magic-container::before {
   content: '';
   position: absolute;
-  /* Centering Engine */
-  top: 40px; /* Positioned at the exact midpoint of your 64px logo */
+  
+  /* POSITION CORRECTION: Pulled up to perfectly align with the center of your logo */
+  top: 38px; 
   left: 50%;
-  width: 100px;
-  height: 100px;
   
-  border-radius: 50%;
-  border: 2px dotted transparent;
-  background: linear-gradient(135deg, #3b82f6, #a855f7, #10b981, #f59e0b) border-box;
+  width: 100px !important;
+  max-width: 100px !important;
+  height: 100px !important;
+  max-height: 100px !important;
   
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
+  border-radius: 50% !important;
   
-  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
-  animation: radarClockwise 8s linear infinite;
-  z-index: 2;
+  /* GENUINE DOT ENGINE: Uses real color dots instead of linear gradient masks */
+  border: 3px dotted #3b82f6; /* Premium Cyan/Blue Dots */
+  
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+  animation: radarClockwise 12s linear infinite; /* Slightly slowed down for elegance */
+  z-index: 1;
 }
 
-/* INSIDE DOTTED RADAR RING: Snapped to identical absolute center */
+/* INSIDE DOTTED RADAR RING: Fixed to genuine dotted spacing & pulled up */
 .magic-container::after {
   content: '';
   position: absolute;
-  /* Centering Engine */
-  top: 40px; /* Positioned at the exact midpoint of your 64px logo */
+  
+  /* POSITION CORRECTION: Aligned matching center coordinates */
+  top: 38px; 
   left: 50%;
-  width: 100px;
-  height: 100px;
   
-  border-radius: 50%;
-  border: 1.5px dotted transparent;
-  background: linear-gradient(-135deg, #ec4899, #3b82f6, #06b6d4) border-box;
+  width: 84px !important;
+  max-width: 84px !important;
+  height: 84px !important;
+  max-height: 84px !important;
   
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: destination-out;
-  mask-composite: exclude;
+  border-radius: 50% !important;
   
-  opacity: 0.75;
-  animation: radarCounterClockwise 5s linear infinite;
-  z-index: 2;
+  /* GENUINE DOT ENGINE: Uses real color dots instead of linear gradient masks */
+  border: 2px dotted #a855f7; /* Vibrant Purple Dots */
+  
+  opacity: 0.8;
+  animation: radarCounterClockwise 8s linear infinite; /* Slightly slowed down for elegance */
+  z-index: 1;
 }
 
-/* THE MAGIC GLOW: Soft ambient backlighting centered */
+/* THE MAGIC GLOW: Maintained soft ambient backlighting centered */
 .magic-glow {
   position: absolute;
-  top: 40px;
+  top: 38px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
+  width: 140px;
+  height: 140px;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, rgba(147, 51, 234, 0) 70%);
   border-radius: 50%;
   z-index: 0;
@@ -480,13 +482,13 @@ button:hover {
 
 /* LOGO LAYER: Floats flawlessly over the dead-center rings */
 .magic-logo {
-  width: 80px !important;
-  height: 80px !important;
+  width: 75px !important;
+  height: 75px !important;
   object-fit: contain !important;
   display: block !important;
-  margin-bottom: 6px !important;
+  margin-bottom: 34px !important;
   z-index: 2 !important;
-  position: relative; /* Gives it local stacking layout authority */
+  position: relative; 
   animation: logoFloat 4.5s infinite ease-in-out;
 }
 
@@ -526,6 +528,7 @@ button:hover {
   0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
   50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
 }
+
 
 /* RESPONSIVE MOBILE MODES */
 @media (max-width: 768px) {
