@@ -1,0 +1,507 @@
+body {
+  margin: 0;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: linear-gradient(135deg, #0f172a, #1e293b) !important;
+  color: #f8fafc;
+  height: 98vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* FIXED CONTAINER: Creates a clean round white backing badge container so the logo shows perfectly on dark screens */
+.logo-badge {
+  width: 80px;
+  height: 80px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+/* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
+.care-logo {
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: contain !important;
+  display: block !important;
+  }
+
+/* Premium Apple Typography Design Rules */
+.apple-bold-title {
+  margin: 0;
+  font-size: 1.85rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   METALLIC STEEL CREDITS CONTAINER WITH LIVE SHIMMER EFFECT
+   ========================================================================== */
+.mac-credits {
+  display: flex;
+  align-items: center;
+  padding: 6px 14px;
+  border-radius: 12px;
+  
+  /* Realistic brushed steel metallic baseline gradient */
+  background: linear-gradient(145deg, #334155, #1e293b);
+  
+  /* Crisp metallic edge borders */
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+  border-right: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  
+  /* Deep shadow profile to pop off the glass layer */
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 4px 10px rgba(0, 0, 0, 0.3);
+    
+  position: relative;
+  overflow: hidden; /* Clips the silver light shine overlay inside the steel box */
+}
+
+/* Metallic Silver Light Shine Overlay Effect */
+.mac-credits::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 95%;
+  height: 98%;
+  
+  /* Ultra-bright silver light bar */
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.03) 75%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  
+  transform: skewX(-25deg); /* Angles the light beam precisely */
+  animation: silverShine 4.5s infinite ease-in-out;
+}
+
+/* Crisp high-contrast text rendering inside the steel component */
+.credits-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e2e8f0; /* Silver chrome colored text */
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5); /* Debossed engraving effect */
+  letter-spacing: 0.2px;
+  z-index: 2; /* Keeps text layered above the silver shine beam */
+}
+
+/* Timeline interpolation keyframes for the silver light movement */
+@keyframes silverShine {
+  0% {
+    left: -150%;
+  }
+  30%, 100% {
+    left: 150%; /* Glides completely across to the right side, then pauses */
+  }
+}
+
+
+.search-box {
+  display: flex;
+  gap: 12px;
+  width: 50%;
+  align-items: center;
+}
+
+.input-wrapper {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  width: 100%;
+  padding: 12px 42px 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* TRUE APPLE BLADE WHEEL SPINNER */
+.mac-spinner {
+  position: absolute;
+  right: 14px;
+  width: 18px;
+  height: 18px;
+  
+  /* Creates the signature iOS fading radial gradient look */
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 1) 100%
+  );
+  
+  /* Mask engine: Splits the circle into 8 crisp separate radiating iOS tick blades */
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 15deg, transparent 15deg 45deg);
+  mask: repeating-conic-gradient(#fff 0deg 15deg, transparent 15deg 45deg);
+  border-radius: 50%;
+  
+  /* Apple's native loading wheel snaps instantly frame-by-frame instead of smooth fluid sliding */
+  animation: appleSnap 0.8s steps(8) infinite;
+  z-index: 10;
+}
+
+/* Apple native 8-stage frame snapping rotation timeline */
+@keyframes appleSnap {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+button {
+  background: #3b82f6;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+button:hover {
+  background: #2563eb;
+}
+
+.app-layout {
+  display: flex;
+  flex: 1;
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+  height: calc(100vh - 160px);
+  min-height: 0; 
+}
+
+#results-wrapper {
+  flex: 1.3;
+  height: 95%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-right: 6px;
+  position: relative;
+}
+
+#results {
+  width: 100%;
+}
+
+#map {
+  flex: 1;
+  height: 50%; 
+  border-radius: 20px;
+  border: 5px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+#results-wrapper::-webkit-scrollbar {
+  width: 6px;
+}
+#results-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 14px;
+}
+
+.nearest-card {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+}
+
+.card-header {
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.badge {
+  background: #22c55e;
+  font-size: 0.7rem;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.card-body {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn.wa-btn {
+  background: #25d366;
+}
+
+
+/* ==========================================================================
+   INTERACTIVE EMPTY STATE ENGINE - PERFECT CONCENTRIC RINGS FIX
+   ========================================================================== */
+#no-results-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80%;
+  min-height: 260px;
+}
+
+/* THE MAGIC CONTAINER: Structural anchor centered for the pseudo rings */
+.magic-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 280px;
+  text-align: center;
+}
+
+/* OUTSIDE SEPARATE RAINBOW DOTS ENGINE: Recentered for larger logo */
+.magic-container::before {
+  content: '';
+  position: absolute;
+  top: 45px; /* Re-aligned to the center of your new 90px logo */
+  left: 50%;
+  
+  width: 140px !important; /* Slightly widened so the bigger logo fits beautifully inside */
+  max-width: 140px !important;
+  height: 140px !important;
+  max-height: 140px !important;
+  border-radius: 50% !important;
+  
+  background: conic-gradient(#3b82f6, #a855f7, #06b6d4, #22c55e, #f59e0b, #3b82f6);
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
+  mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
+  
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.6));
+  animation: radarClockwise 14s linear infinite;
+  z-index: 1;
+}
+
+/* INSIDE SEPARATE RAINBOW DOTS ENGINE: Recentered for larger logo */
+.magic-container::after {
+  content: '';
+  position: absolute;
+  top: 45px; /* Re-aligned to the center of your new 90px logo */
+  left: 50%;
+  
+  width: 114px !important;
+  max-width: 114px !important;
+  height: 114px !important;
+  max-height: 114px !important;
+  border-radius: 50% !important;
+  
+  background: conic-gradient(#ec4899, #3b82f6, #06b6d4, #ec4899);
+  -webkit-mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
+  mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
+  
+  opacity: 0.85;
+  animation: radarCounterClockwise 9s linear infinite;
+  z-index: 1;
+}
+
+/* THE MAGIC GLOW: Expanded backlighting glow */
+.magic-glow {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0) 70%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: glowPulse 4s infinite ease-in-out;
+}
+
+/* LOGO LAYER: Scaled up to 90px and forced securely in front */
+/* LOGO LAYER: Scaled up to 90px with an integrated solid background mask shield */
+.magic-logo {
+  width: 90px !important;  
+  height: 90px !important; 
+  object-fit: contain !important;
+  display: block !important;
+  margin-bottom: 24px !important; 
+  
+  /* BACKGROUND COLOR PATIENT SHIELD */
+  background-color: #f8fafc !important; /* Matches your premium dark theme panel color background */
+  border-radius: 50% !important;        /* Keeps the shield perfectly circular matching the rings */
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.6); /* Adds depth so the logo pulls away from the rings */
+  padding: 4px !important;              /* Adds breathing room between the logo edges and the rings */
+  box-sizing: border-box !important;    /* Keeps the 90px size stable regardless of padding */
+  
+  /* LAYER PRIORITY SYSTEM */
+  position: relative !important;
+  z-index: 10 !important; 
+  animation: logoFloat 4.5s infinite ease-in-out;
+}
+
+
+
+
+.magic-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
+  z-index: 2;
+}
+
+.magic-subtext {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   ANIMATION KEYFRAMES WITH EMBEDDED TRANSLATION RESETS
+   ========================================================================== */
+@keyframes radarClockwise {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes radarCounterClockwise {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
+  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+}
+
+
+
+/* RESPONSIVE MOBILE MODES */
+@media (max-width: 768px) {
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+  .header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 9px;
+  }
+  .search-box {
+    width: 100%;
+  }
+  .mac-credits {
+    align-self: flex-start;
+  }
+  .app-layout {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    padding: 12px;
+    gap: 12px;
+  }
+  #map {
+    height: 35vh;
+    width: 100%;
+    flex: none;
+    order: 1;
+  }
+  #results-wrapper {
+    height: auto;
+    overflow: visible;
+    width: 100%;
+    padding-right: 0;
+    order: 2;
+  }
+}
