@@ -413,7 +413,7 @@ button:hover {
   
   /* INNER CORE BACKGROUND ENGINE */
   /* Creates a solid #111827 circle up to 17px radius (34px wide) then snaps to pure transparency */
-  background: radial-gradient(circle, #111827 0%, #111827 42%, transparent 39%, transparent 100%) !important;
+  background: radial-gradient(circle, #111827 0%, #0f172a 42%, transparent 39%, transparent 100%) !important;
   
   /* Remove old structural padding and frame parameters so rays stay clean */
   padding: 0 !important;
