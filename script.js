@@ -166,16 +166,32 @@ async function searchLocation(query) {
   }
 }
 
+/* ==========================================================================
+   STATE MANAGEMENT ENGINE (WELCOME VS ERROR STATES)
+   ========================================================================== */
+
+// 1. Shows a clean system boot scan sequence on page initialization
+function showWelcomeState() {
+  document.getElementById("results").innerHTML = "";
+  document.getElementById('mac-spinner').classList.add('hidden');
+  document.getElementById('no-results-state').classList.remove('hidden');
+
+  const mainTelemetryText = document.querySelector('.magic-text');
+  const subTelemetryText = document.querySelector('.magic-subtext');
+  if (mainTelemetryText) mainTelemetryText.innerText = "SYSTEM READY";
+  if (subTelemetryText) subTelemetryText.innerText = "Enter a city or area to begin automated coordinate scanning.";
+}
+
+// 2. Switches radar text over to strict warning errors if database search fails
 function clearViews() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  // Custom error state messaging inside your spinning magic container logo panel
-  const mainErrorText = document.querySelector('.magic-text');
-  const subErrorText = document.querySelector('.magic-subtext');
-  if (mainErrorText) mainErrorText.innerText = "No Results Found";
-  if (subErrorText) subErrorText.innerText = "We couldn't find any locations matching that city or area.";
+  const mainTelemetryText = document.querySelector('.magic-text');
+  const subTelemetryText = document.querySelector('.magic-subtext');
+  if (mainTelemetryText) mainTelemetryText.innerText = "No Results Found";
+  if (subTelemetryText) subTelemetryText.innerText = "We couldn't find any locations matching that city or area.";
 }
 
 function copyLink(url) {
@@ -186,9 +202,9 @@ function copyLink(url) {
   });
 }
 
-// Initial boot settings
+// Initial boot settings call welcome state instead of strict errors
 window.addEventListener('DOMContentLoaded', () => {
-  clearViews();
+  showWelcomeState();
 });
 
 /* ==========================================================================
