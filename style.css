@@ -328,20 +328,19 @@ button:hover {
   text-align: center;
 }
 
-/* OUTSIDE SEPARATE RAINBOW DOTS ENGINE: Pulled up and perfectly spaced */
+/* OUTSIDE SEPARATE RAINBOW DOTS ENGINE: Recentered for larger logo */
 .magic-container::before {
   content: '';
   position: absolute;
-  top: 36px; /* Moves rings perfectly up to align with the center of your 75px logo */
+  top: 45px; /* Re-aligned to the center of your new 90px logo */
   left: 50%;
   
-  width: 120px !important;
-  max-width: 120px !important;
-  height: 120px !important;
-  max-height: 120px !important;
+  width: 140px !important; /* Slightly widened so the bigger logo fits beautifully inside */
+  max-width: 140px !important;
+  height: 140px !important;
+  max-height: 140px !important;
   border-radius: 50% !important;
   
-  /* CRITICAL SEPARATE RAINBOW DOTS MATRIX */
   background: conic-gradient(#3b82f6, #a855f7, #06b6d4, #22c55e, #f59e0b, #3b82f6);
   -webkit-mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
   mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg);
@@ -351,20 +350,19 @@ button:hover {
   z-index: 1;
 }
 
-/* INSIDE SEPARATE RAINBOW DOTS ENGINE: Alternate spacing counter-rotating */
+/* INSIDE SEPARATE RAINBOW DOTS ENGINE: Recentered for larger logo */
 .magic-container::after {
   content: '';
   position: absolute;
-  top: 36px; /* Centered precisely with the outer ring */
+  top: 45px; /* Re-aligned to the center of your new 90px logo */
   left: 50%;
   
-  width: 96px !important;
-  max-width: 96px !important;
-  height: 96px !important;
-  max-height: 96px !important;
+  width: 114px !important;
+  max-width: 114px !important;
+  height: 114px !important;
+  max-height: 114px !important;
   border-radius: 50% !important;
   
-  /* CRITICAL SEPARATE RAINBOW DOTS MATRIX */
   background: conic-gradient(#ec4899, #3b82f6, #06b6d4, #ec4899);
   -webkit-mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
   mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg);
@@ -374,34 +372,33 @@ button:hover {
   z-index: 1;
 }
 
-/* THE MAGIC GLOW: Clean ambient soft light background */
+/* THE MAGIC GLOW: Expanded backlighting glow */
 .magic-glow {
   position: absolute;
-  top: 36px;
+  top: 45px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 130px;
-  height: 130px;
+  width: 150px;
+  height: 150px;
   background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0) 70%);
   border-radius: 50%;
   z-index: 0;
   animation: glowPulse 4s infinite ease-in-out;
 }
 
-/* LOGO LAYER: Floats flawlessly directly IN FRONT of the active radar rings */
+/* LOGO LAYER: Scaled up to 90px and forced securely in front */
 .magic-logo {
-  width: 90px !important;
-  height: 90px !important;
+  width: 90px !important;  /* Bigger size parameter */
+  height: 90px !important; /* Bigger size parameter */
   object-fit: contain !important;
   display: block !important;
-  margin-bottom: 34px !important;
+  margin-bottom: 24px !important; /* Smoothed spacing for text below */
   
-  /* LAYER PRIORITY SYSTEM */
-  position: relative !important; /* Gives the element stacking authority */
-  z-index: 10 !important;        /* Forces it in front of the rings (which are at z-index: 1) */
-  
+  position: relative !important;
+  z-index: 10 !important; 
   animation: logoFloat 4.5s infinite ease-in-out;
 }
+
 
 
 .magic-text {
