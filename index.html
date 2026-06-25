@@ -24,18 +24,20 @@
 
     
     <div class="mac-credits">
-      <span class="credits-text">Designed & Developed by Agent Murali Manohar •2026•</span>
+      <span class="credits-text">Designed & Developed by Murali Manohar •2026•</span>
     </div>
   </div>
 
   <div class="search-box">
-    <div class="input-wrapper">
-      <input id="search" placeholder="Enter city or area (e.g., Banjara, Hitech, Nagpur)..." onkeypress="handleKeyPress(event)"/>
-      <!-- Apple Processing Spinner Element -->
-      <div id="mac-spinner" class="mac-spinner hidden"></div>
+  <div class="input-wrapper">
+    <input id="search" placeholder="Enter city or area (e.g., Banjara, Hitech)..." onkeypress="handleKeyPress(event)"/>
+    
+    <div id="mac-spinner" class="radar-mini-spinner hidden">
+      <div class="radar-ping"></div>
     </div>
-    <button onclick="triggerSearch()">Search</button>
   </div>
+  <button onclick="triggerSearch()">Search</button>
+</div>
 </div>
 
 <div class="app-layout">
