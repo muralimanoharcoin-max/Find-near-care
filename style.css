@@ -54,8 +54,8 @@ body {
 
 /* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
 .care-logo {
-  width: 80px !important;
-  height: 80px !important;
+  width: 90px !important;
+  height: 90px !important;
   object-fit: contain !important;
   display: block !important;
   }
@@ -403,8 +403,7 @@ button:hover {
   animation: glowPulse 4s infinite ease-in-out;
 }
 
-/* LOGO LAYER: Scaled up to 90px and forced securely in front */
-/* LOGO LAYER: Scaled up to 90px with an integrated solid background mask shield */
+/* LOGO LAYER: Clean central color anchor behind the letter "e" only */
 .magic-logo {
   width: 90px !important;  
   height: 90px !important; 
@@ -412,18 +411,21 @@ button:hover {
   display: block !important;
   margin-bottom: 24px !important; 
   
-  /* BACKGROUND COLOR PATIENT SHIELD */
-  background-color: #f8fafc !important; /* Matches your premium dark theme panel color background */
-  border-radius: 50% !important;        /* Keeps the shield perfectly circular matching the rings */
-  box-shadow: 0 0 7px rgba(0, 0, 0, 0.6); /* Adds depth so the logo pulls away from the rings */
-  padding: 4px !important;              /* Adds breathing room between the logo edges and the rings */
-  box-sizing: border-box !important;    /* Keeps the 90px size stable regardless of padding */
+  /* INNER CORE BACKGROUND ENGINE */
+  /* Creates a solid #111827 circle up to 17px radius (34px wide) then snaps to pure transparency */
+  background: radial-gradient(circle, #111827 0%, #111827 38%, transparent 39%, transparent 100%) !important;
+  
+  /* Remove old structural padding and frame parameters so rays stay clean */
+  padding: 0 !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
   
   /* LAYER PRIORITY SYSTEM */
   position: relative !important;
   z-index: 10 !important; 
   animation: logoFloat 4.5s infinite ease-in-out;
 }
+
 
 
 
