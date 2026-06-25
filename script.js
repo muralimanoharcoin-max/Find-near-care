@@ -67,7 +67,7 @@ async function searchLocation(query) {
   try {
     let cleanQuery = query.trim();
     
-    const coreHubs = [""];
+    const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
     for (let hub of coreHubs) {
       if (closeMatch(cleanQuery, hub)) {
         cleanQuery = hub; 
