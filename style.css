@@ -388,17 +388,21 @@ button:hover {
   animation: glowPulse 4s infinite ease-in-out;
 }
 
-/* LOGO LAYER: Floats flawlessly directly in the sweet spot center */
+/* LOGO LAYER: Floats flawlessly directly IN FRONT of the active radar rings */
 .magic-logo {
   width: 75px !important;
   height: 75px !important;
   object-fit: contain !important;
   display: block !important;
   margin-bottom: 34px !important;
-  z-index: 2 !important;
-  position: relative; 
+  
+  /* LAYER PRIORITY SYSTEM */
+  position: relative !important; /* Gives the element stacking authority */
+  z-index: 10 !important;        /* Forces it in front of the rings (which are at z-index: 1) */
+  
   animation: logoFloat 4.5s infinite ease-in-out;
 }
+
 
 .magic-text {
   font-size: 1.05rem;
