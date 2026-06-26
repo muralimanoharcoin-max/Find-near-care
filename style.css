@@ -543,3 +543,61 @@ button:hover {
     order: 2;
   }
 }
+/* ==========================================================================
+   DYNAMIC GEOLOCATION SUGGESTIONS CONTAINER
+   ========================================================================== */
+.input-wrapper {
+  position: relative; /* Keeps dropdown attached exactly to input bounds */
+}
+
+.suggestions-box {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  background: rgba(15, 23, 42, 0.95); /* Deep slate matching body */
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 9999; /* Higher priority layer than map components */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.suggestion-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background: rgba(59, 130, 246, 0.2); /* Soft highlight tint */
+  color: #ffffff;
+}
+
+/* Secondary meta labeling for district, state metadata styling */
+.suggestion-meta {
+  font-size: 0.78rem;
+  color: #94a3b8;
+}
+
+/* Custom scrollbar adjustments inside suggestions list */
+.suggestions-box::-webkit-scrollbar {
+  width: 5px;
+}
+.suggestions-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
