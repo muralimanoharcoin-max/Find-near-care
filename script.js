@@ -171,10 +171,10 @@ function showWelcomeState() {
   document.getElementById('mac-spinner').classList.add('hidden');
   document.getElementById('no-results-state').classList.remove('hidden');
 
-  const mainTelemetryText = document.querySelector('.magic-text');
-  const subTelemetryText = document.querySelector('.magic-subtext');
-  if (mainTelemetryText) mainTelemetryText.innerText = "SYSTEM READY";
-  if (subTelemetryText) subTelemetryText.innerText = "Enter a city or area to begin automated coordinate scanning.";
+  const mainTelemetryText = document.querySelector('.quantum-title');
+  const subTelemetryText = document.querySelector('.quantum-subtitle');
+  if (mainTelemetryText) mainTelemetryText.innerText = "COORDINATE MESH ACTIVE";
+  if (subTelemetryText) subTelemetryText.innerText = "Enter a regional area to initialize geospatial routing matrix calculations.";
 }
 
 function clearViews() {
@@ -182,10 +182,10 @@ function clearViews() {
   document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  const mainTelemetryText = document.querySelector('.magic-text');
-  const subTelemetryText = document.querySelector('.magic-subtext');
-  if (mainTelemetryText) mainTelemetryText.innerText = "No Results Found";
-  if (subTelemetryText) subTelemetryText.innerText = "We couldn't find any locations matching that city or area.";
+  const mainTelemetryText = document.querySelector('.quantum-title');
+  const subTelemetryText = document.querySelector('.quantum-subtitle');
+  if (mainTelemetryText) mainTelemetryText.innerText = "MATRIX SCAN EMPTY";
+  if (subTelemetryText) subTelemetryText.innerText = "We couldn't find any Indian locations matching that specific search criteria.";
 }
 
 function copyLink(url) {
