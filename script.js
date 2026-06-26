@@ -31,6 +31,7 @@ function handleKeyPress(event) {
 function triggerSearch() {
   const query = document.getElementById("search").value;
   if (query.trim() !== "") {
+    // Instantly hide suggestions dropdown out of sight on search activation
     const dropdown = document.getElementById('suggestions-dropdown');
     if (dropdown) {
       dropdown.innerHTML = "";
@@ -48,42 +49,16 @@ function formatTravelTime(totalMinutes) {
   return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours}h`;
 }
 
-function closeMatch(str1, str2) {
-  let s1 = str1.toLowerCase().trim();
-  let s2 = str2.toLowerCase().trim();
-  if (s1.includes(s2) || s2.includes(s1)) return true;
-  
-  let matches = 0;
-  for(let i=0; i<Math.min(s1.length, s2.length); i++) {
-    if(s1[i] === s2[i]) matches++;
-  }
-  return (matches / Math.max(s1.length, s2.length)) > 0.5;
-}
-
+// LIVE GEOSPATIAL SEARCH - SEARCH HUBS ARRAY COMPLETELY REMOVED FOR PURE DIRECT SEARCHING
 async function searchLocation(query) {
   document.getElementById('mac-spinner').classList.remove('hidden');
-  
-  // DYNAMIC REVEAL TIMELINES: Instantly display the maps workspace layout sheet
   document.getElementById('no-results-state').classList.add('hidden');
-  document.getElementById('gis-workspace-panel').classList.remove('hidden');
   document.getElementById("results").innerHTML = "";
-  
-  // FIX CRUCIAL LEAFLET RESIZING LAYER GLITCH ON INSTANT VIEW REVEALS
-  map.invalidateSize();
-  setTimeout(() => { map.invalidateSize(); }, 50);
 
   try {
     let cleanQuery = query.trim();
-    
-    const coreHubs = [""];
-    for (let hub of coreHubs) {
-      if (closeMatch(cleanQuery, hub)) {
-        cleanQuery = hub; 
-        document.getElementById("search").value = hub;
-        break;
-      }
-    }
 
+    // Directly fetch destination coordinates from OpenStreetMap geocoder
     const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery)}&limit=1`;
     let response = await fetch(geocodeUrl).then(x => x.json());
 
@@ -97,7 +72,7 @@ async function searchLocation(query) {
     const targetCoords = [targetLat, targetLon];
 
     map.setView(targetCoords, 12);
-    map.invalidateSize(); // Sync dimensions before injecting markers
+    setTimeout(() => { map.invalidateSize(); }, 200);
     
     if (searchMarker) map.removeLayer(searchMarker);
     searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Search Location:</b> ${cleanQuery}`).openPopup();
@@ -169,35 +144,29 @@ async function searchLocation(query) {
     clearViews();
   } finally {
     document.getElementById('mac-spinner').classList.add('hidden');
-    setTimeout(() => { map.invalidateSize(); }, 100);
   }
 }
 
 function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
-  
-  // RESET INITIAL STATES
-  document.getElementById('gis-workspace-panel').classList.add('hidden');
   document.getElementById('no-results-state').classList.remove('hidden');
 
-  const mainTelemetryText = document.querySelector('.radar-title');
-  const subTelemetryText = document.querySelector('.radar-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "ACTIVE• V 1.9";
-  if (subTelemetryText) subTelemetryText.innerText = "Enter location above to compile dynamic matrix.";
+  const mainTelemetryText = document.querySelector('.magic-text');
+  const subTelemetryText = document.querySelector('.magic-subtext');
+  if (mainTelemetryText) mainTelemetryText.innerText = "SYSTEM READY";
+  if (subTelemetryText) subTelemetryText.innerText = "Enter a city or area to begin automated coordinate scanning.";
 }
 
 function clearViews() {
   document.getElementById("results").innerHTML = "";
+  document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  document.getElementById('gis-workspace-panel').classList.add('hidden');
-  document.getElementById('no-results-state').classList.remove('hidden');
-  
-  const mainTelemetryText = document.querySelector('.radar-title');
-  const subTelemetryText = document.querySelector('.radar-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "Sorry No Result: Check the spelling or choose from suggestions";
-  if (subTelemetryText) subTelemetryText.innerText = "We couldn't resolve any active locations across our current health networks.";
+  const mainTelemetryText = document.querySelector('.magic-text');
+  const subTelemetryText = document.querySelector('.magic-subtext');
+  if (mainTelemetryText) mainTelemetryText.innerText = "No Results Found";
+  if (subTelemetryText) subTelemetryText.innerText = "We couldn't find any locations matching that city or area.";
 }
 
 function copyLink(url) {
@@ -252,6 +221,7 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 
         const fitBoundsLayout = L.latLngBounds([[startLat, startLng], [endLat, endLng]]);
         map.fitBounds(fitBoundsLayout, { padding: [50, 50] });
+        setTimeout(() => { map.invalidateSize(); }, 150);
       } else {
         alert("Unable to compute driving metrics across map matrix.");
       }
@@ -260,7 +230,7 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 }
 
 /* ==========================================================================
-   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM INTERCEPT ARCHITECTURE)
+   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM PROGRAMMATIC NODE SETUP)
    ========================================================================== */
 let suggestionTimeout = null;
 
