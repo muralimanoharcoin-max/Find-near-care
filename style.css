@@ -17,10 +17,8 @@ body {
 }
 
 /* ==========================================================================
-   STRICT APP LAYER AND HEADER INTERFACE OVERLAY ARCHITECTURE
+   STRICT LAYER AND OVERLAY SYSTEM (SOLVES DROPBEHIND AND SELECTION SCRUBBING)
    ========================================================================== */
-
-/* The master navbar container floats entirely above the body viewport */
 .header {
   padding: 16px 20px;
   display: flex;
@@ -28,10 +26,9 @@ body {
   gap: 10px;
   flex-shrink: 0;
   position: relative !important;
-  z-index: 999999 !important; /* Higher ranking priority than map or card components */
+  z-index: 999999 !important; /* Forces navigation layout completely above the map canvas */
 }
 
-/* The top row structure retains clear structural layer visibility */
 .header-top {
   display: flex;
   justify-content: space-between;
@@ -71,7 +68,6 @@ body {
   font-family: monospace;
 }
 
-/* Force-aligns search elements over active output layout screens */
 .search-box {
   display: flex;
   gap: 12px;
@@ -81,7 +77,6 @@ body {
   z-index: 999999 !important;
 }
 
-/* Parent input wrapper has an active structural z-index so child overlays function */
 .input-wrapper {
   position: relative !important;
   flex-grow: 1;
@@ -124,27 +119,24 @@ body {
   background: #2563eb;
 }
 
-/* THE DROPDOWN CONTAINER PANEL OVERLAY SHEET */
+/* THE DROPDOWN HOVER VIEWPORT CONTROLLER PANEL SHEET */
 .suggestions-box {
   position: absolute !important;
   top: calc(100% + 6px) !important;
   left: 0 !important;
   width: 100% !important;
-  background: #0f172a !important; /* Strict high-opacity solid slate dark color backdrop */
+  background: #0f172a !important; /* Strict solid baseline opaque tone */
   border: 1px solid rgba(255, 255, 255, 0.22) !important;
   border-radius: 12px !important;
   max-height: 220px !important;
-  
-  /* Forces scrollbar activation and permits choice point selection */
   overflow-y: auto !important;
   overflow-x: hidden !important;
   display: block !important;
   pointer-events: auto !important; 
-  z-index: 9999999 !important; /* Ultimate layer priority */
+  z-index: 9999999 !important; /* Dominates sorting visibility stacks completely */
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9) !important;
 }
 
-/* THE SELECTION SUGGESTION CANDIDATE ROWS */
 .suggestion-item {
   padding: 14px 16px !important;
   cursor: pointer !important;
@@ -163,7 +155,7 @@ body {
 }
 
 .suggestion-item:hover {
-  background: rgba(137, 122, 185, 0.3) !important; /* Elegant CARE Purple styling hover tint */
+  background: rgba(137, 122, 185, 0.3) !important; 
   color: #ffffff !important;
 }
 
@@ -172,7 +164,6 @@ body {
   color: #94a3b8 !important;
 }
 
-/* Mac-Style Input Activity Spinner Elements */
 .mac-spinner {
   position: absolute;
   right: 16px;
@@ -213,7 +204,6 @@ body {
   z-index: 10;
 }
 
-/* Dynamic Content Metric Display Cards Styling */
 #results {
   display: flex;
   flex-direction: column;
@@ -315,7 +305,7 @@ body {
 }
 
 /* ==========================================================================
-   INNOVATIVE QUANTUM CONSTELLATION MESH ENGINE
+   GEOSPATIAL RADAR SWEEP ENGINE ANIMATION CODES
    ========================================================================== */
 #no-results-state {
   display: flex;
@@ -326,107 +316,85 @@ body {
   min-height: 340px;
 }
 
-.quantum-canvas {
+.radar-canvas {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 340px;
-  height: 340px;
+  width: 320px;
+  height: 320px;
   text-align: center;
 }
 
-/* Master constellation boundary layer */
-.quantum-constellation {
+/* Pulsing radar backing loops */
+.radar-wave {
   position: absolute;
   top: 45px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 240px;
-  height: 240px;
-  animation: cosmicDrift 25s linear infinite;
-}
-
-/* Base floating data node points */
-.node {
-  position: absolute;
-  background: #ffffff;
+  border: 1px solid rgba(59, 130, 246, 0.3);
   border-radius: 50%;
-  box-shadow: 0 0 10px #3b82f6, 0 0 20px #897AB9;
-  animation: nodePulse 3s ease-in-out infinite alternate;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.02) 0%, transparent 80%);
+  animation: radarPing 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
 }
 
-.node-1 { width: 6px; height: 6px; top: 15%; left: 20%; animation-delay: 0s; }
-.node-2 { width: 8px; height: 8px; top: 75%; left: 15%; animation-delay: 0.7s; }
-.node-3 { width: 5px; height: 5px; top: 80%; left: 75%; animation-delay: 1.4s; }
-.node-4 { width: 7px; height: 7px; top: 25%; left: 80%; animation-delay: 2.1s; }
-.node-5 { width: 9px; height: 9px; top: 50%; left: 90%; animation-delay: 0.3s; }
+.wave-1 { width: 100px; height: 100px; animation-delay: 0s; }
+.wave-2 { width: 180px; height: 180px; animation-delay: 1.3s; }
+.wave-3 { width: 260px; height: 260px; animation-delay: 2.6s; }
 
-/* Vector linkage beams cutting across coordinates */
-.vector {
+/* Rotating high-tech radar sweeper bar */
+.radar-sweeper {
   position: absolute;
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), rgba(137, 122, 185, 0.4));
-  height: 1px;
-  transform-origin: left center;
-  opacity: 0.6;
+  top: 45px;
+  left: 50%;
+  width: 130px;
+  height: 130px;
+  background: conic-gradient(from 0deg, rgba(137, 122, 185, 0.4) 0%, rgba(59, 130, 246, 0.1) 20%, transparent 60%);
+  border-radius: 50%;
+  transform-origin: top left;
+  transform: translate(0, 0); /* Locked coordinates positioning balance */
+  animation: radarSweep 5s linear infinite;
+  z-index: 1;
 }
 
-.vector-1 {
-  top: 15%;
-  left: 20%;
-  width: 145px;
-  transform: rotate(8deg);
-  animation: vectorPulse 4s ease-in-out infinite alternate;
-}
-
-.vector-2 {
-  top: 75%;
-  left: 15%;
-  width: 120px;
-  transform: rotate(-35deg);
-  animation: vectorPulse 4s ease-in-out infinite alternate-reverse;
-}
-
-/* Central backing layer isolating the branding safely */
-.quantum-logo-capsule {
+/* Static anchoring capsule shielding the asset badge safely */
+.radar-logo-capsule {
   position: relative;
   width: 90px;
   height: 90px;
   margin-bottom: 24px;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
-.quantum-logo {
+.radar-logo {
   width: 76px !important;
   height: 76px !important;
   object-fit: contain !important;
-  animation: smoothHover 5s ease-in-out infinite;
+  animation: floatMotion 4s ease-in-out infinite;
 }
 
-/* Deep neon underlying lighting core */
-.quantum-core-glow {
+.radar-glow-core {
   position: absolute;
   top: 45px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(137, 122, 185, 0.25) 0%, rgba(59, 130, 246, 0.05) 50%, transparent 70%);
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, rgba(137, 122, 185, 0.25) 0%, transparent 70%);
   border-radius: 50%;
   z-index: 0;
-  animation: glowBreath 6s ease-in-out infinite;
+  animation: radarBreath 4s ease-in-out infinite alternate;
 }
 
-/* Telemetry labels formatting */
-.quantum-title {
+.radar-title {
   font-size: 1.15rem;
   font-weight: 800;
   color: #ffffff;
@@ -436,7 +404,7 @@ body {
   text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
-.quantum-subtitle {
+.radar-subtitle {
   font-size: 0.85rem;
   color: #94a3b8;
   max-width: 280px;
@@ -444,39 +412,33 @@ body {
   z-index: 2;
 }
 
-/* ==========================================================================
-   QUANTUM COORDINATE SYSTEM TIMELINES
-   ========================================================================== */
-@keyframes cosmicDrift {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+/* Animation Timelines */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
-@keyframes nodePulse {
-  0% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 8px #3b82f6; }
-  100% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 15px #897AB9, 0 0 25px #3b82f6; }
+@keyframes radarPing {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.4; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; }
 }
 
-@keyframes vectorPulse {
-  0% { opacity: 0.2; width: 80%; }
-  100% { opacity: 0.7; width: 100%; }
+@keyframes radarBreath {
+  0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
 }
 
-@keyframes glowBreath {
-  0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
-  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
-}
-
-@keyframes smoothHover {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-5px) rotate(2deg); }
+@keyframes floatMotion {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
 }
 
 .hidden {
   display: none !important;
 }
 
-/* Custom Scrollbar configurations for the suggestions layout container */
 .suggestions-box::-webkit-scrollbar {
   width: 6px !important;
   display: block !important;
