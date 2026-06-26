@@ -1,12 +1,15 @@
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  background: #0f172a;
+  overflow: hidden; /* ABSOLUTELY NO GLOBAL SCREEN SCROLLING ALLOWED */
+  height: 100vh;
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e293b) !important;
-  color: #f8fafc;
-  height: 98vh;
+}
+
+body {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 
 .glass {
@@ -16,17 +19,14 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* ==========================================================================
-   STRICT LAYER AND OVERLAY SYSTEM (SOLVES DROPBEHIND AND SELECTION SCRUBBING)
-   ========================================================================== */
 .header {
-  padding: 16px 20px;
+  padding: 14px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   flex-shrink: 0;
   position: relative !important;
-  z-index: 999999 !important; /* Forces navigation layout completely above the map canvas */
+  z-index: 999999 !important;
 }
 
 .header-top {
@@ -34,8 +34,6 @@ body {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  position: relative !important;
-  z-index: 999999 !important;
 }
 
 .logo-area {
@@ -45,12 +43,12 @@ body {
 }
 
 .care-logo {
-  height: 48px;
+  height: 44px;
   object-fit: contain;
 }
 
 .apple-bold-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   margin: 0;
   background: linear-gradient(135deg, #ffffff, #94a3b8);
@@ -63,7 +61,7 @@ body {
 }
 
 .credits-text {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   letter-spacing: 0.05em;
   font-family: monospace;
 }
@@ -82,124 +80,109 @@ body {
   flex-grow: 1;
   display: flex;
   align-items: center;
-  z-index: 999999 !important; 
 }
 
 .input-wrapper input {
   width: 100%;
-  padding: 12px 16px;
+  padding: 10px 14px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  border-radius: 8px;
   color: #ffffff;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   outline: none;
-  transition: all 0.3s;
-}
-
-.input-wrapper input:focus {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(59, 130, 246, 0.5);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
 .search-box button {
-  padding: 12px 24px;
+  padding: 10px 20px;
   background: #3b82f6;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   color: #ffffff;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: background 0.2s;
 }
 
-.search-box button:hover {
-  background: #2563eb;
-}
-
-/* THE DROPDOWN HOVER VIEWPORT CONTROLLER PANEL SHEET */
+/* SEARCH DROPDOWN AUTOCOMPLETE LIST PANEL */
 .suggestions-box {
   position: absolute !important;
-  top: calc(100% + 6px) !important;
+  top: calc(100% + 4px) !important;
   left: 0 !important;
   width: 100% !important;
-  background: #0f172a !important; /* Strict solid baseline opaque tone */
+  background: #0f172a !important;
   border: 1px solid rgba(255, 255, 255, 0.22) !important;
-  border-radius: 12px !important;
-  max-height: 220px !important;
+  border-radius: 10px !important;
+  max-height: 180px !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   display: block !important;
-  pointer-events: auto !important; 
-  z-index: 9999999 !important; /* Dominates sorting visibility stacks completely */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9) !important;
+  z-index: 9999999 !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8) !important;
 }
 
 .suggestion-item {
-  padding: 14px 16px !important;
+  padding: 12px 14px !important;
   cursor: pointer !important;
-  font-size: 0.95rem !important;
+  font-size: 0.9rem !important;
   color: #e2e8f0 !important;
   text-align: left !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 2px !important;
   pointer-events: auto !important; 
 }
 
-.suggestion-item:last-child {
-  border-bottom: none !important;
-}
-
 .suggestion-item:hover {
-  background: rgba(137, 122, 185, 0.3) !important; 
-  color: #ffffff !important;
+  background: rgba(137, 122, 185, 0.3) !important;
 }
 
 .suggestion-meta {
-  font-size: 0.8rem !important;
-  color: #94a3b8 !important;
+  font-size: 0.75rem !important;
+  color: #94a3b8;
 }
 
 .mac-spinner {
   position: absolute;
-  right: 16px;
-  width: 18px;
-  height: 18px;
+  right: 14px;
+  width: 16px;
+  height: 16px;
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-top-color: #3b82f6;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ==========================================================================
-   APP DESKTOP VIEWPORT WORKSPACE LAYOUT
+   FLEXIBLE DYNAMIC WORKSPACE (Fills up exact middle space completely)
    ========================================================================== */
+.app-view-area {
+  flex-grow: 1;
+  position: relative;
+  width: 100%;
+  min-height: 0; /* Critical layout setting for proper internal flex scrolling */
+}
+
 .app-layout {
   display: flex;
-  flex-grow: 1;
-  overflow: hidden;
-  height: calc(100vh - 120px);
+  width: 100%;
+  height: 100%;
 }
 
 #results-wrapper {
-  width: 40%;
-  overflow-y: auto;
+  width: 35%;
+  height: 100%;
+  overflow-y: auto; /* Results panel lists scroll internal style safely */
   background: rgba(15, 23, 42, 0.4);
   border-right: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 20px;
+  padding: 16px;
   box-sizing: border-box;
 }
 
 #map {
-  width: 60%;
+  width: 65%;
   height: 100%;
   z-index: 10;
 }
@@ -207,23 +190,18 @@ body {
 #results {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
+/* MINI COMPACT ACTIVE SEARCH CARDS */
 .card {
   background: rgba(30, 41, 59, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
-  padding: 16px;
+  border-radius: 10px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  transition: transform 0.2s, border-color 0.2s;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.15);
+  gap: 10px;
 }
 
 .nearest-card {
@@ -232,88 +210,57 @@ body {
 }
 
 .card-header {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: #ffffff;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
 
 .badge {
-  font-size: 0.75rem;
-  padding: 4px 8px;
+  font-size: 0.7rem;
+  padding: 2px 6px;
   background: rgba(137, 122, 185, 0.2);
   color: #c0b6e4;
-  border-radius: 6px;
-  font-weight: 600;
-  border: 1px solid rgba(137, 122, 185, 0.3);
+  border-radius: 4px;
 }
 
 .card-body {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   color: #94a3b8;
 }
 
 .card-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .action-btn {
   flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 0.85rem;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  text-align: center;
+  border: none;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
 }
 
-.action-btn:not(.secondary):not(.wa-btn) {
-  background: #3b82f6;
-  color: #ffffff;
-  border: none;
-}
-
-.action-btn:not(.secondary):not(.wa-btn):hover {
-  background: #2563eb;
-}
-
-.action-btn.secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: #e2e8f0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.action-btn.secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.action-btn.wa-btn {
-  background: #22c55e;
-  color: #ffffff;
-  border: none;
-}
-
-.action-btn.wa-btn:hover {
-  background: #16a34a;
-}
+.action-btn:not(.secondary):not(.wa-btn) { background: #3b82f6; color: #ffffff; }
+.action-btn.secondary { background: rgba(255, 255, 255, 0.05); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.1); }
+.action-btn.wa-btn { background: #22c55e; color: #ffffff; }
 
 /* ==========================================================================
-   PERFECTLY CENTERED GEOSPATIAL RADAR SWEEP ENGINE ANIMATION 
+   RADAR SCREEN CENTER CONFIGURATIONS (Welcome Panel View)
    ========================================================================== */
 #no-results-state {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  height: 80%;
-  min-height: 340px;
 }
 
 .radar-canvas {
@@ -321,165 +268,134 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  text-align: center;
 }
 
-/* Unified baseline reference anchor viewport block */
 .radar-viewport-core {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 220px;
+  height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
-/* Precise absolute mathematical center coordinate calculation anchors */
 .radar-wave {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid rgba(59, 130, 246, 0.35);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.02) 0%, transparent 80%);
-  animation: radarPing 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-  pointer-events: none;
+  animation: radarPing 4s infinite linear;
 }
+.wave-1 { width: 90px; height: 90px; animation-delay: 0s; }
+.wave-2 { width: 150px; height: 150px; animation-delay: 1.3s; }
+.wave-3 { width: 210px; height: 210px; animation-delay: 2.6s; }
 
-.wave-1 { width: 110px; height: 110px; animation-delay: 0s; }
-.wave-2 { width: 190px; height: 190px; animation-delay: 1.3s; }
-.wave-3 { width: 270px; height: 270px; animation-delay: 2.6s; }
-
-/* Rotating high-tech radar sweeper bar - pivots from absolute midpoint */
 .radar-sweeper {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 135px; /* Sweep radius reaches the edge of the outer wave loop */
-  height: 135px;
+  top: 50%; left: 50%;
+  width: 105px; height: 105px;
   background: conic-gradient(from 0deg, rgba(137, 122, 185, 0.4) 0%, rgba(59, 130, 246, 0.08) 20%, transparent 60%);
   border-radius: 50%;
-  transform-origin: top left; /* Pivot point is locked directly to top-left corner at 50%, 50% */
+  transform-origin: top left;
   animation: radarSweep 5s linear infinite;
-  pointer-events: none;
-  z-index: 1;
 }
 
-/* Central branding capsule stays balanced at flex container axis */
 .radar-logo-capsule {
   position: relative;
-  width: 90px;
-  height: 90px;
+  width: 70px; height: 70px;
   border-radius: 50%;
-  background: rgba(15, 23, 42, 0.95);
+  background: #0f172a;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   z-index: 10;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
-.radar-logo {
-  width: 76px !important;
-  height: 76px !important;
-  object-fit: contain !important;
-  animation: floatMotion 4s ease-in-out infinite;
-}
+.radar-logo { width: 56px !important; height: 56px !important; object-fit: contain !important; }
 
 .radar-glow-core {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
-  background: radial-gradient(circle, rgba(137, 122, 185, 0.25) 0%, transparent 70%);
-  border-radius: 50%;
-  z-index: 0;
-  animation: radarBreath 4s ease-in-out infinite alternate;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(137, 122, 185, 0.2) 0%, transparent 70%);
 }
 
-.radar-title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #ffffff;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
-  z-index: 2;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
+.radar-title { font-size: 1rem; font-weight: 800; color: #ffffff; letter-spacing: 0.08em; margin-bottom: 6px; }
+.radar-subtitle { font-size: 0.8rem; color: #94a3b8; max-width: 260px; text-align: center; }
 
-.radar-subtitle {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  max-width: 280px;
-  line-height: 1.5;
-  z-index: 2;
-}
-
-/* Animation Timelines */
-@keyframes radarSweep {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
+@keyframes radarSweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes radarPing {
   0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
   10% { opacity: 1; }
-  90% { opacity: 0.4; }
   100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0; }
 }
 
-@keyframes radarBreath {
-  0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+/* ==========================================================================
+   FIXED BOTTOM ROW COMPONENT SETS (Zero Window Collusions)
+   ========================================================================== */
+.footer-fixed-master {
+  background: #030712;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  flex-shrink: 0; /* Locks panel layout securely to the true base level */
 }
 
-@keyframes floatMotion {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
+.branches-slider-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.hidden {
-  display: none !important;
+.section-main-heading {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 12px 0;
 }
 
-.suggestions-box::-webkit-scrollbar {
-  width: 6px !important;
-  display: block !important;
-}
-.suggestions-box::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3) !important;
-  border-radius: 10px !important;
+.horizontal-slider-wrapper {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto; /* Continuous horizontal swipe layout engine */
+  overflow-y: hidden;
+  padding-bottom: 8px;
 }
 
-/* RESPONSIVE MOBILE MODES */
-@media (max-width: 768px) {
-  body {
-    overflow-y: auto;
-    height: auto;
-  }
-  .header-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 9px;
-  }
-  .search-box {
-    width: 100%;
-  }
-  .app-layout {
-    flex-direction: column-reverse;
-    height: auto;
-    overflow: visible;
-  }
-  #results-wrapper, #map {
-    width: 100%;
-  }
-  #map {
-    height: 350px;
-  }
+/* Compact branch blocks */
+.slider-branch-card {
+  flex: 0 0 260px;
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 12px;
+  box-sizing: border-box;
 }
+
+.branch-card-header { display: flex; align-items: center; gap: 8px; }
+.branch-status-dot { width: 6px; height: 6px; background-color: #10b981; border-radius: 50%; }
+.slider-branch-card h3 { font-size: 0.85rem; color: #f1f5f9; margin: 0; }
+.branch-address-text { font-size: 0.75rem; color: #94a3b8; margin: 6px 0; line-height: 1.4; }
+.branch-card-meta { font-size: 0.7rem; font-family: monospace; color: #c0b6e4; }
+
+/* Custom light scrolling paths */
+.horizontal-slider-wrapper::-webkit-scrollbar { height: 4px; }
+.horizontal-slider-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
+
+.brand-about-footer {
+  padding: 12px 20px;
+  background: #020617;
+}
+
+.footer-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-info-column h4 { font-size: 0.8rem; color: #ffffff; margin: 0 0 4px 0; text-transform: uppercase; }
+.footer-info-column p { font-size: 0.75rem; color: #94a3b8; margin: 0; }
+.developer-tagline { font-size: 0.75rem; color: #64748b; margin: 0; }
+.developer-tagline span { color: #3b82f6; font-weight: 600; }
+
+.hidden { display: none !important; }
