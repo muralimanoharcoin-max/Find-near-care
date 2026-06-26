@@ -4,8 +4,10 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Find Near CARE</title>
+  <!-- Apple-Style Premium Typography Engine -->
   <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css"/>
+  <!-- Leaflet GIS Mapping Components -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
 <body>
@@ -27,21 +29,27 @@
       <input type="text" id="search" placeholder="Enter city, town, or village..." onkeypress="handleKeyPress(event)" oninput="handleInputSuggestions(event)" autocomplete="off">
       <div id="mac-spinner" class="mac-spinner hidden"></div>
       
+      <!-- SUGGESTIONS DROPDOWN CONTAINER -->
       <div id="suggestions-dropdown" class="suggestions-box hidden"></div>
     </div>
     <button onclick="triggerSearch()">Search</button>
   </div>
 </div>
 
+<!-- MAIN APPLICATION SCREEN SPACE CONTAINER -->
 <div class="app-view-area">
   
+  <!-- CORE GIS INTERACTION BLOCK (50/50 CARD SPLIT WINDOW) -->
   <div id="gis-workspace-panel" class="app-layout hidden">
-    <div id="results-wrapper">
+    <div id="results-wrapper" class="workspace-card">
       <div id="results"></div>
     </div>
-    <div id="map"></div>
+    <div id="map-wrapper" class="workspace-card">
+      <div id="map"></div>
+    </div>
   </div>
   
+  <!-- GEOSPATIAL RADAR NETWORK WELCOME STATE -->
   <div id="no-results-state">
     <div class="radar-canvas">
       <div class="radar-viewport-core">
@@ -61,12 +69,15 @@
 
 </div>
 
+<!-- MASTER FIXED BOTTOM FOOTER INTERFACE -->
 <div class="footer-fixed-master">
   
+  <!-- HORIZONTAL SLIDING CARDS TRACK FOR ALL 13 CARE HOSPITAL BRANCHES -->
   <div class="branches-slider-section">
     <h2 class="section-main-heading">🏥 CARE National Hospital Networks (13 Branches)</h2>
     <div class="horizontal-slider-wrapper">
       
+      <!-- Branch 1 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -76,6 +87,7 @@
         <div class="branch-card-meta">Emergency: +91 40 6165 6565</div>
       </div>
 
+      <!-- Branch 2 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -85,6 +97,7 @@
         <div class="branch-card-meta">Emergency: +91 40 6166 6666</div>
       </div>
 
+      <!-- Branch 3 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -94,6 +107,7 @@
         <div class="branch-card-meta">Emergency: +91 40 6166 7777</div>
       </div>
 
+      <!-- Branch 4 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -103,6 +117,7 @@
         <div class="branch-card-meta">Emergency: +91 40 6165 8888</div>
       </div>
 
+      <!-- Branch 5 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -112,6 +127,7 @@
         <div class="branch-card-meta">Emergency: +91 40 6165 9999</div>
       </div>
 
+      <!-- Branch 6 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -121,6 +137,7 @@
         <div class="branch-card-meta">Emergency: +91 891 616 5656</div>
       </div>
 
+      <!-- Branch 7 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -130,6 +147,7 @@
         <div class="branch-card-meta">Emergency: +91 891 350 2000</div>
       </div>
 
+      <!-- Branch 8 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -139,6 +157,7 @@
         <div class="branch-card-meta">Emergency: +91 674 616 5656</div>
       </div>
 
+      <!-- Branch 9 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -148,6 +167,7 @@
         <div class="branch-card-meta">Emergency: +91 712 616 5656</div>
       </div>
 
+      <!-- Branch 10 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -157,6 +177,7 @@
         <div class="branch-card-meta">Emergency: +91 771 616 5656</div>
       </div>
 
+      <!-- Branch 11 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -166,6 +187,7 @@
         <div class="branch-card-meta">Emergency: +91 731 662 1100</div>
       </div>
 
+      <!-- Branch 12 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -175,6 +197,7 @@
         <div class="branch-card-meta">Emergency: +91 240 616 5656</div>
       </div>
 
+      <!-- Branch 13 -->
       <div class="slider-branch-card">
         <div class="branch-card-header">
           <span class="branch-status-dot"></span>
@@ -187,24 +210,26 @@
     </div>
   </div>
 
+  <!-- COMPACT ABOUT SYSTEM DATA PARAGRAPHS FOOTER COMPONENT -->
   <footer class="brand-about-footer">
     <div class="footer-paragraphs-layout">
-      <p class="footer-para-block text-four-rows">
+      <!-- Paragraph 1: Exactly 3 Lines of Website Specs -->
+      <p class="footer-para-block web-info-block">
         <span>✨ SYSTEM METRICS: Calculating precise dynamic geolocation routing matrices.</span>
-        <span>🌐 ENGINE GEOMETRIES: Synchronized via standard OpenStreetMap mapping structures.</span>
-        <span>⏱️ REALTIME CALCULATIONS: Managed using active remote standard OSRM service paths.</span>
-        <span>🚀 INTERACTION INTERFACE: Optimized with lightweight Apple responsive layout wrappers.</span>
+        <span>🌐 ENGINE GEOMETRIES: Synchronized via standard OpenStreetMap spatial frameworks.</span>
+        <span>⏱️ REALTIME SPEED: Powered via active low-latency open OSRM service paths.</span>
       </p>
 
-      <p class="footer-para-block text-three-rows">
-        <span>🛠️ APPLICATION STACK: Structured using standard native vanilla JavaScript modules.</span>
-        <span>🛡️ HEALTHCARE COMMITMENT: Serving emergency services across 13 national network hubs.</span>
-        <span class="dev-sign">👨‍💻 SYSTEM DESIGN: Architected by <strong>Murali Manohar</strong> • 2026 All Rights Reserved.</span>
+      <!-- Paragraph 2: Exactly 2 Lines of Owner Specs -->
+      <p class="footer-para-block owner-info-block">
+        <span>🛡️ NETWORK ACCESS: Mapping active health metrics for 13 global hospital complexes.</span>
+        <span class="dev-sign">👨‍💻 ARCHITECTURE: Crafted by <strong>Murali Manohar</strong> • 2026 All Rights Reserved.</span>
       </p>
     </div>
   </footer>
 </div>
 
+<!-- Leaflet Engine Source Libraries Injection Scripts -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
