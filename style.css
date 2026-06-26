@@ -56,14 +56,31 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* ==========================================================================
+   PLATINUM & SILVER PREMIUM METALLIC CREDITS UPGRADE
+   ========================================================================== */
 .mac-credits {
-  opacity: 0.6;
+  opacity: 1; /* Restores structural radiance */
 }
 
 .credits-text {
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   font-family: monospace;
+  /* Premium Dynamic Platinum & Liquid Silver Chromic Gradient Layer */
+  background: linear-gradient(
+    135deg, 
+    #ffffff 0%, 
+    #e2e8f0 25%, 
+    #cbd5e1 45%, 
+    #ffffff 55%, 
+    #94a3b8 80%, 
+    #f1f5f9 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4); /* High-definition depth drop drop-shadow */
 }
 
 .search-box {
@@ -151,13 +168,13 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ==========================================================================
-   DYNAMIC EQUAL 50/50 WORKSPACE LAYOUT STYLING
+   DYNAMIC HEIGHT COMPRESSION FOR MAP/RESULT SECTION (BRINGS FOOTER UP)
    ========================================================================== */
 .app-view-area {
-  flex-grow: 1;
+  flex-grow: 0; /* Prevents stretching past its hard layout boundary */
+  height: 55vh; /* LOCKED COMPACT HEIGHT PROFILE: Pulls horizontal footer and end screens up */
   position: relative;
   width: 100%;
-  min-height: 0;
   padding: 12px;
   box-sizing: border-box;
 }
@@ -166,16 +183,16 @@ body {
   display: flex;
   width: 100%;
   height: 100%;
-  gap: 14px; /* Equal spacing between layout components */
+  gap: 14px;
 }
 
 /* Rounded Card Blueprint Wrapper Elements */
 .workspace-card {
-  flex: 1 1 50%; /* STRICT EQUAL 50/50 HORIZONTAL VIEWPORT SPLIT */
+  flex: 1 1 50%; 
   height: 100%;
   background: rgba(30, 41, 59, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px; /* Elegant premium rounded card corners */
+  border-radius: 16px; 
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -330,13 +347,16 @@ body {
 }
 
 /* ==========================================================================
-   FIXED CONTAINER STACK: LOCKED TO BASE FOR PERFECT DATA CONTAINMENT
+   FIXED CONTAINER STACK: AUTOMATICALLY FILLS THE EXTENDED REMAINING BOTTOM SPACE
    ========================================================================== */
 .footer-fixed-master {
   background: #030712;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
-  flex-shrink: 0;
+  flex-grow: 1; /* Automatically expands upward into newly made free viewport space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .branches-slider-section {
@@ -377,9 +397,7 @@ body {
 .horizontal-slider-wrapper::-webkit-scrollbar { height: 4px; }
 .horizontal-slider-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
 
-/* ==========================================================================
-   OPTIMIZED END SCREEN TEXT SECTION (3 LINES WEBSITE, 2 LINES OWNER)
-   ========================================================================== */
+/* END SCREEN PARAGRAPHS TEXT PANEL */
 .brand-about-footer {
   padding: 8px 20px;
   background: #020617;
@@ -402,12 +420,10 @@ body {
   line-height: 1.35;
 }
 
-/* 3 Lines Website Meta Block Style */
 .web-info-block {
   color: #94a3b8;
 }
 
-/* 2 Lines Owner Meta Block Style */
 .owner-info-block {
   color: #64748b;
 }
