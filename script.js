@@ -294,10 +294,10 @@ function handleInputSuggestions(event) {
           return;
         }
 
-        let html = "";
+        dropdown.innerHTML = ""; // Empty out container securely prior to drawing nodes
+
         data.forEach(item => {
           const address = item.address;
-          
           const placeName = address.village || address.town || address.suburb || address.city || address.neighbourhood || item.display_name.split(',')[0];
           const district = address.county || address.district || "";
           const state = address.state || "";
@@ -305,16 +305,24 @@ function handleInputSuggestions(event) {
           let cleanMeta = [district, state].filter(Boolean).join(', ');
           let fullDisplayString = placeName + (cleanMeta ? `, ${cleanMeta}` : "");
 
-          // FIX: Changed onclick to onmousedown so selection fires immediately before input blurs/closes
-          html += `
-            <div class="suggestion-item" onmousedown="selectSuggestion('${escapeHtml(fullDisplayString)}')">
-              <strong>${placeName}</strong>
-              <span class="suggestion-meta">${cleanMeta ? cleanMeta : 'India'}</span>
-            </div>
+          // Create row structure safely as programmatic elements
+          const row = document.createElement('div');
+          row.className = 'suggestion-item';
+          row.innerHTML = `
+            <strong>${placeName}</strong>
+            <span class="suggestion-meta">${cleanMeta ? cleanMeta : 'India'}</span>
           `;
+
+          // CRUCIAL REPLACEMENT: Listens directly to mousedown to intercept input blur actions instantly
+          row.addEventListener('mousedown', function(e) {
+            e.preventDefault(); // Prevents input box from dropping focus prematurely
+            e.stopPropagation();
+            selectSuggestion(fullDisplayString);
+          });
+
+          dropdown.appendChild(row);
         });
 
-        dropdown.innerHTML = html;
         dropdown.classList.remove('hidden');
       })
       .catch(err => console.error("Suggestions retrieval error:", err));
@@ -322,23 +330,23 @@ function handleInputSuggestions(event) {
 }
 
 function selectSuggestion(value) {
-  document.getElementById('search').value = value;
+  const inputElement = document.getElementById('search');
+  if (inputElement) {
+    inputElement.value = value; // Reflects full location choice text in search input bar
+  }
+  
   const dropdown = document.getElementById('suggestions-dropdown');
   if (dropdown) {
     dropdown.innerHTML = "";
     dropdown.classList.add('hidden');
   }
+  
+  // Directly fires off the map lookup logic calculations using the newly picked item!
   triggerSearch();
 }
 
-function escapeHtml(text) {
-  return text
-    .replace(/'/g, "\\'")
-    .replace(/"/g, '&quot;');
-}
-
-// Closes dropdown overlay panels when user clicks clear of them
-document.addEventListener('click', function(e) {
+// Automatically clears the suggestions view panel when a user clicks anywhere outside the input wrapper bounds
+document.addEventListener('mousedown', function(e) {
   const dropdown = document.getElementById('suggestions-dropdown');
   if (e.target.id !== 'search' && dropdown) {
     dropdown.classList.add('hidden');
