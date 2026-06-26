@@ -31,7 +31,6 @@ function handleKeyPress(event) {
 function triggerSearch() {
   const query = document.getElementById("search").value;
   if (query.trim() !== "") {
-    // Instantly hide suggestions dropdown out of sight on search activation
     const dropdown = document.getElementById('suggestions-dropdown');
     if (dropdown) {
       dropdown.innerHTML = "";
@@ -171,10 +170,10 @@ function showWelcomeState() {
   document.getElementById('mac-spinner').classList.add('hidden');
   document.getElementById('no-results-state').classList.remove('hidden');
 
-  const mainTelemetryText = document.querySelector('.quantum-title');
-  const subTelemetryText = document.querySelector('.quantum-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "COORDINATE MESH ACTIVE";
-  if (subTelemetryText) subTelemetryText.innerText = "Enter a regional area to initialize geospatial routing matrix calculations.";
+  const mainTelemetryText = document.querySelector('.radar-title');
+  const subTelemetryText = document.querySelector('.radar-subtitle');
+  if (mainTelemetryText) mainTelemetryText.innerText = "GEOSPATIAL SWEEP ACTIVE";
+  if (subTelemetryText) subTelemetryText.innerText = "Ready to map real-time telemetry and calculate driving routing matrices.";
 }
 
 function clearViews() {
@@ -182,10 +181,10 @@ function clearViews() {
   document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  const mainTelemetryText = document.querySelector('.quantum-title');
-  const subTelemetryText = document.querySelector('.quantum-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "MATRIX SCAN EMPTY";
-  if (subTelemetryText) subTelemetryText.innerText = "We couldn't find any Indian locations matching that specific search criteria.";
+  const mainTelemetryText = document.querySelector('.radar-title');
+  const subTelemetryText = document.querySelector('.radar-subtitle');
+  if (mainTelemetryText) mainTelemetryText.innerText = "COORDINATE MATCH NULL";
+  if (subTelemetryText) subTelemetryText.innerText = "We couldn't resolve any active locations across our current health networks.";
 }
 
 function copyLink(url) {
@@ -249,7 +248,7 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 }
 
 /* ==========================================================================
-   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM PROGRAMMATIC NODE SETUP)
+   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM INTERCEPT ARCHITECTURE)
    ========================================================================== */
 let suggestionTimeout = null;
 
@@ -277,7 +276,7 @@ function handleInputSuggestions(event) {
           return;
         }
 
-        dropdown.innerHTML = ""; // Clear list cleanly to draw brand new element views
+        dropdown.innerHTML = ""; 
 
         data.forEach(item => {
           const address = item.address;
@@ -288,7 +287,6 @@ function handleInputSuggestions(event) {
           let cleanMeta = [district, state].filter(Boolean).join(', ');
           let fullDisplayString = placeName + (cleanMeta ? `, ${cleanMeta}` : "");
 
-          // Programmatic DOM node instantiation ensures bulletproof element binding profiles
           const row = document.createElement('div');
           row.className = 'suggestion-item';
           row.innerHTML = `
@@ -296,7 +294,7 @@ function handleInputSuggestions(event) {
             <span class="suggestion-meta">${cleanMeta ? cleanMeta : 'India'}</span>
           `;
 
-          // STRICT LAYER FIX: Intercept mousedown to resolve state instantly before dropdown collapses
+          // Intercept mousedown to fill values seamlessly prior to input blur collapse triggers
           row.addEventListener('mousedown', function(e) {
             e.preventDefault(); 
             e.stopPropagation();
@@ -327,7 +325,6 @@ function selectSuggestion(value) {
   triggerSearch();
 }
 
-// Global click monitoring collapses panels cleanly when user taps away from inputs
 document.addEventListener('mousedown', function(e) {
   const dropdown = document.getElementById('suggestions-dropdown');
   if (e.target.id !== 'search' && dropdown) {
