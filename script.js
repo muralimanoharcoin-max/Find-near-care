@@ -63,12 +63,13 @@ function closeMatch(str1, str2) {
 async function searchLocation(query) {
   document.getElementById('mac-spinner').classList.remove('hidden');
   
-  // DYNAMIC REVEAL TIMELINES: Hide central radar and open map view layout
+  // DYNAMIC REVEAL TIMELINES: Instantly display the maps workspace layout sheet
   document.getElementById('no-results-state').classList.add('hidden');
   document.getElementById('gis-workspace-panel').classList.remove('hidden');
   document.getElementById("results").innerHTML = "";
   
-  // Ensure leaflet scales immediately to newly opened flexible layout sizes
+  // FIX CRUCIAL LEAFLET RESIZING LAYER GLITCH ON INSTANT VIEW REVEALS
+  map.invalidateSize();
   setTimeout(() => { map.invalidateSize(); }, 50);
 
   try {
@@ -96,7 +97,7 @@ async function searchLocation(query) {
     const targetCoords = [targetLat, targetLon];
 
     map.setView(targetCoords, 12);
-    setTimeout(() => { map.invalidateSize(); }, 200);
+    map.invalidateSize(); // Sync dimensions before injecting markers
     
     if (searchMarker) map.removeLayer(searchMarker);
     searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Search Location:</b> ${cleanQuery}`).openPopup();
@@ -168,6 +169,7 @@ async function searchLocation(query) {
     clearViews();
   } finally {
     document.getElementById('mac-spinner').classList.add('hidden');
+    setTimeout(() => { map.invalidateSize(); }, 100);
   }
 }
 
@@ -175,7 +177,7 @@ function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  // RESET INITIAL STATES: Map layer hidden, radar showing center screen
+  // RESET INITIAL STATES
   document.getElementById('gis-workspace-panel').classList.add('hidden');
   document.getElementById('no-results-state').classList.remove('hidden');
 
@@ -189,7 +191,6 @@ function clearViews() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  // Re-hide workspace container if tracking is invalid
   document.getElementById('gis-workspace-panel').classList.add('hidden');
   document.getElementById('no-results-state').classList.remove('hidden');
   
@@ -251,7 +252,6 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 
         const fitBoundsLayout = L.latLngBounds([[startLat, startLng], [endLat, endLng]]);
         map.fitBounds(fitBoundsLayout, { padding: [50, 50] });
-        setTimeout(() => { map.invalidateSize(); }, 150);
       } else {
         alert("Unable to compute driving metrics across map matrix.");
       }
