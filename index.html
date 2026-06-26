@@ -33,34 +33,103 @@
   </div>
 </div>
 
-<div class="app-layout">
-  <div id="results-wrapper">
-    <div id="results"></div>
-    
-    <div id="no-results-state" class="hidden">
-      <div class="radar-canvas">
-        
-        <div class="radar-viewport-core">
-          <div class="radar-glow-core"></div>
-          
-          <div class="radar-wave wave-1"></div>
-          <div class="radar-wave wave-2"></div>
-          <div class="radar-wave wave-3"></div>
-          
-          <div class="radar-sweeper"></div>
-          
-          <div class="radar-logo-capsule">
-            <img src="Care-Hospitals-removebg-preview.png" class="radar-logo" alt="CARE Logo">
-          </div>
-        </div>
-        
-        <div class="radar-title">GEOSPATIAL SWEEP ACTIVE</div>
-        <div class="radar-subtitle">Ready to map real-time telemetry and calculate driving routing matrices.</div>
-      </div>
+<div class="app-view-area">
+  
+  <div id="gis-workspace-panel" class="app-layout hidden">
+    <div id="results-wrapper">
+      <div id="results"></div>
     </div>
+    <div id="map"></div>
   </div>
   
-  <div id="map"></div>
+  <div id="no-results-state">
+    <div class="radar-canvas">
+      <div class="radar-viewport-core">
+        <div class="radar-glow-core"></div>
+        <div class="radar-wave wave-1"></div>
+        <div class="radar-wave wave-2"></div>
+        <div class="radar-wave wave-3"></div>
+        <div class="radar-sweeper"></div>
+        <div class="radar-logo-capsule">
+          <img src="Care-Hospitals-removebg-preview.png" class="radar-logo" alt="CARE Logo">
+        </div>
+      </div>
+      <div class="radar-title">GEOSPATIAL SWEEP ACTIVE</div>
+      <div class="radar-subtitle">Enter your destination parameters above to compile dynamic matrix profiles.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-fixed-master">
+  
+  <div class="branches-slider-section">
+    <h2 class="section-main-heading">🏥 CARE National Hospital Networks</h2>
+    <div class="horizontal-slider-wrapper">
+      
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Hospitals, Banjara Hills</h3>
+        </div>
+        <p class="branch-address-text">Road No. 1, Prem Nagar, Banjara Hills, Hyderabad, Telangana 500034</p>
+        <div class="branch-card-meta">Emergency: +91 40 6165 6565</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Hospitals, Hi-Tech City</h3>
+        </div>
+        <p class="branch-address-text">Old Mumbai Highway, Near Cyberabad Police Commissionerate, Gachibowli, Hyderabad, Telangana 500032</p>
+        <div class="branch-card-meta">Emergency: +91 40 6166 6666</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Hospitals, Ramnagar</h3>
+        </div>
+        <p class="branch-address-text">Life Line Block, Waltair Main Rd, Ram Nagar, Visakhapatnam, Andhra Pradesh 530002</p>
+        <div class="branch-card-meta">Emergency: +91 891 616 5656</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Hospitals, Bhubaneswar</h3>
+        </div>
+        <p class="branch-address-text">Prachi Enclave, Niladri Vihar, Chandrasekharpur, Bhubaneswar, Odisha 751021</p>
+        <div class="branch-card-meta">Emergency: +91 674 616 5656</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Hospitals, Nagpur</h3>
+        </div>
+        <p class="branch-address-text">3, Farmland, Panchsheel Square, Wardha Road, Nagpur, Maharashtra 440012</p>
+        <div class="branch-card-meta">Emergency: +91 712 616 5656</div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="brand-about-footer">
+    <div class="footer-grid-layout">
+      <div class="footer-info-column">
+        <h4>✨ System Capabilities</h4>
+        <p>Dynamic routing calculations using standard OSRM matrix models with single-tier network queries.</p>
+      </div>
+      <div class="footer-info-column">
+        <h4>🚀 Portal Highlights</h4>
+        <p>Premium Apple design structure with native responsive flex grid bounds.</p>
+      </div>
+      <div class="footer-info-column">
+        <p class="developer-tagline">Architected by <span>Murali Manohar</span> • 2026 All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
