@@ -4,24 +4,18 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Find Near CARE</title>
-  <!-- Apple-Style Premium Typography Engine -->
   <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css"/>
-  <!-- Leaflet GIS Mapping Components -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
 <body>
 
 <div class="glass header">
   <div class="header-top">
-    <!-- Inside the Header Container -->
-<div class="logo-area">
-  <!-- Point this directly to your downloaded file name -->
-  <img src="Care-Hospitals-removebg-preview.png" alt="CARE Logo" class="care-logo">
-  <h1 class="apple-bold-title">Find Near CARE</h1>
-</div>
-
-
+    <div class="logo-area">
+      <img src="Care-Hospitals-removebg-preview.png" alt="CARE Logo" class="care-logo">
+      <h1 class="apple-bold-title">Find Near CARE</h1>
+    </div>
     
     <div class="mac-credits">
       <span class="credits-text">Designed & Developed by Murali Manohar •2026•</span>
@@ -29,42 +23,47 @@
   </div>
 
   <div class="search-box">
-<div class="input-wrapper">
-  <!-- Added autocomplete="off" and changed event listener to handle input monitoring -->
-  <input type="text" id="search" placeholder="Enter city, town, or village..." onkeypress="handleKeyPress(event)" oninput="handleInputSuggestions(event)" autocomplete="off">
-  <div id="mac-spinner" class="mac-spinner hidden"></div>
-  
-  <!-- NEW SUGGESTIONS DROPDOWN CONTAINER -->
-  <div id="suggestions-dropdown" class="suggestions-box hidden"></div>
-</div>
-
-  <button onclick="triggerSearch()">Search</button>
-</div>
+    <div class="input-wrapper">
+      <input type="text" id="search" placeholder="Enter city, town, or village..." onkeypress="handleKeyPress(event)" oninput="handleInputSuggestions(event)" autocomplete="off">
+      <div id="mac-spinner" class="mac-spinner hidden"></div>
+      
+      <div id="suggestions-dropdown" class="suggestions-box hidden"></div>
+    </div>
+    <button onclick="triggerSearch()">Search</button>
+  </div>
 </div>
 
 <div class="app-layout">
   <div id="results-wrapper">
-    <!-- Dynamic Results Inject Target -->
     <div id="results"></div>
     
     <div id="no-results-state" class="hidden">
-  <div class="magic-container">
-    <div class="magic-glow"></div>
-    
-    <div class="dotted-ring ring-outer"></div>
-    <div class="dotted-ring ring-middle"></div>
-    <div class="dotted-ring ring-inner"></div>
-    
-    <img src="Care-Hospitals-removebg-preview.png" class="magic-logo" alt="CARE Logo">
-    
-    <div class="magic-text">A promise of 99.9% accurate information</div>
-    <div class="magic-subtext">Enter a city or area to begin automated coordinate scanning.</div>
+      <div class="quantum-canvas">
+        <div class="quantum-core-glow"></div>
+        
+        <div class="quantum-constellation">
+          <div class="node node-1"></div>
+          <div class="node node-2"></div>
+          <div class="node node-3"></div>
+          <div class="node node-4"></div>
+          <div class="node node-5"></div>
+          <div class="vector vector-1"></div>
+          <div class="vector vector-2"></div>
+        </div>
+        
+        <div class="quantum-logo-capsule">
+          <img src="Care-Hospitals-removebg-preview.png" class="quantum-logo" alt="CARE Logo">
+        </div>
+        
+        <div class="quantum-title">COORDINATE MESH ACTIVE</div>
+        <div class="quantum-subtitle">Enter a regional area to initialize geospatial routing matrix calculations.</div>
+      </div>
+    </div>
   </div>
-</div>
-  </div>
-  </div>
+  
   <div id="map"></div>
 </div>
+
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
