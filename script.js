@@ -31,7 +31,7 @@ function handleKeyPress(event) {
 function triggerSearch() {
   const query = document.getElementById("search").value;
   if (query.trim() !== "") {
-    // Instantly collapse dropdown list suggestions out of sight on search execution
+    // Instantly hide suggestions dropdown out of sight on search activation
     const dropdown = document.getElementById('suggestions-dropdown');
     if (dropdown) {
       dropdown.innerHTML = "";
@@ -41,9 +41,6 @@ function triggerSearch() {
   }
 }
 
-/**
- * Custom travel conversion utility processing hours and minutes elegantly
- */
 function formatTravelTime(totalMinutes) {
   const mins = Math.round(totalMinutes);
   if (mins < 60) return `${mins} min`;
@@ -65,7 +62,6 @@ function closeMatch(str1, str2) {
 }
 
 async function searchLocation(query) {
-  // Clear lists, trigger processing loading icons
   document.getElementById('mac-spinner').classList.remove('hidden');
   document.getElementById('no-results-state').classList.add('hidden');
   document.getElementById("results").innerHTML = "";
@@ -102,7 +98,6 @@ async function searchLocation(query) {
 
     let results = [];
 
-    // OSRM Engine Network Routing Matrix
     for (let h of hospitals) {
       const url = `https://router.project-osrm.org/route/v1/driving/${targetLon},${targetLat};${h.lon},${h.lat}?overview=false`;
       try {
@@ -127,7 +122,6 @@ async function searchLocation(query) {
       return;
     }
 
-    // Sort outputs starting with the closest facility
     results.sort((a, b) => a.min - b.min);
 
     let html = "";
@@ -172,10 +166,6 @@ async function searchLocation(query) {
   }
 }
 
-/* ==========================================================================
-   STATE MANAGEMENT ENGINE (WELCOME VS ERROR STATES)
-   ========================================================================== */
-
 function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
@@ -206,7 +196,6 @@ function copyLink(url) {
   });
 }
 
-// Initial boot settings call welcome state instead of strict errors
 window.addEventListener('DOMContentLoaded', () => {
   showWelcomeState();
 });
@@ -230,10 +219,7 @@ document.addEventListener('click', function (event) {
 
 function calculateLocalRoute(startLat, startLng, endLat, endLng) {
   if (!map) return;
-
-  if (activeRouteLayer) {
-    map.removeLayer(activeRouteLayer);
-  }
+  if (activeRouteLayer) map.removeLayer(activeRouteLayer);
 
   const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${startLng},${startLat};${endLng},${endLat}?overview=full&geometries=geojson`;
 
@@ -254,19 +240,16 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 
         const fitBoundsLayout = L.latLngBounds([[startLat, startLng], [endLat, endLng]]);
         map.fitBounds(fitBoundsLayout, { padding: [50, 50] });
-
         setTimeout(() => { map.invalidateSize(); }, 150);
       } else {
         alert("Unable to compute driving metrics across map matrix.");
       }
     })
-    .catch(error => {
-      console.error("OSRM Routing Fault:", error);
-    });
+    .catch(error => console.error("OSRM Routing Fault:", error));
 }
 
 /* ==========================================================================
-   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM INTEGRATION)
+   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM PROGRAMMATIC NODE SETUP)
    ========================================================================== */
 let suggestionTimeout = null;
 
@@ -294,7 +277,7 @@ function handleInputSuggestions(event) {
           return;
         }
 
-        dropdown.innerHTML = ""; // Empty out container securely prior to drawing nodes
+        dropdown.innerHTML = ""; // Clear list cleanly to draw brand new element views
 
         data.forEach(item => {
           const address = item.address;
@@ -305,7 +288,7 @@ function handleInputSuggestions(event) {
           let cleanMeta = [district, state].filter(Boolean).join(', ');
           let fullDisplayString = placeName + (cleanMeta ? `, ${cleanMeta}` : "");
 
-          // Create row structure safely as programmatic elements
+          // Programmatic DOM node instantiation ensures bulletproof element binding profiles
           const row = document.createElement('div');
           row.className = 'suggestion-item';
           row.innerHTML = `
@@ -313,9 +296,9 @@ function handleInputSuggestions(event) {
             <span class="suggestion-meta">${cleanMeta ? cleanMeta : 'India'}</span>
           `;
 
-          // CRUCIAL REPLACEMENT: Listens directly to mousedown to intercept input blur actions instantly
+          // STRICT LAYER FIX: Intercept mousedown to resolve state instantly before dropdown collapses
           row.addEventListener('mousedown', function(e) {
-            e.preventDefault(); // Prevents input box from dropping focus prematurely
+            e.preventDefault(); 
             e.stopPropagation();
             selectSuggestion(fullDisplayString);
           });
@@ -332,7 +315,7 @@ function handleInputSuggestions(event) {
 function selectSuggestion(value) {
   const inputElement = document.getElementById('search');
   if (inputElement) {
-    inputElement.value = value; // Reflects full location choice text in search input bar
+    inputElement.value = value;
   }
   
   const dropdown = document.getElementById('suggestions-dropdown');
@@ -341,11 +324,10 @@ function selectSuggestion(value) {
     dropdown.classList.add('hidden');
   }
   
-  // Directly fires off the map lookup logic calculations using the newly picked item!
   triggerSearch();
 }
 
-// Automatically clears the suggestions view panel when a user clicks anywhere outside the input wrapper bounds
+// Global click monitoring collapses panels cleanly when user taps away from inputs
 document.addEventListener('mousedown', function(e) {
   const dropdown = document.getElementById('suggestions-dropdown');
   if (e.target.id !== 'search' && dropdown) {
