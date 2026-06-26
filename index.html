@@ -32,187 +32,24 @@
   </div>
 </div>
 
-<!-- COMPLIANT VIEW AREA: SCALES PROPORTIONALLY ON ALL DEVICE TYPES -->
-<div class="app-view-area">
-  <div id="gis-workspace-panel" class="app-layout hidden">
-    <div id="results-wrapper" class="workspace-card">
-      <div id="results"></div>
-    </div>
-    <div id="map-wrapper" class="workspace-card">
-      <div id="map"></div>
+<div class="app-layout">
+  <div id="results-wrapper">
+    <div id="results"></div>
+    
+    <div id="no-results-state" class="hidden">
+      <div class="magic-container">
+        <div class="magic-glow"></div>
+        <div class="dotted-ring ring-outer"></div>
+        <div class="dotted-ring ring-middle"></div>
+        <div class="dotted-ring ring-inner"></div>
+        <img src="Care-Hospitals-removebg-preview.png" class="magic-logo" alt="CARE Logo">
+        <div class="magic-text">A promise of 99.9% accurate information</div>
+        <div class="magic-subtext">Enter a city or area to begin automated coordinate scanning.</div>
+      </div>
     </div>
   </div>
   
-  <div id="no-results-state">
-    <div class="radar-canvas">
-      <div class="radar-viewport-core">
-        <div class="radar-glow-core"></div>
-        <div class="radar-wave wave-1"></div>
-        <div class="radar-wave wave-2"></div>
-        <div class="radar-wave wave-3"></div>
-        <div class="radar-sweeper"></div>
-        <div class="radar-logo-capsule">
-          <img src="Care-Hospitals-removebg-preview.png" class="radar-logo" alt="CARE Logo">
-        </div>
-      </div>
-      <div class="radar-title">A promise of 99.9% accuracy</div>
-      <div class="radar-subtitle">Search with city/area name to find nearest CARE.</div>
-    </div>
-  </div>
-</div>
-
-<!-- STRUCTURAL FLEX FOOTER STACK -->
-<div class="footer-fixed-master">
-  <div class="branches-slider-section">
-    <h2 class="section-main-heading">CARE Hospital Network</h2>
-    <div class="horizontal-slider-wrapper">
-      
-      <!-- Branch 1 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Banjara IP, Hyderabad</h3>
-        </div>
-        <p class="branch-address-text">Road No. 1, Prem Nagar, Banjara Hills, Hyderabad, Telangana 500034</p>
-        <div class="branch-card-meta">Emergency: +91 40 6165 6565</div>
-      </div>
-
-      <!-- Branch 2 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Hi-Tech City, Hyderabad</h3>
-        </div>
-        <p class="branch-address-text">Old Mumbai Highway, Gachibowli, Hyderabad, Telangana 500032</p>
-        <div class="branch-card-meta">Emergency: +91 40 6166 6666</div>
-      </div>
-
-      <!-- Branch 3 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Musheerabad, Hyderabad</h3>
-        </div>
-        <p class="branch-address-text">1-5-551, Out-Patient Block, Musheerabad, Hyderabad, Telangana 500020</p>
-        <div class="branch-card-meta">Emergency: +91 40 6166 7777</div>
-      </div>
-
-      <!-- Branch 4 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Malakpet, Hyderabad</h3>
-        </div>
-        <p class="branch-address-text">Near Malakpet Railway Station, Mahbub Mansion, Hyderabad, Telangana 500036</p>
-        <div class="branch-card-meta">Emergency: +91 40 6165 8888</div>
-      </div>
-
-      <!-- Branch 5 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Nampally, Hyderabad</h3>
-        </div>
-        <p class="branch-address-text">Exhibition Grounds Road, Nampally, Hyderabad, Telangana 500001</p>
-        <div class="branch-card-meta">Emergency: +91 40 6165 9999</div>
-      </div>
-
-      <!-- Branch 6 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Ramnagar, Visakhapatnam</h3>
-        </div>
-        <p class="branch-address-text">Life Line Block, Waltair Main Rd, Ram Nagar, Visakhapatnam, AP 530002</p>
-        <div class="branch-card-meta">Emergency: +91 891 616 5656</div>
-      </div>
-
-      <!-- Branch 7 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Health City, Arilova</h3>
-        </div>
-        <p class="branch-address-text">Health City, Chinagadila, Arilova, Visakhapatnam, Andhra Pradesh 530040</p>
-        <div class="branch-card-meta">Emergency: +91 891 350 2000</div>
-      </div>
-
-      <!-- Branch 8 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Bhubaneswar, Odisha</h3>
-        </div>
-        <p class="branch-address-text">Prachi Enclave, Niladri Vihar, Chandrasekharpur, Bhubaneswar, Odisha 751021</p>
-        <div class="branch-card-meta">Emergency: +91 674 616 5656</div>
-      </div>
-
-      <!-- Branch 9 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Ganga Nagpur, Maharashtra</h3>
-        </div>
-        <p class="branch-address-text">3, Farmland, Panchsheel Square, Wardha Road, Nagpur, Maharashtra 440012</p>
-        <div class="branch-card-meta">Emergency: +91 712 616 5656</div>
-      </div>
-
-      <!-- Branch 10 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Ramkriahna Raipur, Chhattisgarh</h3>
-        </div>
-        <p class="branch-address-text">Pachpedi Naka, Dhamtari Rd, near Kalibadi Chowk, Raipur, Chhattisgarh 492001</p>
-        <div class="branch-card-meta">Emergency: +91 771 616 5656</div>
-      </div>
-
-      <!-- Branch 11 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE CHL Hospitals, Indore</h3>
-        </div>
-        <p class="branch-address-text">CHL Campus, 11, Anoop Nagar, Indore, Madhya Pradesh 452001</p>
-        <div class="branch-card-meta">Emergency: +91 731 662 1100</div>
-      </div>
-
-      <!-- Branch 12 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE Ciigma Aurangabad, Maharashtra</h3>
-        </div>
-        <p class="branch-address-text">Ajabnagar, Near High Court, Aurangabad, Maharashtra 431001</p>
-        <div class="branch-card-meta">Emergency: +91 240 616 5656</div>
-      </div>
-
-      <!-- Branch 13 -->
-      <div class="slider-branch-card">
-        <div class="branch-card-header">
-          <span class="branch-status-dot"></span>
-          <h3>CARE COPC, Outpatient centre</h3>
-        </div>
-        <p class="branch-address-text">Banjara road No. 10, Babukhan chambers building, Hyderabad</p>
-        <div class="branch-card-meta">Emergency: +968 2448 3434</div>
-      </div>
-
-    </div>
-  </div>
-
-  <footer class="brand-about-footer">
-    <div class="footer-paragraphs-layout">
-      <p class="footer-para-block web-info-block">
-        <span>🌐 SYSTEM: Calculating precise dynamic geolocation routing matrices.</span>
-        <span>🌐 ENGINE: Version 1.9 is synchronized via standard OpenStreetMap spatial frameworks.</span>
-        <span>🌐 REALTIME: Powered via active low-latency open OSRM service paths.</span>
-      </p>
-      <p class="footer-para-block owner-info-block">
-        <span>🌐 NETWORK ACCESS: Mapping active health metrics for 13 care hospital locations.</span>
-        <span class="dev-sign">🌐 ARCHITECTURE: Crafted by <strong>Murali Manohar</strong> • 2026 All Rights Reserved.</span>
-      </p>
-    </div>
-  </footer>
+  <div id="map"></div>
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
