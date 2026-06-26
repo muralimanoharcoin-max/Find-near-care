@@ -260,3 +260,87 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
       console.error("OSRM Routing Fault:", error);
     });
 }
+/* ==========================================================================
+   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM INTEGRATION)
+   ========================================================================== */
+let suggestionTimeout = null;
+
+function handleInputSuggestions(event) {
+  const query = event.target.value.trim();
+  const dropdown = document.getElementById('suggestions-dropdown');
+
+  // Clear previous execution timer to avoid hitting API bounds endlessly (Debouncing)
+  clearTimeout(suggestionTimeout);
+
+  if (query.length < 3) {
+    dropdown.innerHTML = "";
+    dropdown.classList.add('hidden');
+    return;
+  }
+
+  // Wait 400ms after user stops typing to trigger request execution
+  suggestionTimeout = setTimeout(() => {
+    // Inject countrycodes=in parameter to limit lookup scopes strictly within India
+    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in&addressdetails=1&limit=5`;
+
+    fetch(url, { headers: { 'Accept-Language': 'en' } })
+      .then(res => res.json())
+      .then(data => {
+        if (!data || data.length === 0) {
+          dropdown.innerHTML = "";
+          dropdown.classList.add('hidden');
+          return;
+        }
+
+        let html = "";
+        data.forEach(item => {
+          const address = item.address;
+          
+          // Pull target point indicators dynamically based on what OSM classification resolves
+          const placeName = address.village || address.town || address.suburb || address.city || address.neighbourhood || item.display_name.split(',')[0];
+          const district = address.county || address.district || "";
+          const state = address.state || "";
+
+          // Clean up string structuring to create your crisp "Place, District, State" layout pattern
+          let cleanMeta = [district, state].filter(Boolean).join(', ');
+          let fullDisplayString = placeName + (cleanMeta ? `, ${cleanMeta}` : "");
+
+          html += `
+            <div class="suggestion-item" onclick="selectSuggestion('${escapeHtml(fullDisplayString)}')">
+              <strong>${placeName}</strong>
+              <span class="suggestion-meta">${cleanMeta ? cleanMeta : 'India'}</span>
+            </div>
+          `;
+        });
+
+        dropdown.innerHTML = html;
+        dropdown.classList.remove('hidden');
+      })
+      .catch(err => console.error("Suggestions retrieval error:", err));
+  }, 400);
+}
+
+// Action execution firing when a user hits a candidate layout row selection option
+function selectSuggestion(value) {
+  document.getElementById('search').value = value;
+  document.getElementById('suggestions-dropdown').innerHTML = "";
+  document.getElementById('suggestions-dropdown').classList.add('hidden');
+  
+  // Directly trigger data search computations automatically on mouse selection clicks!
+  triggerSearch();
+}
+
+// Escape utility avoiding UI parsing breakdown issues against input formatting marks
+function escapeHtml(text) {
+  return text
+    .replace(/'/g, "\\'")
+    .replace(/"/g, '&quot;');
+}
+
+// Global window layout close interceptor event block dismisses window overlay panels when user clicks clear of them
+document.addEventListener('click', function(e) {
+  const dropdown = document.getElementById('suggestions-dropdown');
+  if (e.target.id !== 'search' && dropdown) {
+    dropdown.classList.add('hidden');
+  }
+});
