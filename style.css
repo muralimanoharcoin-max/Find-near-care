@@ -2,8 +2,9 @@ html, body {
   margin: 0;
   padding: 0;
   background: #0f172a;
-  overflow: hidden; /* ABSOLUTELY NO GLOBAL WINDOW SCROLLBARS ALLOWED */
+  overflow: hidden; /* STRICT WINDOW LAYOUT PROTECTION */
   height: 100vh;
+  width: 100vw;
   font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
@@ -56,11 +57,9 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* ==========================================================================
-   PLATINUM & SILVER PREMIUM METALLIC CREDITS UPGRADE
-   ========================================================================== */
+/* PLATINUM & SILVER CHROMIC CREDITS ENGINE */
 .mac-credits {
-  opacity: 1; /* Restores structural radiance */
+  opacity: 1;
 }
 
 .credits-text {
@@ -68,7 +67,6 @@ body {
   font-weight: 600;
   letter-spacing: 0.06em;
   font-family: monospace;
-  /* Premium Dynamic Platinum & Liquid Silver Chromic Gradient Layer */
   background: linear-gradient(
     135deg, 
     #ffffff 0%, 
@@ -80,7 +78,7 @@ body {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4); /* High-definition depth drop drop-shadow */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .search-box {
@@ -121,7 +119,7 @@ body {
   cursor: pointer;
 }
 
-/* SEARCH SUGGESTIONS PANEL CONTAINER */
+/* SUGGESTIONS PANEL CONTAINER */
 .suggestions-box {
   position: absolute !important;
   top: calc(100% + 4px) !important;
@@ -168,15 +166,15 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ==========================================================================
-   DYNAMIC HEIGHT COMPRESSION FOR MAP/RESULT SECTION (BRINGS FOOTER UP)
+   DYNAMIC RESPONSIVE AUTO-FITTING WORKSPACE VIEWPORT ENGINE
    ========================================================================== */
 .app-view-area {
-  flex-grow: 0; /* Prevents stretching past its hard layout boundary */
-  height: 55vh; /* LOCKED COMPACT HEIGHT PROFILE: Pulls horizontal footer and end screens up */
+  flex-grow: 1; /* Automatically adapts size across laptops, monitors, tabs and phones */
   position: relative;
   width: 100%;
   padding: 12px;
   box-sizing: border-box;
+  min-height: 250px; /* Prevents collision collapsing on ultra compact viewport resolutions */
 }
 
 .app-layout {
@@ -186,7 +184,6 @@ body {
   gap: 14px;
 }
 
-/* Rounded Card Blueprint Wrapper Elements */
 .workspace-card {
   flex: 1 1 50%; 
   height: 100%;
@@ -218,7 +215,7 @@ body {
   gap: 10px;
 }
 
-/* COMPACT MAP INFO LIST CARDS */
+/* MAP LIST DETAILS CARDS */
 .card {
   background: rgba(30, 41, 59, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -277,7 +274,7 @@ body {
 .action-btn.secondary { background: rgba(255, 255, 255, 0.05); color: #e2e8f0; border: 1px solid rgba(255, 255, 255, 0.1); }
 .action-btn.wa-btn { background: #22c55e; color: #ffffff; }
 
-/* CENTRAL RADAR LAYOUT SPECIFICATIONS */
+/* CENTRAL GEOSPATIAL RADAR WINDOW */
 #no-results-state {
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -295,8 +292,8 @@ body {
 
 .radar-viewport-core {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 140px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -311,14 +308,14 @@ body {
   border-radius: 50%;
   animation: radarPing 4s infinite linear;
 }
-.wave-1 { width: 70px; height: 70px; animation-delay: 0s; }
-.wave-2 { width: 120px; height: 120px; animation-delay: 1.3s; }
-.wave-3 { width: 170px; height: 170px; animation-delay: 2.6s; }
+.wave-1 { width: 50px; height: 50px; animation-delay: 0s; }
+.wave-2 { width: 95px; height: 95px; animation-delay: 1.3s; }
+.wave-3 { width: 140px; height: 140px; animation-delay: 2.6s; }
 
 .radar-sweeper {
   position: absolute;
   top: 50%; left: 50%;
-  width: 85px; height: 85px;
+  width: 70px; height: 70px;
   background: conic-gradient(from 0deg, rgba(137, 122, 185, 0.4) 0%, rgba(59, 130, 246, 0.08) 20%, transparent 60%);
   border-radius: 50%;
   transform-origin: top left;
@@ -327,7 +324,7 @@ body {
 
 .radar-logo-capsule {
   position: relative;
-  width: 58px; height: 58px;
+  width: 52px; height: 52px;
   border-radius: 50%;
   background: #0f172a;
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -335,9 +332,9 @@ body {
   z-index: 10;
 }
 
-.radar-logo { width: 44px !important; height: 44px !important; object-fit: contain !important; }
-.radar-title { font-size: 0.9rem; font-weight: 800; color: #ffffff; letter-spacing: 0.08em; margin-bottom: 4px; }
-.radar-subtitle { font-size: 0.75rem; color: #94a3b8; max-width: 240px; text-align: center; }
+.radar-logo { width: 38px !important; height: 38px !important; object-fit: contain !important; }
+.radar-title { font-size: 0.85rem; font-weight: 800; color: #ffffff; letter-spacing: 0.08em; margin-bottom: 4px; }
+.radar-subtitle { font-size: 0.72rem; color: #94a3b8; max-width: 240px; text-align: center; }
 
 @keyframes radarSweep { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes radarPing {
@@ -347,28 +344,26 @@ body {
 }
 
 /* ==========================================================================
-   FIXED CONTAINER STACK: AUTOMATICALLY FILLS THE EXTENDED REMAINING BOTTOM SPACE
+   RESPONSIVE FOOTER SYSTEM WITH PERFECT CONTROLLED 8PX SEPARATION
    ========================================================================== */
 .footer-fixed-master {
   background: #030712;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   width: 100%;
-  flex-grow: 1; /* Automatically expands upward into newly made free viewport space */
+  flex-shrink: 0; 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .branches-slider-section {
-  padding: 10px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 10px 20px 4px 20px;
 }
 
 .section-main-heading {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: #ffffff;
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
 }
 
 .horizontal-slider-wrapper {
@@ -376,11 +371,11 @@ body {
   gap: 12px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 .slider-branch-card {
-  flex: 0 0 240px;
+  flex: 0 0 220px;
   background: rgba(30, 41, 59, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 6px;
@@ -390,18 +385,19 @@ body {
 
 .branch-card-header { display: flex; align-items: center; gap: 6px; }
 .branch-status-dot { width: 5px; height: 5px; background-color: #10b981; border-radius: 50%; }
-.slider-branch-card h3 { font-size: 0.78rem; color: #f1f5f9; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.branch-address-text { font-size: 0.7rem; color: #94a3b8; margin: 4px 0; line-height: 1.35; height: 32px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-.branch-card-meta { font-size: 0.65rem; font-family: monospace; color: #c0b6e4; }
+.slider-branch-card h3 { font-size: 0.75rem; color: #f1f5f9; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.branch-address-text { font-size: 0.68rem; color: #94a3b8; margin: 4px 0; line-height: 1.35; height: 32px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.branch-card-meta { font-size: 0.62rem; font-family: monospace; color: #c0b6e4; }
 
 .horizontal-slider-wrapper::-webkit-scrollbar { height: 4px; }
 .horizontal-slider-wrapper::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 10px; }
 
-/* END SCREEN PARAGRAPHS TEXT PANEL */
+/* THE SMALL EXACT SEPARATION ENGINE GAP */
 .brand-about-footer {
   padding: 8px 20px;
   background: #020617;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  margin-top: 8px; /* Clean, beautiful structural separation gap */
 }
 
 .footer-paragraphs-layout {
@@ -416,21 +412,38 @@ body {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   line-height: 1.35;
 }
 
-.web-info-block {
-  color: #94a3b8;
-}
-
-.owner-info-block {
-  color: #64748b;
-}
-
-.dev-sign strong {
-  color: #3b82f6;
-  font-weight: 600;
-}
+.web-info-block { color: #94a3b8; }
+.owner-info-block { color: #64748b; }
+.dev-sign strong { color: #3b82f6; font-weight: 600; }
 
 .hidden { display: none !important; }
+
+/* ==========================================================================
+   CROSS-DEVICE MEDIA RESPONSIVENESS QUERY INTERFACES
+   ========================================================================== */
+
+/* Tablets & Small Monitors Breakpoint */
+@media (max-width: 991px) {
+  .search-box { width: 70%; }
+  .app-view-area { padding: 8px; }
+  .app-layout { gap: 10px; }
+}
+
+/* Mobile Phones Breakpoint */
+@media (max-width: 767px) {
+  html, body { overflow-y: auto; height: auto; } /* Allows natural scrolling on small devices */
+  .header { padding: 10px; }
+  .header-top { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .search-box { width: 100%; }
+  
+  .app-view-area { height: 75vh; } /* Dedicated view spacing block on handheld views */
+  .app-layout { flex-direction: column-reverse; } /* Stack map above results list on phones */
+  .workspace-card { flex: 1 1 auto; height: 50%; }
+  
+  .footer-fixed-master { position: relative; border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .slider-branch-card { flex: 0 0 190px; }
+}
