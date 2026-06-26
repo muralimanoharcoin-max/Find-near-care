@@ -29,10 +29,15 @@
   </div>
 
   <div class="search-box">
-  <div class="input-wrapper">
-    <input id="search" placeholder="Enter city or area..." onkeypress="handleKeyPress(event)"/>
-    <div id="mac-spinner" class="mac-spinner hidden"></div>
-  </div>
+<div class="input-wrapper">
+  <!-- Added autocomplete="off" and changed event listener to handle input monitoring -->
+  <input type="text" id="search" placeholder="Enter city, town, or village..." onkeypress="handleKeyPress(event)" oninput="handleInputSuggestions(event)" autocomplete="off">
+  <div id="mac-spinner" class="mac-spinner hidden"></div>
+  
+  <!-- NEW SUGGESTIONS DROPDOWN CONTAINER -->
+  <div id="suggestions-dropdown" class="suggestions-box hidden"></div>
+</div>
+
   <button onclick="triggerSearch()">Search</button>
 </div>
 </div>
