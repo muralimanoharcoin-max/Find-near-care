@@ -62,8 +62,14 @@ function closeMatch(str1, str2) {
 
 async function searchLocation(query) {
   document.getElementById('mac-spinner').classList.remove('hidden');
+  
+  // DYNAMIC REVEAL TIMELINES: Hide central radar and open map view layout
   document.getElementById('no-results-state').classList.add('hidden');
+  document.getElementById('gis-workspace-panel').classList.remove('hidden');
   document.getElementById("results").innerHTML = "";
+  
+  // Ensure leaflet scales immediately to newly opened flexible layout sizes
+  setTimeout(() => { map.invalidateSize(); }, 50);
 
   try {
     let cleanQuery = query.trim();
@@ -168,18 +174,24 @@ async function searchLocation(query) {
 function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
+  
+  // RESET INITIAL STATES: Map layer hidden, radar showing center screen
+  document.getElementById('gis-workspace-panel').classList.add('hidden');
   document.getElementById('no-results-state').classList.remove('hidden');
 
   const mainTelemetryText = document.querySelector('.radar-title');
   const subTelemetryText = document.querySelector('.radar-subtitle');
   if (mainTelemetryText) mainTelemetryText.innerText = "GEOSPATIAL SWEEP ACTIVE";
-  if (subTelemetryText) subTelemetryText.innerText = "Ready to map real-time telemetry and calculate driving routing matrices.";
+  if (subTelemetryText) subTelemetryText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
 }
 
 function clearViews() {
   document.getElementById("results").innerHTML = "";
-  document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
+  
+  // Re-hide workspace container if tracking is invalid
+  document.getElementById('gis-workspace-panel').classList.add('hidden');
+  document.getElementById('no-results-state').classList.remove('hidden');
   
   const mainTelemetryText = document.querySelector('.radar-title');
   const subTelemetryText = document.querySelector('.radar-subtitle');
