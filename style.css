@@ -16,20 +16,114 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* ==========================================================================
+   STRICT APP LAYER AND HEADER INTERFACE OVERLAY ARCHITECTURE
+   ========================================================================== */
+
+/* CRUCIAL FIX: The master navbar container must float above the body viewport */
 .header {
   padding: 16px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   flex-shrink: 0;
+  position: relative !important;
+  z-index: 999999 !important; /* Higher ranking priority than the map components */
 }
 
+/* CRUCIAL FIX: The top row structure must have an active structural index layer */
 .header-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  position: relative !important;
+  z-index: 999999 !important;
 }
+
+/* Force-aligns search elements over active output layout screens */
+.search-box {
+  display: flex;
+  gap: 12px;
+  width: 50%;
+  align-items: center;
+  position: relative !important;
+  z-index: 999999 !important;
+}
+
+.input-wrapper {
+  position: relative !important;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  z-index: 999999 !important; 
+}
+
+/* THE DROPDOWN CONTAINER PANEL OVERLAY SHEET */
+.suggestions-box {
+  position: absolute !important;
+  top: 100% !important; /* Pins it directly flush against the bottom edge of input container */
+  left: 0 !important;
+  width: 100% !important;
+  background: #0f172a !important; /* Strict high-opacity solid slate dark color backdrop */
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 12px !important;
+  max-height: 200px !important;
+  
+  /* CRUCIAL FIXES: Forces scrollbar activation and permits choice point selection */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  display: block !important;
+  pointer-events: auto !important; 
+  z-index: 9999999 !important; /* Ultimate layer priority */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* THE SELECTION SUGGESTION CANDIDATE ROWS */
+.suggestion-item {
+  padding: 14px 16px !important;
+  cursor: pointer !important;
+  font-size: 0.95rem !important;
+  color: #e2e8f0 !important;
+  text-align: left !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  
+  /* CRUCIAL FIX: Directs pointer actions down into touch and click layers */
+  pointer-events: auto !important; 
+}
+
+.suggestion-item:last-child {
+  border-bottom: none !important;
+}
+
+.suggestion-item:hover {
+  background: rgba(137, 122, 185, 0.35) !important; /* Elegant CARE Purple styling hover tint */
+  color: #ffffff !important;
+}
+
+.suggestion-meta {
+  font-size: 0.8rem !important;
+  color: #94a3b8 !important;
+}
+
+/* Standard visibility state controller utility block */
+.hidden {
+  display: none !important;
+}
+
+/* Custom Scrollbar configurations for the suggestions layout container */
+.suggestions-box::-webkit-scrollbar {
+  width: 6px !important;
+  display: block !important;
+}
+.suggestions-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-radius: 10px !important;
+}
+
 
 .logo-area {
   display: flex;
