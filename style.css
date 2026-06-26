@@ -601,3 +601,67 @@ button:hover {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
 }
+/* ==========================================================================
+   Z-INDEX & STRUCTURAL OVERLAY FIXES FOR SUGGESTIONS DROPDOWN
+   ========================================================================== */
+.input-wrapper {
+  position: relative !important;
+}
+
+.suggestions-box {
+  position: absolute !important;
+  top: calc(100% + 6px) !important;
+  left: 0 !important;
+  width: 100% !important;
+  background: rgba(15, 23, 42, 0.98) !important; /* High opacity slate dark theme */
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 12px !important;
+  max-height: 220px !important;
+  
+  /* CRUCIAL FIX: Forces scrollbars to appear and sets layout order to float above cards */
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  z-index: 99999 !important; 
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7) !important;
+}
+
+.suggestion-item {
+  padding: 12px 16px !important;
+  cursor: pointer !important;
+  font-size: 0.95rem !important;
+  color: #e2e8f0 !important;
+  text-align: left !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  transition: background 0.15s ease !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  
+  /* CRUCIAL FIX: Ensures the row accepts mouse clicks and touches immediately */
+  pointer-events: auto !important; 
+}
+
+.suggestion-item:last-child {
+  border-bottom: none !important;
+}
+
+.suggestion-item:hover {
+  background: rgba(137, 122, 185, 0.25) !important; /* Highlights with clean Care Purple tint */
+  color: #ffffff !important;
+}
+
+.suggestion-meta {
+  font-size: 0.8rem !important;
+  color: #94a3b8 !important;
+}
+
+/* Custom Scrollbar styling for suggestions panel */
+.suggestions-box::-webkit-scrollbar {
+  width: 6px !important;
+}
+.suggestions-box::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-radius: 10px !important;
+}
