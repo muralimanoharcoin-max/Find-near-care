@@ -294,7 +294,6 @@ function handleInputSuggestions(event) {
             <span class="suggestion-meta">${cleanMeta ? cleanMeta : 'India'}</span>
           `;
 
-          // Intercept mousedown to fill values seamlessly prior to input blur collapse triggers
           row.addEventListener('mousedown', function(e) {
             e.preventDefault(); 
             e.stopPropagation();
