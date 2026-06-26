@@ -20,7 +20,7 @@ body {
    STRICT APP LAYER AND HEADER INTERFACE OVERLAY ARCHITECTURE
    ========================================================================== */
 
-/* CRUCIAL FIX: The master navbar container must float above the body viewport */
+/* The master navbar container floats entirely above the body viewport */
 .header {
   padding: 16px 20px;
   display: flex;
@@ -28,10 +28,10 @@ body {
   gap: 10px;
   flex-shrink: 0;
   position: relative !important;
-  z-index: 999999 !important; /* Higher ranking priority than the map components */
+  z-index: 999999 !important; /* Higher ranking priority than map or card components */
 }
 
-/* CRUCIAL FIX: The top row structure must have an active structural index layer */
+/* The top row structure retains clear structural layer visibility */
 .header-top {
   display: flex;
   justify-content: space-between;
@@ -39,6 +39,36 @@ body {
   width: 100%;
   position: relative !important;
   z-index: 999999 !important;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.care-logo {
+  height: 48px;
+  object-fit: contain;
+}
+
+.apple-bold-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #ffffff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mac-credits {
+  opacity: 0.6;
+}
+
+.credits-text {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  font-family: monospace;
 }
 
 /* Force-aligns search elements over active output layout screens */
@@ -51,6 +81,7 @@ body {
   z-index: 999999 !important;
 }
 
+/* Parent input wrapper has an active structural z-index so child overlays function */
 .input-wrapper {
   position: relative !important;
   flex-grow: 1;
@@ -59,18 +90,52 @@ body {
   z-index: 999999 !important; 
 }
 
+.input-wrapper input {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.input-wrapper input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.search-box button {
+  padding: 12px 24px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-box button:hover {
+  background: #2563eb;
+}
+
 /* THE DROPDOWN CONTAINER PANEL OVERLAY SHEET */
 .suggestions-box {
   position: absolute !important;
-  top: 100% !important; /* Pins it directly flush against the bottom edge of input container */
+  top: calc(100% + 6px) !important;
   left: 0 !important;
   width: 100% !important;
   background: #0f172a !important; /* Strict high-opacity solid slate dark color backdrop */
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
   border-radius: 12px !important;
-  max-height: 200px !important;
+  max-height: 220px !important;
   
-  /* CRUCIAL FIXES: Forces scrollbar activation and permits choice point selection */
+  /* Forces scrollbar activation and permits choice point selection */
   overflow-y: auto !important;
   overflow-x: hidden !important;
   display: block !important;
@@ -90,8 +155,6 @@ body {
   display: flex !important;
   flex-direction: column !important;
   gap: 2px !important;
-  
-  /* CRUCIAL FIX: Directs pointer actions down into touch and click layers */
   pointer-events: auto !important; 
 }
 
@@ -100,7 +163,7 @@ body {
 }
 
 .suggestion-item:hover {
-  background: rgba(137, 122, 185, 0.35) !important; /* Elegant CARE Purple styling hover tint */
+  background: rgba(137, 122, 185, 0.3) !important; /* Elegant CARE Purple styling hover tint */
   color: #ffffff !important;
 }
 
@@ -109,7 +172,306 @@ body {
   color: #94a3b8 !important;
 }
 
-/* Standard visibility state controller utility block */
+/* Mac-Style Input Activity Spinner Elements */
+.mac-spinner {
+  position: absolute;
+  right: 16px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   APP DESKTOP VIEWPORT WORKSPACE LAYOUT
+   ========================================================================== */
+.app-layout {
+  display: flex;
+  flex-grow: 1;
+  overflow: hidden;
+  height: calc(100vh - 120px);
+}
+
+#results-wrapper {
+  width: 40%;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.4);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#map {
+  width: 60%;
+  height: 100%;
+  z-index: 10;
+}
+
+/* Dynamic Content Metric Display Cards Styling */
+#results {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.nearest-card {
+  border: 1px solid rgba(137, 122, 185, 0.4);
+  background: linear-gradient(145deg, rgba(30, 41, 59, 0.9), rgba(137, 122, 185, 0.06));
+}
+
+.card-header {
+  font-size: 1.1rem;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  background: rgba(137, 122, 185, 0.2);
+  color: #c0b6e4;
+  border-radius: 6px;
+  font-weight: 600;
+  border: 1px solid rgba(137, 122, 185, 0.3);
+}
+
+.card-body {
+  font-size: 0.95rem;
+  color: #94a3b8;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.action-btn:not(.secondary):not(.wa-btn) {
+  background: #3b82f6;
+  color: #ffffff;
+  border: none;
+}
+
+.action-btn:not(.secondary):not(.wa-btn):hover {
+  background: #2563eb;
+}
+
+.action-btn.secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.action-btn.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.action-btn.wa-btn {
+  background: #22c55e;
+  color: #ffffff;
+  border: none;
+}
+
+.action-btn.wa-btn:hover {
+  background: #16a34a;
+}
+
+/* ==========================================================================
+   INNOVATIVE QUANTUM CONSTELLATION MESH ENGINE
+   ========================================================================== */
+#no-results-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80%;
+  min-height: 340px;
+}
+
+.quantum-canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 340px;
+  height: 340px;
+  text-align: center;
+}
+
+/* Master constellation boundary layer */
+.quantum-constellation {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 240px;
+  height: 240px;
+  animation: cosmicDrift 25s linear infinite;
+}
+
+/* Base floating data node points */
+.node {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #3b82f6, 0 0 20px #897AB9;
+  animation: nodePulse 3s ease-in-out infinite alternate;
+}
+
+.node-1 { width: 6px; height: 6px; top: 15%; left: 20%; animation-delay: 0s; }
+.node-2 { width: 8px; height: 8px; top: 75%; left: 15%; animation-delay: 0.7s; }
+.node-3 { width: 5px; height: 5px; top: 80%; left: 75%; animation-delay: 1.4s; }
+.node-4 { width: 7px; height: 7px; top: 25%; left: 80%; animation-delay: 2.1s; }
+.node-5 { width: 9px; height: 9px; top: 50%; left: 90%; animation-delay: 0.3s; }
+
+/* Vector linkage beams cutting across coordinates */
+.vector {
+  position: absolute;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.4), rgba(137, 122, 185, 0.4));
+  height: 1px;
+  transform-origin: left center;
+  opacity: 0.6;
+}
+
+.vector-1 {
+  top: 15%;
+  left: 20%;
+  width: 145px;
+  transform: rotate(8deg);
+  animation: vectorPulse 4s ease-in-out infinite alternate;
+}
+
+.vector-2 {
+  top: 75%;
+  left: 15%;
+  width: 120px;
+  transform: rotate(-35deg);
+  animation: vectorPulse 4s ease-in-out infinite alternate-reverse;
+}
+
+/* Central backing layer isolating the branding safely */
+.quantum-logo-capsule {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin-bottom: 24px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.quantum-logo {
+  width: 76px !important;
+  height: 76px !important;
+  object-fit: contain !important;
+  animation: smoothHover 5s ease-in-out infinite;
+}
+
+/* Deep neon underlying lighting core */
+.quantum-core-glow {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(137, 122, 185, 0.25) 0%, rgba(59, 130, 246, 0.05) 50%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+  animation: glowBreath 6s ease-in-out infinite;
+}
+
+/* Telemetry labels formatting */
+.quantum-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  z-index: 2;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.quantum-subtitle {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  max-width: 280px;
+  line-height: 1.5;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   QUANTUM COORDINATE SYSTEM TIMELINES
+   ========================================================================== */
+@keyframes cosmicDrift {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes nodePulse {
+  0% { transform: scale(0.8); opacity: 0.5; box-shadow: 0 0 8px #3b82f6; }
+  100% { transform: scale(1.2); opacity: 1; box-shadow: 0 0 15px #897AB9, 0 0 25px #3b82f6; }
+}
+
+@keyframes vectorPulse {
+  0% { opacity: 0.2; width: 80%; }
+  100% { opacity: 0.7; width: 100%; }
+}
+
+@keyframes glowBreath {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+@keyframes smoothHover {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(2deg); }
+}
+
 .hidden {
   display: none !important;
 }
@@ -122,556 +484,6 @@ body {
 .suggestions-box::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3) !important;
   border-radius: 10px !important;
-}
-
-
-.logo-area {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-/* FIXED CONTAINER: Creates a clean round white backing badge container so the logo shows perfectly on dark screens */
-.logo-badge {
-  width: 80px;
-  height: 80px;
-  background-color: #ffffff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  flex-shrink: 0;
-  padding: 2px;
-  box-sizing: border-box;
-}
-
-/* FIXED HEADER LOGO: Forces the large downloaded file down to a crisp navbar size */
-.care-logo {
-  width: 90px !important;
-  height: 90px !important;
-  object-fit: contain !important;
-  display: block !important;
-}
-
-/* Premium Apple Typography Design Rules */
-.apple-bold-title {
-  margin: 0;
-  font-size: 1.85rem;
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  color: #ffffff;
-}
-
-/* ==========================================================================
-   METALLIC STEEL CREDITS CONTAINER WITH LIVE SHIMMER EFFECT
-   ========================================================================== */
-.mac-credits {
-  display: flex;
-  align-items: center;
-  padding: 6px 14px;
-  border-radius: 12px;
-  
-  /* Realistic brushed steel metallic baseline gradient */
-  background: linear-gradient(145deg, #334155, #1e293b);
-  
-  /* Crisp metallic edge borders */
-  border-top: 1px solid rgba(255, 255, 255, 0.25);
-  border-left: 1px solid rgba(255, 255, 255, 0.15);
-  border-right: 1px solid rgba(0, 0, 0, 0.3);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-  
-  /* Deep shadow profile to pop off the glass layer */
-  box-shadow: 
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 4px 10px rgba(0, 0, 0, 0.3);
-    
-  position: relative;
-  overflow: hidden; /* Clips the silver light shine overlay inside the steel box */
-}
-
-/* Metallic Silver Light Shine Overlay Effect */
-.mac-credits::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 95%;
-  height: 98%;
-  
-  /* Ultra-bright silver light bar */
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.03) 25%,
-    rgba(255, 255, 255, 0.45) 50%,
-    rgba(255, 255, 255, 0.03) 75%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  
-  transform: skewX(-25deg); /* Angles the light beam precisely */
-  animation: silverShine 4.5s infinite ease-in-out;
-}
-
-/* Crisp high-contrast text rendering inside the steel component */
-.credits-text {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #e2e8f0; /* Silver chrome colored text */
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5); /* Debossed engraving effect */
-  letter-spacing: 0.2px;
-  z-index: 2; /* Keeps text layered above the silver shine beam */
-}
-
-/* Timeline interpolation keyframes for the silver light movement */
-@keyframes silverShine {
-  0% {
-    left: -150%;
-  }
-  30%, 100% {
-    left: 150%; /* Glides completely across to the right side, then pauses */
-  }
-}
-
-/* ==========================================================================
-   STRICT OVERLAY SYSTEM FOR SEARCH BOX AND INPUT SELECTION DROPDOWN
-   ========================================================================== */
-
-/* Forces the search area row itself to be sorted at a high level */
-.search-box {
-  display: flex;
-  gap: 12px;
-  width: 50%;
-  align-items: center;
-  position: relative !important;
-  z-index: 99999 !important; /* Forces the entire search line onto the highest layer */
-}
-
-/* CRUCIAL FIX: Parent wrapper must have an active z-index so child overlays float */
-.input-wrapper {
-  position: relative !important;
-  flex-grow: 1;
-  display: flex;
-  align-items: center;
-  z-index: 99999 !important; 
-}
-
-/* THE DROPDOWN PANEL OVERLAY CONTAINER */
-.suggestions-box {
-  position: absolute !important;
-  top: calc(100% + 6px) !important;
-  left: 0 !important;
-  width: 100% !important;
-  background: #0f172a !important; /* High contrast solid slate background */
-  border: 1px solid rgba(255, 255, 255, 0.18) !important;
-  border-radius: 12px !important;
-  max-height: 220px !important;
-  
-  /* CRUCIAL FIXES: Forces physical scrollbars and permits selection events */
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  display: block !important;
-  pointer-events: auto !important; 
-  z-index: 999999 !important; 
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.8) !important;
-}
-
-/* THE LAYOUT ROW ITEMS DEFINITION */
-.suggestion-item {
-  padding: 12px 16px !important;
-  cursor: pointer !important;
-  font-size: 0.95rem !important;
-  color: #e2e8f0 !important;
-  text-align: left !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 2px !important;
-  
-  /* CRUCIAL FIX: Tells the browser this surface receives immediate pointer events */
-  pointer-events: auto !important; 
-}
-
-.suggestion-item:last-child {
-  border-bottom: none !important;
-}
-
-.suggestion-item:hover {
-  background: rgba(137, 122, 185, 0.35) !important; /* Highlights with clean Care Purple tint */
-  color: #ffffff !important;
-}
-
-.suggestion-meta {
-  font-size: 0.8rem !important;
-  color: #94a3b8 !important;
-}
-
-/* Utility visibility modifier override rule */
-.hidden {
-  display: none !important;
-}
-
-/* Custom Scrollbar configuration for suggestions box panel */
-.suggestions-box::-webkit-scrollbar {
-  width: 6px !important;
-  display: block !important;
-}
-.suggestions-box::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3) !important;
-  border-radius: 10px !important;
-}
-
-
-input {
-  width: 100%;
-  padding: 12px 42px 12px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.25);
-  color: white;
-  font-size: 0.95rem;
-  transition: all 0.3s;
-}
-
-input:focus {
-  outline: none;
-  border-color: #3b82f6;
-  background: rgba(0, 0, 0, 0.4);
-}
-
-/* ==========================================================================
-   UPDATED HIGH-TECH MINI RADAR LOADING SPINNER
-   ========================================================================== */
-.mac-spinner {
-  position: absolute;
-  right: 14px;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-  
-  /* Reset old background assets */
-  background: none !important;
-  -webkit-mask: none !important;
-  mask: none !important;
-}
-
-/* Central micro glowing radar beacon dot */
-.mac-spinner::before {
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background-color: #3b82f6; /* Matching theme cyan/blue */
-  border-radius: 50%;
-  box-shadow: 0 0 8px #3b82f6;
-}
-
-/* Active outward pulsing radar ping wave ring */
-.mac-spinner::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border: 1.5px solid #3b82f6;
-  border-radius: 50%;
-  box-sizing: border-box;
-  opacity: 0;
-  animation: radarMiniPulse 1.1s ease-out infinite;
-}
-
-/* Radar ping expansion timeline profile */
-@keyframes radarMiniPulse {
-  0% {
-    transform: scale(0.3);
-    opacity: 0.9;
-  }
-  50% {
-    opacity: 0.4;
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
-button {
-  background: #3b82f6;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: background 0.2s;
-  white-space: nowrap;
-}
-
-button:hover {
-  background: #2563eb;
-}
-
-.app-layout {
-  display: flex;
-  flex: 1;
-  gap: 16px;
-  padding: 16px;
-  box-sizing: border-box;
-  height: calc(100vh - 160px);
-  min-height: 0; 
-}
-
-#results-wrapper {
-  flex: 1.3;
-  height: 95%;
-  overflow-y: auto;
-  box-sizing: border-box;
-  padding-right: 6px;
-  position: relative;
-}
-
-#results {
-  width: 100%;
-}
-
-#map {
-  flex: 1;
-  height: 50%; 
-  border-radius: 20px;
-  border: 5px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-}
-
-#results-wrapper::-webkit-scrollbar {
-  width: 6px;
-}
-#results-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-}
-.card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 16px;
-  margin-bottom: 12px;
-  border-radius: 14px;
-}
-
-.nearest-card {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.4);
-}
-
-.card-header {
-  font-size: 1.15rem;
-  margin-bottom: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.badge {
-  background: #22c55e;
-  font-size: 0.7rem;
-  padding: 4px 8px;
-  border-radius: 20px;
-  font-weight: bold;
-}
-
-.card-body {
-  color: #94a3b8;
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-}
-
-.card-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.action-btn {
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.8rem;
-  padding: 8px 12px;
-  background: #3b82f6;
-  color: white;
-  border-radius: 8px;
-  font-weight: 500;
-}
-
-.action-btn.secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.action-btn.wa-btn {
-  background: #25d366;
-}
-
-/* ==========================================================================
-   UPDATED: WIPRO-STYLE CONCENTRIC DOTTED LOOP ANIMATION ENGINE (CARE PURPLE)
-   ========================================================================== */
-#no-results-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 80%;
-  min-height: 260px;
-}
-
-/* THE MAGIC CONTAINER: Structural center anchor for the purple dotted layers */
-.magic-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 280px;
-  text-align: center;
-}
-
-/* Master setup blueprint for the custom segmented loops using care purple (#897AB9) */
-.dotted-ring {
-  position: absolute;
-  top: 45px; /* Centered with the 90px logo element */
-  left: 50%;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, #897AB9 0%, rgba(137, 122, 185, 0.3) 50%, #897AB9 100%);
-  border: none;
-  pointer-events: none;
-  transform-origin: center center;
-}
-
-/* OUTER DOTTED LOOP: Widened loop radius with slow breathing pulse transformations */
-.dotted-ring.ring-outer {
-  width: 155px;
-  height: 155px;
-  -webkit-mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg), 
-                radial-gradient(circle, transparent 72px, #fff 73px);
-  mask: repeating-conic-gradient(#fff 0deg 4deg, transparent 4deg 12deg), 
-        radial-gradient(circle, transparent 72px, #fff 73px);
-  animation: 
-    wiproClockwise 14s linear infinite,
-    wiproPulseOuter 4s ease-in-out infinite;
-  z-index: 1;
-}
-
-/* MIDDLE DOTTED LOOP: Spins counter-clockwise at medium speed */
-.dotted-ring.ring-middle {
-  width: 125px;
-  height: 125px;
-  -webkit-mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg), 
-                radial-gradient(circle, transparent 57px, #fff 58px);
-  mask: repeating-conic-gradient(#fff 0deg 5deg, transparent 5deg 15deg), 
-        radial-gradient(circle, transparent 57px, #fff 58px);
-  opacity: 0.85;
-  animation: wiproCounterClockwise 9s linear infinite;
-  z-index: 1;
-}
-
-/* INNER DOTTED LOOP: Small diameter orbit layer spinning quickly right behind logo */
-.dotted-ring.ring-inner {
-  width: 98px;
-  height: 98px;
-  -webkit-mask: repeating-conic-gradient(#fff 0deg 6deg, transparent 6deg 19deg), 
-                radial-gradient(circle, transparent 44px, #fff 45px);
-  mask: repeating-conic-gradient(#fff 0deg 6deg, transparent 6deg 19deg), 
-                radial-gradient(circle, transparent 44px, #fff 45px);
-  opacity: 0.65;
-  animation: wiproClockwise 5.5s linear infinite;
-  z-index: 1;
-}
-
-/* THE MAGIC GLOW: Matching ambient backlight shadow aura for Care Purple */
-.magic-glow {
-  position: absolute;
-  top: 45px;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 165px;
-  height: 165px;
-  background: radial-gradient(circle, rgba(137, 122, 185, 0.3) 0%, rgba(137, 122, 185, 0) 70%);
-  border-radius: 50%;
-  z-index: 0;
-  animation: glowPulse 4s infinite ease-in-out;
-}
-
-/* LOGO LAYER: Clean central color anchor behind the branding image asset */
-.magic-logo {
-  width: 90px !important;  
-  height: 90px !important; 
-  object-fit: contain !important;
-  display: block !important;
-  margin-bottom: 24px !important; 
-  
-  /* INNER CORE BACKGROUND ENGINE */
-  background: radial-gradient(circle, #111827 0%, #0f172a 42%, transparent 39%, transparent 100%) !important;
-  
-  /* Remove old structural padding and frame parameters so rays stay clean */
-  padding: 0 !important;
-  background-color: transparent !important;
-  border-radius: 0 !important;
-  
-  /* LAYER PRIORITY SYSTEM */
-  position: relative !important;
-  z-index: 10 !important; 
-  animation: logoFloat 4.5s infinite ease-in-out;
-}
-
-.magic-text {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 6px;
-  z-index: 2;
-}
-
-.magic-subtext {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  z-index: 2;
-}
-
-/* ==========================================================================
-   WIPRO LOOP ANIMATION KEYFRAMES WITH EMBEDDED TRANSLATION RESETS
-   ========================================================================== */
-@keyframes wiproClockwise {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes wiproCounterClockwise {
-  from { transform: translate(-50%, -50%) rotate(360deg); }
-  to { transform: translate(-50%, -50%) rotate(0deg); }
-}
-
-@keyframes wiproPulseOuter {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-  50% { transform: translate(-50%, -50%) scale(1.07); opacity: 0.8; }
-}
-
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes glowPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.5; }
-  50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
-}
-
-/* Utility layout visibility modifier */
-.hidden {
-  display: none !important;
 }
 
 /* RESPONSIVE MOBILE MODES */
@@ -688,149 +500,15 @@ button:hover {
   .search-box {
     width: 100%;
   }
-  .mac-credits {
-    align-self: flex-start;
-  }
   .app-layout {
-    flex-direction: column;
+    flex-direction: column-reverse;
     height: auto;
     overflow: visible;
-    padding: 12px;
-    gap: 12px;
+  }
+  #results-wrapper, #map {
+    width: 100%;
   }
   #map {
-    height: 35vh;
-    width: 100%;
-    flex: none;
-    order: 1;
+    height: 350px;
   }
-  #results-wrapper {
-    height: auto;
-    overflow: visible;
-    width: 100%;
-    padding-right: 0;
-    order: 2;
-  }
-}
-/* ==========================================================================
-   DYNAMIC GEOLOCATION SUGGESTIONS CONTAINER
-   ========================================================================== */
-.input-wrapper {
-  position: relative; /* Keeps dropdown attached exactly to input bounds */
-}
-
-.suggestions-box {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  width: 100%;
-  background: rgba(15, 23, 42, 0.95); /* Deep slate matching body */
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  max-height: 250px;
-  overflow-y: auto;
-  z-index: 9999; /* Higher priority layer than map components */
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
-}
-
-.suggestion-item {
-  padding: 12px 16px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  color: #e2e8f0;
-  text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background 0.2s, color 0.2s;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.suggestion-item:last-child {
-  border-bottom: none;
-}
-
-.suggestion-item:hover {
-  background: rgba(59, 130, 246, 0.2); /* Soft highlight tint */
-  color: #ffffff;
-}
-
-/* Secondary meta labeling for district, state metadata styling */
-.suggestion-meta {
-  font-size: 0.78rem;
-  color: #94a3b8;
-}
-
-/* Custom scrollbar adjustments inside suggestions list */
-.suggestions-box::-webkit-scrollbar {
-  width: 5px;
-}
-.suggestions-box::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-}
-/* ==========================================================================
-   Z-INDEX & STRUCTURAL OVERLAY FIXES FOR SUGGESTIONS DROPDOWN
-   ========================================================================== */
-.input-wrapper {
-  position: relative !important;
-}
-
-.suggestions-box {
-  position: absolute !important;
-  top: calc(100% + 6px) !important;
-  left: 0 !important;
-  width: 100% !important;
-  background: rgba(15, 23, 42, 0.98) !important; /* High opacity slate dark theme */
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-radius: 12px !important;
-  max-height: 220px !important;
-  
-  /* CRUCIAL FIX: Forces scrollbars to appear and sets layout order to float above cards */
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  z-index: 99999 !important; 
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7) !important;
-}
-
-.suggestion-item {
-  padding: 12px 16px !important;
-  cursor: pointer !important;
-  font-size: 0.95rem !important;
-  color: #e2e8f0 !important;
-  text-align: left !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  transition: background 0.15s ease !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 2px !important;
-  
-  /* CRUCIAL FIX: Ensures the row accepts mouse clicks and touches immediately */
-  pointer-events: auto !important; 
-}
-
-.suggestion-item:last-child {
-  border-bottom: none !important;
-}
-
-.suggestion-item:hover {
-  background: rgba(137, 122, 185, 0.25) !important; /* Highlights with clean Care Purple tint */
-  color: #ffffff !important;
-}
-
-.suggestion-meta {
-  font-size: 0.8rem !important;
-  color: #94a3b8 !important;
-}
-
-/* Custom Scrollbar styling for suggestions panel */
-.suggestions-box::-webkit-scrollbar {
-  width: 6px !important;
-}
-.suggestions-box::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2) !important;
-  border-radius: 10px !important;
 }
