@@ -75,7 +75,7 @@ async function searchLocation(query) {
   try {
     let cleanQuery = query.trim();
     
-    const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
+    const coreHubs = [""];
     for (let hub of coreHubs) {
       if (closeMatch(cleanQuery, hub)) {
         cleanQuery = hub; 
@@ -183,8 +183,8 @@ function showWelcomeState() {
 
   const mainTelemetryText = document.querySelector('.radar-title');
   const subTelemetryText = document.querySelector('.radar-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "GEOSPATIAL SWEEP ACTIVE";
-  if (subTelemetryText) subTelemetryText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
+  if (mainTelemetryText) mainTelemetryText.innerText = "ACTIVE• V 1.9";
+  if (subTelemetryText) subTelemetryText.innerText = "Enter location above to compile dynamic matrix.";
 }
 
 function clearViews() {
@@ -196,7 +196,7 @@ function clearViews() {
   
   const mainTelemetryText = document.querySelector('.radar-title');
   const subTelemetryText = document.querySelector('.radar-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "COORDINATE MATCH NULL";
+  if (mainTelemetryText) mainTelemetryText.innerText = "Sorry No Result: Check the spelling or choose from suggestions";
   if (subTelemetryText) subTelemetryText.innerText = "We couldn't resolve any active locations across our current health networks.";
 }
 
