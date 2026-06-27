@@ -232,7 +232,9 @@ function renderSortedCards(results, targetLat, targetLon) {
         <b>${x.name}</b> ${badge}
       </div>
       <div class="card-body">
-        🚗 ${x.km.toFixed(1)} km  |  ⏱️ ${timeDisplay}
+        <span>🚗 ${x.km.toFixed(1)} km</span>
+        <span style="color: rgba(255,255,255,0.15)">|</span>
+        <span>⏱️ ${timeDisplay}</span>
       </div>
       <div class="card-actions">
         <button class="action-btn local-navigate-btn" 
@@ -251,6 +253,7 @@ function renderSortedCards(results, targetLat, targetLon) {
 
   document.getElementById("results").innerHTML = html;
 }
+
 
 function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
