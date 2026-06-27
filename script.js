@@ -268,7 +268,7 @@ function showWelcomeState() {
   const subText = document.querySelector('.radar-subtitle');
   
   if (mainText) mainText.innerText = "A promise of 99.9% accuracy";
-  if (subText) subText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
+  if (subText) subText.innerText = "Search with city, town or area name to find near CARE.";
 }
 
 function clearViews() {
@@ -369,8 +369,8 @@ function handleInputSuggestions(event) {
 
   const mainText = document.querySelector('.radar-title');
   const subText = document.querySelector('.radar-subtitle');
-  if (mainText) mainText.innerText = "";
-  if (subText) subText.innerText = "";
+  if (mainText) mainText.innerText = "A promise of 99.9 accuracy";
+  if (subText) subText.innerText = "Search with city, town or area name to find near CARE.";
 
   clearTimeout(suggestionTimeout);
 
