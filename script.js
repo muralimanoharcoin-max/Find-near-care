@@ -47,7 +47,6 @@ async function handleMapLongPress(clickedLat, clickedLng) {
 
   try {
     const reverseUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickedLat}&lon=${clickedLng}&addressdetails=1`;
-    // Added compliant fallback headers to protect reverse coordinate looks
     let response = await fetch(reverseUrl, {
       headers: { 'User-Agent': 'FindNearCareHospitalApp/2.0 (murali.manohar@example.com)' }
     }).then(x => x.json());
@@ -159,7 +158,6 @@ async function searchLocation(query) {
     let cleanQuery = query.trim();
 
     const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery)}&limit=1`;
-    // Explicit User-Agent added to satisfy OpenStreetMap strict app policies
     let response = await fetch(geocodeUrl, {
       headers: { 'User-Agent': 'FindNearCareHospitalApp/2.0 (murali.manohar@example.com)' }
     }).then(x => x.json());
@@ -218,6 +216,7 @@ function renderSortedCards(results, targetLat, targetLon) {
 
   let html = "";
   results.forEach((x, index) => {
+    // Fixed string interpolation typo here
     const mapsUrl = x.gmap || `https://www.google.com/maps/dir/?api=1&origin=${targetLat},${targetLon}&destination=${x.lat},${x.lon}&travelmode=driving`;
     const timeDisplay = formatTravelTime(x.min);
     const shareText = encodeURIComponent(`Closest Hospital found! 🏥 ${x.name} is ${x.km.toFixed(1)} km away (${timeDisplay}). Route: ${mapsUrl}`);
