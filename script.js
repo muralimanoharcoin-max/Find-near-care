@@ -267,7 +267,7 @@ function showWelcomeState() {
   const mainText = document.querySelector('.radar-title');
   const subText = document.querySelector('.radar-subtitle');
   
-  if (mainText) mainText.innerText = "GEOSPATIAL SWEEP ACTIVE";
+  if (mainText) mainText.innerText = "A promise of 99.9% accuracy";
   if (subText) subText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
 }
 
