@@ -363,6 +363,12 @@ function handleInputSuggestions(event) {
   const query = event.target.value.trim();
   const dropdown = document.getElementById('suggestions-dropdown');
 
+  // NEW FIX: Instantly hide the tail connection error toast as soon as the user clears or edits the text
+  const inlineError = document.getElementById('search-error-toast');
+  if (inlineError) {
+    inlineError.classList.add('hidden');
+  }
+
   clearTimeout(suggestionTimeout);
 
   if (query.length < 3) {
@@ -415,6 +421,7 @@ function handleInputSuggestions(event) {
       .catch(err => console.error("Suggestions retrieval error:", err));
   }, 150); 
 }
+
 
 function selectSuggestion(value) {
   const inputElement = document.getElementById('search');
