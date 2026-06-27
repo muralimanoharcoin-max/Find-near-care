@@ -448,38 +448,39 @@ body {
   .slider-branch-card { flex: 0 0 190px; }
 }
 .error-toast {
-  position: absolute;       /* Floats right below without pushing the blue box down */
-  top: 100%;                /* Docks directly beneath the search row */
-  left: 12px;               /* Offsets slightly from the left edge for a natural tail position */
-  display: inline-flex;     
+  position: absolute;       /* Floats directly under the relative search-box container */
+  top: 100%;                /* Positions right below the bottom edge of the search bar */
+  left: 12px;               /* Clean offset from the left edge */
+  display: inline-flex;     /* Tightly wraps the box background around the text length only */
   align-items: center;
   gap: 6px;
-  margin-top: 8px;          /* Clean space to make room for the tail arrow */
+  margin-top: 10px;         /* Adds a clear gap to perfectly account for the upward pointing tail arrow */
   padding: 6px 12px;
-  background: #7f1d1d;      /* Solid dark red background so the tail blends seamlessly */
+  background: #7f1d1d;      /* Dark red background color matching the theme */
   border: 1px solid rgba(239, 68, 68, 0.4);
   border-radius: 6px;
   color: #fca5a5;
   font-size: 0.82rem;
   font-weight: 500;
-  z-index: 10;              
+  z-index: 1000000;         /* Keeps it layered safely on top of your high search-box z-index */
   max-width: calc(100% - 24px);
   box-sizing: border-box;
+  white-space: normal;      /* Safe for mobile screens if the screen size drops below the text length */
   animation: fadeInToast 0.2s ease-out forwards;
 }
 
-/* THE TAIL CONNECTION */
+/* THE UPWARD POINTING TAIL ARROW */
 .error-toast::before {
   content: "";
   position: absolute;
-  bottom: 100%;             /* Points upward toward the search bar */
-  left: 16px;               /* Aligns the tail nicely on the left edge */
+  bottom: 100%;             /* Positions pointing up */
+  left: 16px;               /* Positions the arrow neatly below the search input area */
   border-width: 6px;
   border-style: solid;
-  border-color: transparent transparent #7f1d1d transparent; /* Color matches the background */
+  border-color: transparent transparent #7f1d1d transparent; /* Matches dark red background box */
 }
 
-/* SECONDARY OVERLAY FOR THE TAIL BORDER */
+/* SECONDARY REFLECTION FOR THE TAIL BORDER EFFECT */
 .error-toast::after {
   content: "";
   position: absolute;
@@ -487,8 +488,8 @@ body {
   left: 15px;
   border-width: 7px;
   border-style: solid;
-  border-color: transparent transparent rgba(239, 68, 68, 0.4) transparent;
-  z-index: -1;              /* Sits behind the main tail to form a crisp matching border */
+  border-color: transparent transparent rgba(239, 68, 68, 0.4) transparent; /* Matches custom border color */
+  z-index: -1;
 }
 
 @keyframes fadeInToast {
