@@ -369,8 +369,8 @@ function handleInputSuggestions(event) {
 
   const mainText = document.querySelector('.radar-title');
   const subText = document.querySelector('.radar-subtitle');
-  if (mainText) mainText.innerText = "GEOSPATIAL SWEEP ACTIVE";
-  if (subText) subText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
+  if (mainText) mainText.innerText = "";
+  if (subText) subText.innerText = "";
 
   clearTimeout(suggestionTimeout);
 
