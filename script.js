@@ -23,13 +23,12 @@ fetch('care_locations.json')
   .catch(err => console.error("Error loading JSON file structure:", err));
 
 /* ==========================================================================
-   UPDATED FEATURE: DYNAMIC LONG-PRESS ON MAP TO SEARCH ENGINE
+   FEATURE: DYNAMIC LONG-PRESS ON MAP TO SEARCH ENGINE
    ========================================================================== */
 let pressTimer = null;
 
 // Starts timing when user holds mouse down or touches the screen
 map.on('mousedown', function(e) {
-  // Clear any existing timer just in case
   clearTimeout(pressTimer);
   
   // Set a 500ms delay window for a valid long press
@@ -45,12 +44,14 @@ map.on('mouseup movestart zoomstart dragstart', function() {
 
 // Dedicated functional block to process the long press activation
 async function handleMapLongPress(clickedLat, clickedLng) {
-  // Display temporary feedback metrics in search box
+  // Clear any active warning banners
+  const inlineError = document.getElementById('search-error-toast');
+  if (inlineError) inlineError.classList.add('hidden');
+
   document.getElementById("search").value = `${clickedLat.toFixed(4)}, ${clickedLng.toFixed(4)}`;
   document.getElementById('mac-spinner').classList.remove('hidden');
 
   try {
-    // Reverse geocode via Nominatim API to fetch clean regional names
     const reverseUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickedLat}&lon=${clickedLng}&addressdetails=1`;
     let response = await fetch(reverseUrl).then(x => x.json());
     
@@ -63,12 +64,14 @@ async function handleMapLongPress(clickedLat, clickedLng) {
     console.error("Reverse geocoding execution error:", err);
   }
 
-  // Calculate driving metrics to care centers
   searchLocationDirectCoords(clickedLat, clickedLng);
 }
 
 // Helper function to calculate distances via coordinates
 async function searchLocationDirectCoords(targetLat, targetLon) {
+  const inlineError = document.getElementById('search-error-toast');
+  if (inlineError) inlineError.classList.add('hidden');
+
   document.getElementById('mac-spinner').classList.remove('hidden');
   document.getElementById('no-results-state').classList.add('hidden');
   document.getElementById("results").innerHTML = "";
@@ -146,6 +149,9 @@ function formatTravelTime(totalMinutes) {
 }
 
 async function searchLocation(query) {
+  const inlineError = document.getElementById('search-error-toast');
+  if (inlineError) inlineError.classList.add('hidden');
+
   document.getElementById('mac-spinner').classList.remove('hidden');
   document.getElementById('no-results-state').classList.add('hidden');
   document.getElementById("results").innerHTML = "";
@@ -250,6 +256,9 @@ function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
   
+  const inlineError = document.getElementById('search-error-toast');
+  if (inlineError) inlineError.classList.add('hidden');
+
   const workspacePanel = document.getElementById('gis-workspace-panel');
   if (workspacePanel) workspacePanel.classList.add('hidden');
 
@@ -276,6 +285,13 @@ function clearViews() {
   
   if (mainText) mainText.innerText = "Sorry Try again";
   if (subText) subText.innerText = "Check the spelling/choose from suggestions.";
+
+  // Show inline message warning under search bar layout
+  const inlineError = document.getElementById('search-error-toast');
+  if (inlineError) {
+    inlineError.innerHTML = `⚠️ Sorry Try again. Check the spelling/choose from suggestions.`;
+    inlineError.classList.remove('hidden');
+  }
 }
 
 function copyLink(url) {
