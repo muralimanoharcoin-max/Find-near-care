@@ -366,11 +366,17 @@ function handleInputSuggestions(event) {
   const query = event.target.value.trim();
   const dropdown = document.getElementById('suggestions-dropdown');
 
-  // NEW FIX: Instantly hide the tail connection error toast as soon as the user clears or edits the text
+  // 1. Instantly hide the tail connection error toast
   const inlineError = document.getElementById('search-error-toast');
   if (inlineError) {
     inlineError.classList.add('hidden');
   }
+
+  // 2. NEW FIX: Instantly restore the central welcoming text state when typing starts
+  const mainText = document.querySelector('.radar-title') || document.querySelector('.magic-text');
+  const subText = document.querySelector('.radar-subtitle') || document.querySelector('.magic-subtext');
+  if (mainText) mainText.innerText = "A promise of 99.9% accuracy";
+  if (subText) subText.innerText = "Search with city/area name.";
 
   clearTimeout(suggestionTimeout);
 
@@ -424,6 +430,7 @@ function handleInputSuggestions(event) {
       .catch(err => console.error("Suggestions retrieval error:", err));
   }, 150); 
 }
+
 
 
 function selectSuggestion(value) {
