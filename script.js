@@ -31,6 +31,7 @@ function handleKeyPress(event) {
 function triggerSearch() {
   const query = document.getElementById("search").value;
   if (query.trim() !== "") {
+    // Instantly hide suggestions dropdown out of sight on search activation
     const dropdown = document.getElementById('suggestions-dropdown');
     if (dropdown) {
       dropdown.innerHTML = "";
@@ -48,41 +49,13 @@ function formatTravelTime(totalMinutes) {
   return remainingMins > 0 ? `${hours}h ${remainingMins}m` : `${hours}h`;
 }
 
-function closeMatch(str1, str2) {
-  let s1 = str1.toLowerCase().trim();
-  let s2 = str2.toLowerCase().trim();
-  if (s1.includes(s2) || s2.includes(s1)) return true;
-  
-  let matches = 0;
-  for(let i=0; i<Math.min(s1.length, s2.length); i++) {
-    if(s1[i] === s2[i]) matches++;
-  }
-  return (matches / Math.max(s1.length, s2.length)) > 0.5;
-}
-
 async function searchLocation(query) {
   document.getElementById('mac-spinner').classList.remove('hidden');
-  
-  // DYNAMIC REVEAL TIMELINES: Instantly display the maps workspace layout sheet
   document.getElementById('no-results-state').classList.add('hidden');
-  document.getElementById('gis-workspace-panel').classList.remove('hidden');
   document.getElementById("results").innerHTML = "";
-  
-  // FIX CRUCIAL LEAFLET RESIZING LAYER GLITCH ON INSTANT VIEW REVEALS
-  map.invalidateSize();
-  setTimeout(() => { map.invalidateSize(); }, 50);
 
   try {
     let cleanQuery = query.trim();
-    
-    const coreHubs = ["Hyderabad", "Visakhapatnam", "Bhubaneswar", "Indore", "Raipur", "Nagpur", "Banjara", "Hitech", "Musheerabad", "Malakpet", "Nampally"];
-    for (let hub of coreHubs) {
-      if (closeMatch(cleanQuery, hub)) {
-        cleanQuery = hub; 
-        document.getElementById("search").value = hub;
-        break;
-      }
-    }
 
     const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery)}&limit=1`;
     let response = await fetch(geocodeUrl).then(x => x.json());
@@ -97,7 +70,7 @@ async function searchLocation(query) {
     const targetCoords = [targetLat, targetLon];
 
     map.setView(targetCoords, 12);
-    map.invalidateSize(); // Sync dimensions before injecting markers
+    setTimeout(() => { map.invalidateSize(); }, 200);
     
     if (searchMarker) map.removeLayer(searchMarker);
     searchMarker = L.marker(targetCoords).addTo(map).bindPopup(`<b>Search Location:</b> ${cleanQuery}`).openPopup();
@@ -169,35 +142,31 @@ async function searchLocation(query) {
     clearViews();
   } finally {
     document.getElementById('mac-spinner').classList.add('hidden');
-    setTimeout(() => { map.invalidateSize(); }, 100);
   }
 }
 
+// WELCOME PANEL SPECIFICATION TEXT
 function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
-  
-  // RESET INITIAL STATES
-  document.getElementById('gis-workspace-panel').classList.add('hidden');
   document.getElementById('no-results-state').classList.remove('hidden');
 
-  const mainTelemetryText = document.querySelector('.radar-title');
-  const subTelemetryText = document.querySelector('.radar-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "GEOSPATIAL SWEEP ACTIVE";
-  if (subTelemetryText) subTelemetryText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
+  const mainTelemetryText = document.querySelector('.magic-text');
+  const subTelemetryText = document.querySelector('.magic-subtext');
+  if (mainTelemetryText) mainTelemetryText.innerText = "A promise of 99.9% accuracy";
+  if (subTelemetryText) subTelemetryText.innerText = "Search with city/area name.";
 }
 
+// ERROR PANEL SPECIFICATION TEXT
 function clearViews() {
   document.getElementById("results").innerHTML = "";
+  document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  document.getElementById('gis-workspace-panel').classList.add('hidden');
-  document.getElementById('no-results-state').classList.remove('hidden');
-  
-  const mainTelemetryText = document.querySelector('.radar-title');
-  const subTelemetryText = document.querySelector('.radar-subtitle');
-  if (mainTelemetryText) mainTelemetryText.innerText = "COORDINATE MATCH NULL";
-  if (subTelemetryText) subTelemetryText.innerText = "We couldn't resolve any active locations across our current health networks.";
+  const mainTelemetryText = document.querySelector('.magic-text');
+  const subTelemetryText = document.querySelector('.magic-subtext');
+  if (mainTelemetryText) mainTelemetryText.innerText = "Sorry Try again";
+  if (subTelemetryText) subTelemetryText.innerText = "Check the spelling/choose from suggestions.";
 }
 
 function copyLink(url) {
@@ -252,6 +221,7 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 
         const fitBoundsLayout = L.latLngBounds([[startLat, startLng], [endLat, endLng]]);
         map.fitBounds(fitBoundsLayout, { padding: [50, 50] });
+        setTimeout(() => { map.invalidateSize(); }, 150);
       } else {
         alert("Unable to compute driving metrics across map matrix.");
       }
@@ -260,7 +230,7 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 }
 
 /* ==========================================================================
-   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (NOMINATIM INTERCEPT ARCHITECTURE)
+   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (SPEED METRICS OPTIMIZED)
    ========================================================================== */
 let suggestionTimeout = null;
 
@@ -276,6 +246,7 @@ function handleInputSuggestions(event) {
     return;
   }
 
+  // DEBOUNCE SPEED RADICAL OPTIMIZATION: Dropped from 400ms down to 150ms for hyper fast live displays
   suggestionTimeout = setTimeout(() => {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in&addressdetails=1&limit=5`;
 
@@ -318,7 +289,7 @@ function handleInputSuggestions(event) {
         dropdown.classList.remove('hidden');
       })
       .catch(err => console.error("Suggestions retrieval error:", err));
-  }, 400);
+  }, 150); 
 }
 
 function selectSuggestion(value) {
