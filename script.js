@@ -27,24 +27,18 @@ fetch('care_locations.json')
    ========================================================================== */
 let pressTimer = null;
 
-// Starts timing when user holds mouse down or touches the screen
 map.on('mousedown', function(e) {
   clearTimeout(pressTimer);
-  
-  // Set a 500ms delay window for a valid long press
   pressTimer = setTimeout(function() {
     handleMapLongPress(e.latlng.lat, e.latlng.lng);
   }, 500); 
 });
 
-// Cancels the search instantly if they move the map or lift their finger early
 map.on('mouseup movestart zoomstart dragstart', function() {
   clearTimeout(pressTimer);
 });
 
-// Dedicated functional block to process the long press activation
 async function handleMapLongPress(clickedLat, clickedLng) {
-  // Clear any active warning banners
   const inlineError = document.getElementById('search-error-toast');
   if (inlineError) inlineError.classList.add('hidden');
 
@@ -53,7 +47,10 @@ async function handleMapLongPress(clickedLat, clickedLng) {
 
   try {
     const reverseUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${clickedLat}&lon=${clickedLng}&addressdetails=1`;
-    let response = await fetch(reverseUrl).then(x => x.json());
+    // Added compliant fallback headers to protect reverse coordinate looks
+    let response = await fetch(reverseUrl, {
+      headers: { 'User-Agent': 'FindNearCareHospitalApp/2.0 (murali.manohar@example.com)' }
+    }).then(x => x.json());
     
     if (response && response.display_name) {
       const addr = response.address;
@@ -67,7 +64,6 @@ async function handleMapLongPress(clickedLat, clickedLng) {
   searchLocationDirectCoords(clickedLat, clickedLng);
 }
 
-// Helper function to calculate distances via coordinates
 async function searchLocationDirectCoords(targetLat, targetLon) {
   const inlineError = document.getElementById('search-error-toast');
   if (inlineError) inlineError.classList.add('hidden');
@@ -163,7 +159,10 @@ async function searchLocation(query) {
     let cleanQuery = query.trim();
 
     const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cleanQuery)}&limit=1`;
-    let response = await fetch(geocodeUrl).then(x => x.json());
+    // Explicit User-Agent added to satisfy OpenStreetMap strict app policies
+    let response = await fetch(geocodeUrl, {
+      headers: { 'User-Agent': 'FindNearCareHospitalApp/2.0 (murali.manohar@example.com)' }
+    }).then(x => x.json());
 
     if (!response || response.length === 0) {
       clearViews();
@@ -233,7 +232,7 @@ function renderSortedCards(results, targetLat, targetLon) {
       </div>
       <div class="card-body">
         <span>🚗 ${x.km.toFixed(1)} km</span>
-        <span style="color: rgba(255,255,255,0.15)">|</span>
+        <span style="color: rgba(255,255,255,0.15); margin: 0 4px;">|</span>
         <span>⏱️ ${timeDisplay}</span>
       </div>
       <div class="card-actions">
@@ -254,7 +253,6 @@ function renderSortedCards(results, targetLat, targetLon) {
   document.getElementById("results").innerHTML = html;
 }
 
-
 function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
@@ -267,11 +265,11 @@ function showWelcomeState() {
 
   document.getElementById('no-results-state').classList.remove('hidden');
 
-  const mainText = document.querySelector('.radar-title') || document.querySelector('.magic-text');
-  const subText = document.querySelector('.radar-subtitle') || document.querySelector('.magic-subtext');
+  const mainText = document.querySelector('.radar-title');
+  const subText = document.querySelector('.radar-subtitle');
   
-  if (mainText) mainText.innerText = "A promise of 99.9% accuracy";
-  if (subText) subText.innerText = "Search with city/area name.";
+  if (mainText) mainText.innerText = "GEOSPATIAL SWEEP ACTIVE";
+  if (subText) subText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
 }
 
 function clearViews() {
@@ -283,13 +281,12 @@ function clearViews() {
 
   document.getElementById('no-results-state').classList.remove('hidden');
   
-  const mainText = document.querySelector('.radar-title') || document.querySelector('.magic-text');
-  const subText = document.querySelector('.radar-subtitle') || document.querySelector('.magic-subtext');
+  const mainText = document.querySelector('.radar-title');
+  const subText = document.querySelector('.radar-subtitle');
   
   if (mainText) mainText.innerText = "Sorry Try again";
   if (subText) subText.innerText = "Check the spelling/choose from suggestions.";
 
-  // Show inline message warning under search bar layout
   const inlineError = document.getElementById('search-error-toast');
   if (inlineError) {
     inlineError.innerHTML = `⚠️ Sorry Try again. Check the spelling/choose from suggestions.`;
@@ -366,17 +363,15 @@ function handleInputSuggestions(event) {
   const query = event.target.value.trim();
   const dropdown = document.getElementById('suggestions-dropdown');
 
-  // 1. Instantly hide the tail connection error toast
   const inlineError = document.getElementById('search-error-toast');
   if (inlineError) {
     inlineError.classList.add('hidden');
   }
 
-  // 2. NEW FIX: Instantly restore the central welcoming text state when typing starts
-  const mainText = document.querySelector('.radar-title') || document.querySelector('.magic-text');
-  const subText = document.querySelector('.radar-subtitle') || document.querySelector('.magic-subtext');
-  if (mainText) mainText.innerText = "A promise of 99.9% accuracy";
-  if (subText) subText.innerText = "Search with city/area name.";
+  const mainText = document.querySelector('.radar-title');
+  const subText = document.querySelector('.radar-subtitle');
+  if (mainText) mainText.innerText = "GEOSPATIAL SWEEP ACTIVE";
+  if (subText) subText.innerText = "Enter your destination parameters above to compile dynamic matrix profiles.";
 
   clearTimeout(suggestionTimeout);
 
@@ -389,7 +384,12 @@ function handleInputSuggestions(event) {
   suggestionTimeout = setTimeout(() => {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in&addressdetails=1&limit=5`;
 
-    fetch(url, { headers: { 'Accept-Language': 'en' } })
+    fetch(url, { 
+      headers: { 
+        'Accept-Language': 'en',
+        'User-Agent': 'FindNearCareHospitalApp/2.0 (murali.manohar@example.com)'
+      } 
+    })
       .then(res => res.json())
       .then(data => {
         if (!data || data.length === 0) {
@@ -431,8 +431,6 @@ function handleInputSuggestions(event) {
   }, 150); 
 }
 
-
-
 function selectSuggestion(value) {
   const inputElement = document.getElementById('search');
   if (inputElement) {
@@ -454,6 +452,7 @@ document.addEventListener('mousedown', function(e) {
     dropdown.classList.add('hidden');
   }
 });
+
 /* ==========================================================================
    APPLE STYLE ADVERTISEMENT MODAL ENGINE
    ========================================================================== */
@@ -461,7 +460,6 @@ function showAdModal() {
   const modal = document.getElementById('apple-ad-modal');
   if (modal) {
     modal.classList.remove('hidden');
-    // Micro-delay to let display register so the entry transform animation fires beautifully
     setTimeout(() => {
       modal.classList.add('active');
     }, 10);
@@ -472,14 +470,13 @@ function closeAdModal() {
   const modal = document.getElementById('apple-ad-modal');
   if (modal) {
     modal.classList.remove('active');
-    // Hide it from layout flow completely once opacity fade finishes
     setTimeout(() => {
       modal.classList.add('hidden');
     }, 300);
   }
 }
 
-// Trigger the pop-up to show exactly 3.5 seconds after page loads
+// Launches advertisement panel 3.5 seconds post loader completion
 window.addEventListener('load', () => {
   setTimeout(showAdModal, 3500);
 });
