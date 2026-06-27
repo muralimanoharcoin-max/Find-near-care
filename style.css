@@ -448,29 +448,52 @@ body {
   .slider-branch-card { flex: 0 0 190px; }
 }
 .error-toast {
-  position: absolute;       /* Floats the element so it doesn't push down or expand the background */
-  top: 100%;                /* Positions it exactly right below the search box row */
-  left: 0;
-  display: inline-flex;     /* Tightly wraps the background around the text length */
+  position: absolute;       /* Floats right below without pushing the blue box down */
+  top: 100%;                /* Docks directly beneath the search row */
+  left: 12px;               /* Offsets slightly from the left edge for a natural tail position */
+  display: inline-flex;     
   align-items: center;
   gap: 6px;
-  margin-top: 6px;          /* Clean breathing room below the row */
+  margin-top: 8px;          /* Clean space to make room for the tail arrow */
   padding: 6px 12px;
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: #7f1d1d;      /* Solid dark red background so the tail blends seamlessly */
+  border: 1px solid rgba(239, 68, 68, 0.4);
   border-radius: 6px;
   color: #fca5a5;
   font-size: 0.82rem;
   font-weight: 500;
-  z-index: 10;              /* Layer it safely above any lower elements */
-  max-width: 100%;
+  z-index: 10;              
+  max-width: calc(100% - 24px);
   box-sizing: border-box;
-  white-space: nowrap;      /* Keeps the warning on a clean single line on wide screens */
   animation: fadeInToast 0.2s ease-out forwards;
+}
+
+/* THE TAIL CONNECTION */
+.error-toast::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;             /* Points upward toward the search bar */
+  left: 16px;               /* Aligns the tail nicely on the left edge */
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent #7f1d1d transparent; /* Color matches the background */
+}
+
+/* SECONDARY OVERLAY FOR THE TAIL BORDER */
+.error-toast::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 15px;
+  border-width: 7px;
+  border-style: solid;
+  border-color: transparent transparent rgba(239, 68, 68, 0.4) transparent;
+  z-index: -1;              /* Sits behind the main tail to form a crisp matching border */
 }
 
 @keyframes fadeInToast {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 
