@@ -454,3 +454,32 @@ document.addEventListener('mousedown', function(e) {
     dropdown.classList.add('hidden');
   }
 });
+/* ==========================================================================
+   APPLE STYLE ADVERTISEMENT MODAL ENGINE
+   ========================================================================== */
+function showAdModal() {
+  const modal = document.getElementById('apple-ad-modal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    // Micro-delay to let display register so the entry transform animation fires beautifully
+    setTimeout(() => {
+      modal.classList.add('active');
+    }, 10);
+  }
+}
+
+function closeAdModal() {
+  const modal = document.getElementById('apple-ad-modal');
+  if (modal) {
+    modal.classList.remove('active');
+    // Hide it from layout flow completely once opacity fade finishes
+    setTimeout(() => {
+      modal.classList.add('hidden');
+    }, 300);
+  }
+}
+
+// Trigger the pop-up to show exactly 3.5 seconds after page loads
+window.addEventListener('load', () => {
+  setTimeout(showAdModal, 3500);
+});
