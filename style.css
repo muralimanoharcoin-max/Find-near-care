@@ -448,18 +448,24 @@ body {
   .slider-branch-card { flex: 0 0 190px; }
 }
 .error-toast {
-  width: fit-content;
-  margin-top: 4px;
-  padding: 6px 14px;
+  position: absolute;       /* Floats the element so it doesn't push down or expand the background */
+  top: 100%;                /* Positions it exactly right below the search box row */
+  left: 0;
+  display: inline-flex;     /* Tightly wraps the background around the text length */
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;          /* Clean breathing room below the row */
+  padding: 6px 12px;
   background: rgba(239, 68, 68, 0.15);
   border: 1px solid rgba(239, 68, 68, 0.3);
   border-radius: 6px;
   color: #fca5a5;
   font-size: 0.82rem;
   font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  z-index: 10;              /* Layer it safely above any lower elements */
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;      /* Keeps the warning on a clean single line on wide screens */
   animation: fadeInToast 0.2s ease-out forwards;
 }
 
@@ -467,3 +473,4 @@ body {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
