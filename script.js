@@ -31,7 +31,6 @@ function handleKeyPress(event) {
 function triggerSearch() {
   const query = document.getElementById("search").value;
   if (query.trim() !== "") {
-    // Instantly hide suggestions dropdown out of sight on search activation
     const dropdown = document.getElementById('suggestions-dropdown');
     if (dropdown) {
       dropdown.innerHTML = "";
@@ -53,6 +52,12 @@ async function searchLocation(query) {
   document.getElementById('mac-spinner').classList.remove('hidden');
   document.getElementById('no-results-state').classList.add('hidden');
   document.getElementById("results").innerHTML = "";
+
+  // Show the workspace flex panel layout explicitly when running a search
+  const workspacePanel = document.getElementById('gis-workspace-panel');
+  if (workspacePanel) {
+    workspacePanel.classList.remove('hidden');
+  }
 
   try {
     let cleanQuery = query.trim();
@@ -145,28 +150,39 @@ async function searchLocation(query) {
   }
 }
 
-// WELCOME PANEL SPECIFICATION TEXT
+// WELCOME STATE
 function showWelcomeState() {
   document.getElementById("results").innerHTML = "";
   document.getElementById('mac-spinner').classList.add('hidden');
+  
+  const workspacePanel = document.getElementById('gis-workspace-panel');
+  if (workspacePanel) workspacePanel.classList.add('hidden');
+
   document.getElementById('no-results-state').classList.remove('hidden');
 
-  const mainTelemetryText = document.querySelector('.magic-text');
-  const subTelemetryText = document.querySelector('.magic-subtext');
-  if (mainTelemetryText) mainTelemetryText.innerText = "A promise of 99.9% accuracy";
-  if (subTelemetryText) subTelemetryText.innerText = "Search with city/area name.";
+  // Corrected element selectors matching the responsive layout CSS
+  const mainText = document.querySelector('.radar-title') || document.querySelector('.magic-text');
+  const subText = document.querySelector('.radar-subtitle') || document.querySelector('.magic-subtext');
+  
+  if (mainText) mainText.innerText = "A promise of 99.9% accuracy";
+  if (subText) subText.innerText = "Search with city/area name.";
 }
 
-// ERROR PANEL SPECIFICATION TEXT
+// ERROR / NO RESULTS STATE
 function clearViews() {
   document.getElementById("results").innerHTML = "";
-  document.getElementById('no-results-state').classList.remove('hidden');
   document.getElementById('mac-spinner').classList.add('hidden');
   
-  const mainTelemetryText = document.querySelector('.magic-text');
-  const subTelemetryText = document.querySelector('.magic-subtext');
-  if (mainTelemetryText) mainTelemetryText.innerText = "Sorry Try again";
-  if (subTelemetryText) subTelemetryText.innerText = "Check the spelling/choose from suggestions.";
+  const workspacePanel = document.getElementById('gis-workspace-panel');
+  if (workspacePanel) workspacePanel.classList.add('hidden');
+
+  document.getElementById('no-results-state').classList.remove('hidden');
+  
+  const mainText = document.querySelector('.radar-title') || document.querySelector('.magic-text');
+  const subText = document.querySelector('.radar-subtitle') || document.querySelector('.magic-subtext');
+  
+  if (mainText) mainText.innerText = "Sorry Try again";
+  if (subText) subText.innerText = "Check the spelling/choose from suggestions.";
 }
 
 function copyLink(url) {
@@ -230,7 +246,7 @@ function calculateLocalRoute(startLat, startLng, endLat, endLng) {
 }
 
 /* ==========================================================================
-   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (SPEED METRICS OPTIMIZED)
+   INDIA-WIDE REALTIME SUGGESTIONS ENGINE (DEBOUNCE SPEED: 150MS)
    ========================================================================== */
 let suggestionTimeout = null;
 
@@ -246,7 +262,6 @@ function handleInputSuggestions(event) {
     return;
   }
 
-  // DEBOUNCE SPEED RADICAL OPTIMIZATION: Dropped from 400ms down to 150ms for hyper fast live displays
   suggestionTimeout = setTimeout(() => {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=in&addressdetails=1&limit=5`;
 
