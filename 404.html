@@ -21,16 +21,26 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .animation-box {
-            width: 220px;
-            height: 220px;
-            margin: 0 auto 20px auto;
+        /* Seamless layout with no bounding box */
+        .wrapper {
+            max-width: 500px;
+            width: 100%;
         }
+
+        .animation-box {
+            width: 240px;
+            height: 240px;
+            margin: 0 auto 15px auto;
+        }
+
         .animation-box img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            border-radius: 10px;
+            /* Removes any default borders and makes it blend */
+            background: transparent; 
+            border: none;
+            box-shadow: none;
         }
         h1 {
             color: #ffb703;
@@ -62,12 +72,11 @@
 </head>
 <body>
 
-    <div class="container">
-        <!-- Space Animation Graphic -->
+    <div class="wrapper">
+        <!-- Transparent Blended Graphic Container -->
         <div class="animation-box">
-            <img src="https://media2.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Space Animation">
-    </div>
-
+            <img src="https://media2.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Lost in Space Illustration">
+        </div>
     
     <div class="container">
         <h1>404</h1>
