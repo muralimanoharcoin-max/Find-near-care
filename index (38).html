@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Find Near CARE</title>
+  <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+
+<div class="glass header">
+  <div class="header-top">
+    <div class="logo-area">
+      <img src="Care-Hospitals-removebg-preview.png" alt="CARE Logo" class="care-logo">
+      <h1 class="apple-bold-title">Find Near CARE</h1>
+    </div>
+    
+    <div class="mac-credits">
+      <span class="credits-text">Designed & Developed by Murali Manohar •TechM-2026•</span>
+    </div>
+  </div>
+
+  <div class="search-box">
+    <div class="input-wrapper">
+      <input type="text" id="search" placeholder="Enter city, town, or village..." onkeypress="handleKeyPress(event)" oninput="handleInputSuggestions(event)" autocomplete="off">
+      <div id="mac-spinner" class="mac-spinner hidden"></div>
+      <div id="suggestions-dropdown" class="suggestions-box hidden"></div>
+    </div>
+    <button onclick="triggerSearch()">Search</button>
+  </div>
+  <div id="search-error-toast" class="error-toast hidden"></div>
+</div>
+
+<div class="app-view-area">
+  <div id="gis-workspace-panel" class="app-layout hidden">
+    <div id="results-wrapper" class="workspace-card">
+      <div id="results"></div>
+    </div>
+    <div id="map-wrapper" class="workspace-card">
+      <div id="map"></div>
+    </div>
+  </div>
+  
+  <div id="no-results-state">
+    <div class="radar-canvas">
+      <div class="radar-viewport-core">
+        <div class="radar-glow-core"></div>
+        <div class="radar-wave wave-1"></div>
+        <div class="radar-wave wave-2"></div>
+        <div class="radar-wave wave-3"></div>
+        <div class="radar-sweeper"></div>
+        <div class="radar-logo-capsule">
+          <img src="Care-Hospitals-removebg-preview.png" class="radar-logo" alt="CARE Logo">
+        </div>
+      </div>
+      <div class="radar-title">A promise of 99.9% accuracy</div>
+      <div class="radar-subtitle">Search with city, town or area name to find near CARE.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-fixed-master">
+  <div class="branches-slider-section">
+    <h2 class="section-main-heading">CARE Hospitals Network</h2>
+    <div class="horizontal-slider-wrapper">
+      
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Banjara IP, Hyderabad</h3>
+        </div>
+        <p class="branch-address-text">Road No. 1, Prem Nagar, Banjara Hills, Hyderabad, Telangana 500034</p>
+        <div class="branch-card-meta">Emergency: +91 40 6165 6565</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Hi-Tech City, Hyderabad</h3>
+        </div>
+        <p class="branch-address-text">Old Mumbai Highway, Gachibowli, Hyderabad, Telangana 500032</p>
+        <div class="branch-card-meta">Emergency: +91 40 6166 6666</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Musheerabad, Hyderabad</h3>
+        </div>
+        <p class="branch-address-text">1-5-551, Out-Patient Block, Musheerabad, Hyderabad, Telangana 500020</p>
+        <div class="branch-card-meta">Emergency: +91 40 6166 7777</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Malakpet, Hyderabad</h3>
+        </div>
+        <p class="branch-address-text">Near Malakpet Railway Station, Mahbub Mansion, Hyderabad, Telangana 500036</p>
+        <div class="branch-card-meta">Emergency: +91 40 6165 8888</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Nampally, Hyderabad</h3>
+        </div>
+        <p class="branch-address-text">Exhibition Grounds Road, Nampally, Hyderabad, Telangana 500001</p>
+        <div class="branch-card-meta">Emergency: +91 40 6165 9999</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Ramnagar, Visakhapatnam</h3>
+        </div>
+        <p class="branch-address-text">Life Line Block, Waltair Main Rd, Ram Nagar, Visakhapatnam, AP 530002</p>
+        <div class="branch-card-meta">Emergency: +91 891 616 5656</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Health City, Arilova</h3>
+        </div>
+        <p class="branch-address-text">Health City, Chinagadila, Arilova, Visakhapatnam, Andhra Pradesh 530040</p>
+        <div class="branch-card-meta">Emergency: +91 891 350 2000</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Bhubaneswar, Odisha</h3>
+        </div>
+        <p class="branch-address-text">Prachi Enclave, Niladri Vihar, Chandrasekharpur, Bhubaneswar, Odisha 751021</p>
+        <div class="branch-card-meta">Emergency: +91 674 616 5656</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Nagpur, Maharashtra</h3>
+        </div>
+        <p class="branch-address-text">3, Farmland, Panchsheel Square, Wardha Road, Nagpur, Maharashtra 440012</p>
+        <div class="branch-card-meta">Emergency: +91 712 616 5656</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Raipur, Chhattisgarh</h3>
+        </div>
+        <p class="branch-address-text">Pachpedi Naka, Dhamtari Rd, near Kalibadi Chowk, Raipur, Chhattisgarh 492001</p>
+        <div class="branch-card-meta">Emergency: +91 771 616 5656</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE CHL Hospitals, Indore</h3>
+        </div>
+        <p class="branch-address-text">CHL Campus, 11, Anoop Nagar, Indore, Madhya Pradesh 452001</p>
+        <div class="branch-card-meta">Emergency: +91 731 662 1100</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Aurangabad, Maharashtra</h3>
+        </div>
+        <p class="branch-address-text">Ajabnagar, Near High Court, Aurangabad, Maharashtra 431001</p>
+        <div class="branch-card-meta">Emergency: +91 240 616 5656</div>
+      </div>
+
+      <div class="slider-branch-card">
+        <div class="branch-card-header">
+          <span class="branch-status-dot"></span>
+          <h3>CARE Banjara COPC</h3>
+        </div>
+        <p class="branch-address-text">Banjara road No. 10, Babu Khan chambers building</p>
+        <div class="branch-card-meta">Emergency: +968 2448 3434</div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="brand-about-footer">
+    <div class="footer-paragraphs-layout">
+      <p class="footer-para-block web-info-block">
+        <span>🌐 SYSTEM MET: Calculating precise dynamic geolocation routing matrices.</span>
+        <span>🌐 ENGINE: Version 1.9 synchronized via standard OpenStreetMap spatial frameworks.</span>
+        <span>🌐 REALTIME SPEED: Powered via active low-latency open OSRM service paths.</span>
+      </p>
+      <p class="footer-para-block owner-info-block">
+        <span>🌐 NETWORK ACCESS: Mapping active health metrics for 13 care hospital locations.</span>
+        <span class="dev-sign">🌐 ARCHITECTURERE: Crafted by <strong>Murali Manohar</strong> • 2026 •.</span>
+      </p>
+    </div>
+  </footer>
+</div>
+
+<div id="apple-ad-modal" class="modal-overlay hidden">
+  <div class="modal-card">
+    <button class="modal-close-btn" onclick="closeAdModal()">✕</button>
+    <div class="modal-badge">Welcome</div>
+    <h2 class="modal-title">Announcement</h2>
+    <p class="modal-body-text">
+      'Dear users' CARE Hospitals-services are resumed for today, Thank you.
+    </p>
+    <div class="modal-actions-row">
+      <button class="modal-btn secondary" onclick="closeAdModal()">Dismiss</button>
+  <a href="https://tandcfromnmm.github.io/Find-doctor-care.com/" target="_blank" class="modal-btn primary" onclick="closeAdModal()">Find Doctor</a>
+    </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
